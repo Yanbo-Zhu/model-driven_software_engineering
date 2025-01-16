@@ -7,6 +7,30 @@
 	- Composite structure diagram
 	- Component diagram
 
+- Paketdiagramme (Package Diagrams)
+	- Partitionierung des Modells in Pakete
+	- Aggregations- und Gen/Spec-Beziehungen zwischen Paketen
+	- Importbeziehungen:
+		- Import einzelner Elemente mit `<<access>>`
+		- Import ganzer Pakete mit `<<import>>`
+	- Darstellung der hierarchischen Struktur des Systems
+- Komponentendiagramme (Component Diagrams)
+	- Komponenten: ausführbare Klassen, kapseln internen Aufbau, stellen Verhalten über Schnittstellen und Ports zur Verfügung
+	- Komponentendiagramme stellen die Komponenten und deren Interaktion dar (Ports und Schnittstellen)
+	- Darstellung der funktionalen Struktur (Software Architecture)
+- Kompositionsstrukturdiagramme (Composite Structure)
+	- Konfiguration von miteinander verbundenen Laufzeitelementen
+	- z.B. Zusammenarbeit von Klassen oder Objekten zur Erfüllung einer bestimmten Aufgabe
+- Verteilungsdiagramme (Deployment Diagrams)
+	- Beschreibung der physikalischen Struktur (Topologie) von verteilten Systemen
+	- Modellierung aller im realen System tatsächlich vorhandenen Hardware- und Software-Knoten und deren Verbindungen (Kommunikationspfade)
+- Physikalische Struktur setzt sich zusammen aus
+	- Artefakten (physikalische Informationseinheiten, z.B. Dateien)
+	- HW- und SW-Knoten (Ausführungseinheiten, z.B. Geräte)
+	- Kommunikationspfaden (physikalische Verbindungen)
+
+
+
 # 1 PACKAGE DIAGRAM
 
 ![[01_UML/image/Pasted image 20250104174048.png]]
@@ -48,12 +72,23 @@ Elements imported via ElementImport can have an alias assigned to avoid nameclas
 
 # 2 CLASS DIAGRAM
 
+Class diagrams enable a view on structural information of the system at Class level
+
+Klassendiagramm
+- Zeigt die Objektklassen im System und deren mögliche Beziehungen
+- Beschreibt alle möglichen Zustände des Systems
+- Kann für Entwurf und Dokumentation verwendet werden
+- Statisch (Compile-Zeit)
+
+Klassendiagramme erlauben die Modellierung abstrakter objektorientierter Konzepte, die unabhängig von der tatsächlichen Implementierung sind
+- Objektorientierung bekannt von objektorientierten Programmiersprachen wie Java
+- Bspw. wird tatsächliche Implementierung von Methoden oder Vererbung nicht vorgegeben
+
 ![[01_UML/image/Pasted image 20250104175705.png]]
 
 ![[01_UML/image/Pasted image 20250104175845.png]]
 
 
-Class diagrams enable a view on structural information of the system at Class level
 
 Main constituents (among others) are
 − Classes, DataTypes, Signals or Interfaces
@@ -63,6 +98,12 @@ Main constituents (among others) are
 − Operations, and
 − Associations
 
+Wesentliche Modellierungselemente
+- Klassen
+- Attribute
+- Assoziationen
+- Stereotype
+
 ## 2.1 Classifier
 
 - Classifier is the common super metaclass for all elements that may posses a structure.
@@ -70,24 +111,50 @@ Main constituents (among others) are
 - Concrete specializations (among others): Class, Component, Interface, Signal, DataType, PrimitiveType, Association
 
 
-## 2.2 基础 
+## 2.2 Classes
+
+
+Bilden ein abstraktes Modell für eine Menge von ähnlichen Objekten
+- Erlauben Instanziierung mehrerer Objekte desselben Typs
 
 A Class is an structured, complex type that is able to own Attributes (Properties), Operations and nested Classes
 Class may have an internal structure
 Other kinds of Classes are DataType, Signal and Interface
 Formal derivation rule may be described with OCLD
 
+![[01_UML/image/Pasted image 20250115141020.png]]
+
 ![[01_UML/image/Pasted image 20250104180604.png]]
 
-## 2.3 Property
+
+
+## 2.3 Property/Attribute
 
 - Property is kind of MultiplicityElement
 - Lower and upper bound determine multiplicity
 - Fundamental collection types defined by metaattributes isOrdered and isUnique
 
+Klassen können getypte Attribute enthalten
+Attribute können mit einer Sichtbarkeit versehen werden
+- public (+): jede andere Klasse kann auf eigenes Attribut zugreifen
+- private (-): Zugriff nur von eigener Klasse
+- protected (#): Zugriff nur von eigener Klasse und Unterklassen
+
+![[01_UML/image/Pasted image 20250115211738.png]]
+
 ![[01_UML/image/Pasted image 20250104181219.png]]
 
-## 2.4 GENERALIZATION
+## 2.4 Generalisierung/Spezialisierung
+
+
+- Ermöglicht die Modellierung von Vererbung in Klassendiagrammen
+	- Eigenschaften (Attribute/Assoziationen) der generellen Klasse (Oberklasse) werden an spezielle Klassen (Subklassen) vererbt
+	- Abstrakte Klassen (Oberklasse kann nicht instanziiert werden) oder Operationen (müssen durch Subklassen implementiert werden) werden kursiv dargestellt
+
+In UML ist Mehrfachvererbung möglich: In Java z.B. durch Interfaces umsetzbar
+![[01_UML/image/Pasted image 20250115215337.png]]
+
+![[01_UML/image/Pasted image 20250115215442.png]]
 
 - All Classifier may participate in Generalizations
 - A Generalization specifies that a Class (or more generally, a Classifier) is a specialization of another, more general Classifier
@@ -99,6 +166,13 @@ Formal derivation rule may be described with OCLD
 
 ## 2.5 ASSOCIATION
 
+Stellen die Beziehungen zwischen Klassen dar
+- Assoziationsbezeichnung hat eine Leserichtung (optional, aber hilfreich)
+- Assoziationen können als Objektreferenzen bzw. durch verschiedene Container implementiert werden
+
+![[01_UML/image/Pasted image 20250115212103.png]]
+
+
 - Associations specify semantic relationships (called links) that can occur between typed instances.
 - It has at least two association ends (binary association) but could be n-ary
 - Association ends have a specific multiplicity, can be ordered, unique, supersets, subsets, derived, unions … because they are Properties
@@ -107,6 +181,62 @@ Formal derivation rule may be described with OCLD
 
 ![[01_UML/image/Pasted image 20250104191134.png]]
 
+
+### 2.5.1 Rollen
+
+Verschiedene Rollen (Namen am Assoziationsende) helfen mehrdeutige Assoziationen zu unterscheiden und Assoziationen passend zu benennen
+
+Der Onlineshop führt normale und Premiumkunden und -kundinnen auf zwei verschiedenen Listen
+![[01_UML/image/Pasted image 20250115213056.png]]
+
+
+### 2.5.2 Navigierbarkeit
+
+Gibt an, in welche Richtung die Assoziation (nicht) gelten soll
+	→: In diese Richtung existiert die Assoziation (als Attribut)
+	X: In diese Richtung darf sie nicht gelten (Es gibt kein Attribut)
+
+Wenn keine Navigierbarkeit angegeben ist, ist sie unspezifiziert
+
+![[01_UML/image/Pasted image 20250115213327.png]]
+
+
+
+
+
+### 2.5.3 Multiplizitäten
+
+![[01_UML/image/Pasted image 20250115213515.png]]
+
+![[01_UML/image/Pasted image 20250115213533.png]]
+
+- 1 cart contains 0 oder 1 customer ,  1 customer hat nur 1 cart 
+
+### 2.5.4 class 的 attribute 作为 ausschnitt 用 association 相连
+
+Je nach Zweck des Modells kann ein spezifischer Ausschnitt des Systems dargestellt werden
+Die Auswahl der Klassen bestimmt welche Attribute als Assoziation dargestellt werden!
+
+图片中的例子 
+- customer 有个 attribute "name", 这个name 为 klasse string 的一个 object 
+
+![[01_UML/image/Pasted image 20250115214241.png]]
+
+
+### 2.5.5 Implementierungsdetails
+
+Beispielhafte Implementierung der Navigierbarkeiten in JAVA
+![[01_UML/image/Pasted image 20250115214611.png]]
+
+
+Beispielhafte Implementierung verschiedener Multiplizitäten in JAVA
+![[01_UML/image/Pasted image 20250115214625.png]]
+
+
+
+
+### 2.5.6 aggregation and Composition
+
 - Each Association end has a particular aggregation kind associated
 	- None (Association)
 	- Shared (Aggregation)
@@ -114,7 +244,26 @@ Formal derivation rule may be described with OCLD
 - Determine lifecycle dependencies among instances of Classifiers that are associated
 - ==None and Shared means instances are rather loosely coupled==
 - Composite describes a whole-part coupling (lifecycle dependency of the part)
-- ==注意实心和虚心三角的意义==, 虚心三角代表 loosely coupled, 代表 
+- ==注意实心和虚心三角的意义==, 虚心菱形代表 loosely coupled, 实心的route代表 a whole-part coupling
+
+In UML enthalten Beziehungen als Teil-Ganzes hervorzuheben
+- Aggregation 
+	- ![[01_UML/image/Pasted image 20250115215116.png]]
+	- Objekte der Klasse A sind aus anderen Objekten der Klasse B zusammengesetzt, bzw. die Objekte von B gehören zu A
+	- Multiplizitäten werden nicht eingeschränkt
+		- Beispiel: Eine Vorlesung besteht aus Studierenden, diese können aber mehrere VLs besuchen
+- Komposition ( ♢ )
+	- Spezialfall der Aggregation: Die Existenz der beherbergten Klasse hängt von der Existenz der beherbergenden Klasse ab
+	- Kann Multiplizitäten 0..1 oder 1 bedeuten:
+		- Beispiel 0..1: Ein Blatt gehört zu höchstens einem Baum, kann aber auch ohne existieren
+		- Beispiel 1: Haus hat Räume (Haus stürzt ein → Räume sind weg)
+
+下面的例子1
+- customer 没了,  delivceradress 也没有了 
+- 1 cart contains 0 oder 1 customer ,  1 customer hat nur 1 cart 
+
+![[01_UML/image/Pasted image 20250115215514.png]]
+
 
 ![[01_UML/image/Pasted image 20250104191439.png]]
 
@@ -129,7 +278,8 @@ Formal derivation rule may be described with OCLD
 
 
 
-### 2.5.1 Shared aggregation
+
+#### 2.5.6.1 Shared aggregation
 
 https://www.uml-diagrams.org/aggregation.html
 
@@ -152,7 +302,7 @@ Shared aggregation could be depicted together with other association adornments 
 
 ![[01_UML/image/Pasted image 20250104194208.png]]
 
-### 2.5.2 Composition
+#### 2.5.6.2 Composition
 
 https://www.uml-diagrams.org/composition.html
 
@@ -192,12 +342,91 @@ a member of one Department (or none). If Department is closed,
 its Staff is relieved (but excluding the "stand alone" Staff).
 
 
+## 2.6 Stereotype
+
+Stereotype trennen Klassen nach ihrer Bedeutung im System 
+
+Entity-Control-Boundary-Pattern (ECB)
+- Verwendet drei Stereotype zur Trennung von Daten und Funktionalität
+	- Entity:  Klasse repräsentiert Daten im System (lokale Funktionalität erlaubt)
+	- Boundary:  Schnittstelle zu Akteuren/Akteurinnen 活跃分子 außerhalb des Systems.
+	- Controller:  Übergeordnete Funktionalität, z.B. die Use-Cases
+
+Controller-Klassen halten keine persistenten Daten, Entity-Klassen haben keine klassenübergreifenden Operationen
+- Vereinfachte Form des Architekturmodells Model-View-Controller (MVC)
+
+Im Allgemeinen existiert im System nur eine Instanz jedes Controllers
+
+![[01_UML/image/Pasted image 20250115223256.png]]
+
+
+Unter Umständen müssen einzelne Klassen zerlegt werden, um eindeutige Stereotype vergeben zu können
+![[01_UML/image/Pasted image 20250115223340.png]]
+
+
+
+
+
+
+## 2.7 Fallbeispiel (class-attribute-association)
+
+
+1 先得到 class
+Sie werden gebeten für einen kleines Unternehmen, das Schuhe und Kleidung verkauft, die Verwaltungssoftware eines Online-Shops zu entwickeln. Der Onlineshop soll es Kunden und Kundinnen ermöglichen, Produkte in einen Warenkorb zu legen und diesen zu bezahlen. Jeder Kunde/jede Kundin hat mindestens eine Lieferadresse.
+
+Wir kennen bereits die Use-Cases:
+Was sind sinnvolle Klassen dieses Systems?
+![[01_UML/image/Pasted image 20250115205601.png]]
+
+![[01_UML/image/Pasted image 20250115205745.png]]
+
+
+
+---
+
+2  算出 attribute/property 
+
+Im System wird der Name und eine Email-Adresse von jedem Kunden/jeder Kundin des Onlineshops hinterlegt. Außerdem wird für jedes Produkt eine Produktnummer und eine Bezeichnung sowie der Preis und die Lagermenge gespeichert.
+
+![[01_UML/image/Pasted image 20250115211935.png]]
+
+
+---
+
+3 Assoziationen
+
+![[01_UML/image/Pasted image 20250115212430.png]]
+
 # 3 Object Diagram 
+
+同一个 klasse 的不同 object (object 有自己的 zustand (attribute 的值 ), 和其他的 object 不同)
+
+Objekt-Diagramm ist eine Instanz des im Klassendiagramm beschriebenen Systems, d.h. genau ein Zustand
+- Sinnvoll für Debugging, veranschaulichende Beispiele oder z.B. Startzustände
+
+Objekte ähneln in der Darstellung Klassen:
+![[01_UML/image/Pasted image 20250115223743.png]]
+
+Verbindungen im Objektdiagramm entsprechen instanziierten Assoziationen im Klassendiagramm
+
+![[01_UML/image/Pasted image 20250115224051.png]]
+
+
+--- 
+
+
+Object diagrams are used to visualize partial/complete instances (called InstanceSpecifications) of Classifier and Associations
+
+Objektdiagramm
+- Zeigt tatsächlich existierende Objekte im System und deren tatsächlichen Beziehungen
+- Beschreibt genau einen Zustand des Systems
+- Kann für Dokumentation und Debugging verwendet werden, nicht für Entwurf
+- Dynamisch (Laufzeit)
 
 ![[01_UML/image/Pasted image 20250104194747.png]]
 
 
-Object diagrams are used to visualize partial/complete instances (called InstanceSpecifications) of Classifier and Associations
+
 
 Main constituents are
 − InstanceSpecifications
