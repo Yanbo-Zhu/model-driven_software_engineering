@@ -283,9 +283,11 @@ Start-/Endknoten
 ![[01_UML/image/Pasted image 20250116204631.png]]
 
 Entscheidung
+- 可以看到两个 Entscheidung之间 的 SchnitteMenge 交集 为 leer, 就是 两个里面只能选一个 
 • Nur einer der folgenden Kontrollflüsse wird ausgeführt
 • Disjunkte Guards notwendig
 • Weglassen eines Guards an einem Ausgang gleichbedeutend mit „Else“
+
 
 Zusammenführung
 • Führt alternative Zweige wieder zusammen
@@ -302,6 +304,7 @@ Beliebig viele Ein-/Ausgänge der Verzweigungsknoten möglich
 
 Splitting/Synchronisation
 - Splitting (Fork): Reihenfolge der Ausführung von Pfaden macht keinen Unterschied (könnten auch parallel ausgeführt werden)
+	- 不同于Entscheidung, spliting 出来的两个操作. 这两个是可以在同一时间 一起执行的. 
 - Synchronisation (Join): Nebenläufige Pfade wieder zusammenführen
 
 ![[01_UML/image/Pasted image 20250116205116.png]]
@@ -310,6 +313,7 @@ Splitting/Synchronisation
 Der Kontrollfluss wird in mehrere Kontrollflüsse aufgeteilt bzw. wieder vereinigt (Tokens vervielfältigt oder vereinigt)
 Wichtig: Getrennte Pfade werden i.A. entweder zusammengeführt oder einzeln gestartet / beendet.
 - Verbindungen der nebenläufigen Pfade mit Elementen außerhalb Fork/Join sind meist nicht sinnvoll
+- nebenläufigen Pfade 其中一个撤回 是不允许的, 因为 nebenläufigen Pfade 两个是同时必须一起存在的 , 撤销其中一个, 会使得另一个无意义了
 
 ![[01_UML/image/Pasted image 20250116205332.png]]
 
