@@ -33,7 +33,7 @@
 
 # 1 PACKAGE DIAGRAM
 
-![[01_UML/image/Pasted image 20250104174048.png]]
+![[01_01_UML/image/Pasted image 20250104174048.png]]
 
 Packages diagram shows the structure of the system at Package level and interdependencies among those Packages.
 
@@ -43,7 +43,7 @@ Main constituents are:
 - PackageImport
 - ElementImport
 
-![[01_UML/image/Pasted image 20250104174214.png]]
+![[01_01_UML/image/Pasted image 20250104174214.png]]
 
 - A Package represents namespaces and therefore, influences the visibility of members of that namespace
 - PackageableElements are elements that can be contained by a Package (e.g., Class/Component, InstanceSpecification, Depdendency etc.)
@@ -52,22 +52,22 @@ Main constituents are:
 
 1 nested Packages 
 Alternative Representations of Packages with nested Packages 
-![[01_UML/image/Pasted image 20250104174507.png]]
+![[01_01_UML/image/Pasted image 20250104174507.png]]
 
 2 PackageImport
 PackageImport enables importing Packages to get access to all public PackageableElements of another Package
 ==(private with «access», public with «import»)==
-![[01_UML/image/Pasted image 20250104174829.png]]
+![[01_01_UML/image/Pasted image 20250104174829.png]]
 
 
 3 ElementImport
 ElementImport enables Packages to import single public PackageableElements from another Package
-![[01_UML/image/Pasted image 20250104174954.png]]
+![[01_01_UML/image/Pasted image 20250104174954.png]]
 
 
 4 ElementImport with alias 
 Elements imported via ElementImport can have an alias assigned to avoid nameclashes in the importing Package
-![[01_UML/image/Pasted image 20250104175001.png]]
+![[01_01_UML/image/Pasted image 20250104175001.png]]
 
 
 # 2 CLASS DIAGRAM
@@ -84,9 +84,9 @@ Klassendiagramme erlauben die Modellierung abstrakter objektorientierter Konzept
 - Objektorientierung bekannt von objektorientierten Programmiersprachen wie Java
 - Bspw. wird tatsächliche Implementierung von Methoden oder Vererbung nicht vorgegeben
 
-![[01_UML/image/Pasted image 20250104175705.png]]
+![[01_01_UML/image/Pasted image 20250104175705.png]]
 
-![[01_UML/image/Pasted image 20250104175845.png]]
+![[01_01_UML/image/Pasted image 20250104175845.png]]
 
 
 
@@ -122,9 +122,9 @@ Class may have an internal structure
 Other kinds of Classes are DataType, Signal and Interface
 Formal derivation rule may be described with OCLD
 
-![[01_UML/image/Pasted image 20250115141020.png]]
+![[01_01_UML/image/Pasted image 20250115141020.png]]
 
-![[01_UML/image/Pasted image 20250104180604.png]]
+![[01_01_UML/image/Pasted image 20250104180604.png]]
 
 
 
@@ -140,9 +140,9 @@ Attribute können mit einer Sichtbarkeit versehen werden
 - private (-): Zugriff nur von eigener Klasse
 - protected (#): Zugriff nur von eigener Klasse und Unterklassen
 
-![[01_UML/image/Pasted image 20250115211738.png]]
+![[01_01_UML/image/Pasted image 20250115211738.png]]
 
-![[01_UML/image/Pasted image 20250104181219.png]]
+![[01_01_UML/image/Pasted image 20250104181219.png]]
 
 ## 2.4 Generalisierung/Spezialisierung
 
@@ -152,9 +152,9 @@ Attribute können mit einer Sichtbarkeit versehen werden
 	- Abstrakte Klassen (Oberklasse kann nicht instanziiert werden) oder Operationen (müssen durch Subklassen implementiert werden) werden kursiv dargestellt
 
 In UML ist Mehrfachvererbung möglich: In Java z.B. durch Interfaces umsetzbar
-![[01_UML/image/Pasted image 20250115215337.png]]
+![[01_01_UML/image/Pasted image 20250115215337.png]]
 
-![[01_UML/image/Pasted image 20250115215442.png]]
+![[01_01_UML/image/Pasted image 20250115215442.png]]
 
 - All Classifier may participate in Generalizations
 - A Generalization specifies that a Class (or more generally, a Classifier) is a specialization of another, more general Classifier
@@ -162,7 +162,7 @@ In UML ist Mehrfachvererbung möglich: In Java z.B. durch Interfaces umsetzbar
 - An InterfaceRealization specifies that a Class/Component realizes one or more certain Interfaces
 	- Similar to interface implementation in programming languages (e.g. Java)
 
-![[01_UML/image/Pasted image 20250104181516.png]]
+![[01_01_UML/image/Pasted image 20250104181516.png]]
 
 ## 2.5 ASSOCIATION
 
@@ -170,7 +170,7 @@ Stellen die Beziehungen zwischen Klassen dar
 - Assoziationsbezeichnung hat eine Leserichtung (optional, aber hilfreich)
 - Assoziationen können als Objektreferenzen bzw. durch verschiedene Container implementiert werden
 
-![[01_UML/image/Pasted image 20250115212103.png]]
+![[01_01_UML/image/Pasted image 20250115212103.png]]
 
 
 - Associations specify semantic relationships (called links) that can occur between typed instances.
@@ -179,7 +179,7 @@ Stellen die Beziehungen zwischen Klassen dar
 - ==`*`的意义是 Multiplicity== 就是 notation 的值 
 
 
-![[01_UML/image/Pasted image 20250104191134.png]]
+![[01_01_UML/image/Pasted image 20250104191134.png]]
 
 
 ### 2.5.1 Rollen
@@ -187,7 +187,7 @@ Stellen die Beziehungen zwischen Klassen dar
 Verschiedene Rollen (Namen am Assoziationsende) helfen mehrdeutige Assoziationen zu unterscheiden und Assoziationen passend zu benennen
 
 Der Onlineshop führt normale und Premiumkunden und -kundinnen auf zwei verschiedenen Listen
-![[01_UML/image/Pasted image 20250115213056.png]]
+![[01_01_UML/image/Pasted image 20250115213056.png]]
 
 
 ### 2.5.2 Navigierbarkeit
@@ -198,7 +198,7 @@ Gibt an, in welche Richtung die Assoziation (nicht) gelten soll
 
 Wenn keine Navigierbarkeit angegeben ist, ist sie unspezifiziert
 
-![[01_UML/image/Pasted image 20250115213327.png]]
+![[01_01_UML/image/Pasted image 20250115213327.png]]
 
 
 
@@ -206,9 +206,9 @@ Wenn keine Navigierbarkeit angegeben ist, ist sie unspezifiziert
 
 ### 2.5.3 Multiplizitäten
 
-![[01_UML/image/Pasted image 20250115213515.png]]
+![[01_01_UML/image/Pasted image 20250115213515.png]]
 
-![[01_UML/image/Pasted image 20250115213533.png]]
+![[01_01_UML/image/Pasted image 20250115213533.png]]
 
 - 1 cart contains 0 oder 1 customer ,  1 customer hat nur 1 cart 
 
@@ -220,17 +220,17 @@ Die Auswahl der Klassen bestimmt welche Attribute als Assoziation dargestellt we
 图片中的例子 
 - customer 有个 attribute "name", 这个name 为 klasse string 的一个 object 
 
-![[01_UML/image/Pasted image 20250115214241.png]]
+![[01_01_UML/image/Pasted image 20250115214241.png]]
 
 
 ### 2.5.5 Implementierungsdetails
 
 Beispielhafte Implementierung der Navigierbarkeiten in JAVA
-![[01_UML/image/Pasted image 20250115214611.png]]
+![[01_01_UML/image/Pasted image 20250115214611.png]]
 
 
 Beispielhafte Implementierung verschiedener Multiplizitäten in JAVA
-![[01_UML/image/Pasted image 20250115214625.png]]
+![[01_01_UML/image/Pasted image 20250115214625.png]]
 
 
 
@@ -248,7 +248,7 @@ Beispielhafte Implementierung verschiedener Multiplizitäten in JAVA
 
 In UML enthalten Beziehungen als Teil-Ganzes hervorzuheben
 - Aggregation 
-	- ![[01_UML/image/Pasted image 20250115215116.png]]
+	- ![[01_01_UML/image/Pasted image 20250115215116.png]]
 	- Objekte der Klasse A sind aus anderen Objekten der Klasse B zusammengesetzt, bzw. die Objekte von B gehören zu A
 	- Multiplizitäten werden nicht eingeschränkt
 		- Beispiel: Eine Vorlesung besteht aus Studierenden, diese können aber mehrere VLs besuchen
@@ -262,10 +262,10 @@ In UML enthalten Beziehungen als Teil-Ganzes hervorzuheben
 - customer 没了,  delivceradress 也没有了 
 - 1 cart contains 0 oder 1 customer ,  1 customer hat nur 1 cart 
 
-![[01_UML/image/Pasted image 20250115215514.png]]
+![[01_01_UML/image/Pasted image 20250115215514.png]]
 
 
-![[01_UML/image/Pasted image 20250104191439.png]]
+![[01_01_UML/image/Pasted image 20250104191439.png]]
 
 ---
 
@@ -274,7 +274,7 @@ In UML enthalten Beziehungen als Teil-Ganzes hervorzuheben
 - ==Dot-Notation== was introduced to determine Classifier- or Association ownership of Association ends
 	- 实心点代表 这个 association end 属于  另外一边的 association end, 也属于 Association itself
 
-![[01_UML/image/Pasted image 20250104191743.png]]
+![[01_01_UML/image/Pasted image 20250104191743.png]]
 
 
 
@@ -296,11 +296,11 @@ Shared aggregation is depicted as association decorated with a _hollow diamond_ 
 
 Example below shows _Triangle_ as an aggregate of exactly three line segments (sides). Multiplicity '*' of the _Triangle_ association end means that each line _Segment_ could be a part of several triangles, or might not belong to any triangle at all. Erasing specific _Triangle_ instance does not mean that all or any segments will be deleted as well. (Note, that we named collection of three line Segments as 'sides', while usual UML convention is to use singular form, i.e. 'side', even for collections.)
 
-![[01_UML/image/Pasted image 20250104194133.png]]
+![[01_01_UML/image/Pasted image 20250104194133.png]]
 
 Shared aggregation could be depicted together with other association adornments such as [navigability](https://www.uml-diagrams.org/association.html#navigability) and [association end ownership](https://www.uml-diagrams.org/association.html#association-end). In the example below line _Segment_ is navigable from _Triangle_. Association end 'sides' is owned by _Triangle_ (not by association itself), which means that 'sides' is an [attribute](https://www.uml-diagrams.org/property.html#classifier-attribute) of _Triangle_.
 
-![[01_UML/image/Pasted image 20250104194208.png]]
+![[01_01_UML/image/Pasted image 20250104194208.png]]
 
 #### 2.5.6.2 Composition
 
@@ -357,11 +357,11 @@ Controller-Klassen halten keine persistenten Daten, Entity-Klassen haben keine k
 
 Im Allgemeinen existiert im System nur eine Instanz jedes Controllers
 
-![[01_UML/image/Pasted image 20250115223256.png]]
+![[01_01_UML/image/Pasted image 20250115223256.png]]
 
 
 Unter Umständen müssen einzelne Klassen zerlegt werden, um eindeutige Stereotype vergeben zu können
-![[01_UML/image/Pasted image 20250115223340.png]]
+![[01_01_UML/image/Pasted image 20250115223340.png]]
 
 
 
@@ -376,9 +376,9 @@ Sie werden gebeten für einen kleines Unternehmen, das Schuhe und Kleidung verka
 
 Wir kennen bereits die Use-Cases:
 Was sind sinnvolle Klassen dieses Systems?
-![[01_UML/image/Pasted image 20250115205601.png]]
+![[01_01_UML/image/Pasted image 20250115205601.png]]
 
-![[01_UML/image/Pasted image 20250115205745.png]]
+![[01_01_UML/image/Pasted image 20250115205745.png]]
 
 
 
@@ -388,14 +388,14 @@ Was sind sinnvolle Klassen dieses Systems?
 
 Im System wird der Name und eine Email-Adresse von jedem Kunden/jeder Kundin des Onlineshops hinterlegt. Außerdem wird für jedes Produkt eine Produktnummer und eine Bezeichnung sowie der Preis und die Lagermenge gespeichert.
 
-![[01_UML/image/Pasted image 20250115211935.png]]
+![[01_01_UML/image/Pasted image 20250115211935.png]]
 
 
 ---
 
 3 Assoziationen
 
-![[01_UML/image/Pasted image 20250115212430.png]]
+![[01_01_UML/image/Pasted image 20250115212430.png]]
 
 # 3 Object Diagram 
 
@@ -405,11 +405,11 @@ Objekt-Diagramm ist eine Instanz des im Klassendiagramm beschriebenen Systems, d
 - Sinnvoll für Debugging, veranschaulichende Beispiele oder z.B. Startzustände
 
 Objekte ähneln in der Darstellung Klassen:
-![[01_UML/image/Pasted image 20250115223743.png]]
+![[01_01_UML/image/Pasted image 20250115223743.png]]
 
 Verbindungen im Objektdiagramm entsprechen instanziierten Assoziationen im Klassendiagramm
 
-![[01_UML/image/Pasted image 20250115224051.png]]
+![[01_01_UML/image/Pasted image 20250115224051.png]]
 
 
 --- 
@@ -423,7 +423,7 @@ Objektdiagramm
 - Kann für Dokumentation und Debugging verwendet werden, nicht für Entwurf
 - Dynamisch (Laufzeit)
 
-![[01_UML/image/Pasted image 20250104194747.png]]
+![[01_01_UML/image/Pasted image 20250104194747.png]]
 
 
 
@@ -433,7 +433,7 @@ Main constituents are
 − Slots
 − Links (InstanceSpecification of Associations)
 
-![[01_UML/image/Pasted image 20250104194850.png]]
+![[01_01_UML/image/Pasted image 20250104194850.png]]
 
 ## 3.1 InstanceSpecifications
 
@@ -443,18 +443,18 @@ InstanceSpecifications specify an overview of a set of instance of a Classifier 
 
 InstanceSpecification of Associations are called links
 
-![[01_UML/image/Pasted image 20250104195045.png]]
+![[01_01_UML/image/Pasted image 20250104195045.png]]
 
 
 ## 3.2 Object diagrams
 
 Object diagrams can be used to visualize the metaclass instances of a UML (abstract syntax)
 
-![[01_UML/image/Pasted image 20250104195620.png]]
+![[01_01_UML/image/Pasted image 20250104195620.png]]
 
 
 
-![[01_UML/image/Pasted image 20250104195628.png]]
+![[01_01_UML/image/Pasted image 20250104195628.png]]
 
 
 # 4 COMPOSITE STRUCTURE DIAGRAM
@@ -467,7 +467,7 @@ Main constituents are
 − Ports (see Component Diagram)
 
 
-![[01_UML/image/Pasted image 20250104200021.png]]
+![[01_01_UML/image/Pasted image 20250104200021.png]]
 
 ## 4.1 Role and Part 
 
@@ -479,7 +479,7 @@ Main constituents are
 Role:  Wheel, Enginer 
 Part:  Car 
 
-![[01_UML/image/Pasted image 20250104201256.png]]
+![[01_01_UML/image/Pasted image 20250104201256.png]]
 
 ## 4.2 Connectors
 
@@ -491,11 +491,11 @@ Similar to Associations
 
 Connectors can be typed by an Association
 
-![[01_UML/image/Pasted image 20250104201651.png]]
+![[01_01_UML/image/Pasted image 20250104201651.png]]
 
 ## 4.3 例子 
 
-![[01_UML/image/Pasted image 20250104201851.png]]
+![[01_01_UML/image/Pasted image 20250104201851.png]]
 
 Possible instances:
 − Hybrid engine, front-wheel drive
@@ -509,13 +509,13 @@ Issue: Number of engines must not be 0!
 
 # 5 COMPONENT DIAGRAMM
 
-![[01_UML/image/Pasted image 20250104202007.png]]
+![[01_01_UML/image/Pasted image 20250104202007.png]]
 
 Main building blocks of a component diagram are
 − Component
 − Interfaces
 
-![[01_UML/image/Pasted image 20250104202024.png]]
+![[01_01_UML/image/Pasted image 20250104202024.png]]
 
 ## 5.1 Component
 
@@ -527,7 +527,7 @@ A Component is substitutable
 − Replaceable (design time/run-time) by compatible components
 − Compatibility is calculated based on provided/required interfaces
 
-![[01_UML/image/Pasted image 20250104202650.png]]
+![[01_01_UML/image/Pasted image 20250104202650.png]]
 
 ## 5.2 Interface 
 
@@ -540,7 +540,7 @@ Interfaces are displayed in ball/socket (lollipop) notation
 Offers interfaces to its environment (provided interfaces)
 Expects interfaces from its environment (required interfaces)
 
-![[01_UML/image/Pasted image 20250104202904.png]]
+![[01_01_UML/image/Pasted image 20250104202904.png]]
 
 ## 5.3 Ports 
 
@@ -549,12 +549,12 @@ Port types (Class/Component) determine the set of required/provided Interfaces t
 (compatible) Ports
 Ports can be conjugated, i.e., implicitly mirroring the provided/required Interfaces of a Port type → reduces modelling overhead
 
-![[01_UML/image/Pasted image 20250104205023.png]]
+![[01_01_UML/image/Pasted image 20250104205023.png]]
 
 − Compatible parts and Ports can be connected via Connectors
 − Compatibility of Ports is defined compatibility of its Port types
 
-![[01_UML/image/Pasted image 20250104205043.png]]
+![[01_01_UML/image/Pasted image 20250104205043.png]]
 
 ## 5.4 Connectors
 
@@ -566,7 +566,7 @@ Ports can be conjugated, i.e., implicitly mirroring the provided/required Interf
 
 # 6 PROFILE DIAGRAM
 
-![[01_UML/image/Pasted image 20250104205645.png]]
+![[01_01_UML/image/Pasted image 20250104205645.png]]
 
 **Profile diagram** is [structure diagram](https://www.uml-diagrams.org/uml-25-diagrams.html#structure-diagram) which describes **lightweight extension mechanism** to the UML by defining custom [stereotypes](https://www.uml-diagrams.org/stereotype.html), [tagged values](https://www.uml-diagrams.org/stereotype.html#tagged-value), and constraints. Profiles allow adaptation of the UML metamodel for different:
 
@@ -598,7 +598,7 @@ Main building blocks are
 − Extension
 
 
-![[01_UML/image/Pasted image 20250104205906.png]]
+![[01_01_UML/image/Pasted image 20250104205906.png]]
 
 
 ## 6.1 Profile
@@ -610,7 +610,7 @@ Main building blocks are
 - Profile cannot be applied to another Profile, but Profiles can extend each other
 - Profiles do not modify the UML metamodel
 
-![[01_UML/image/Pasted image 20250105155008.png]]
+![[01_01_UML/image/Pasted image 20250105155008.png]]
 
 
 ## 6.2 Stereotype
@@ -621,7 +621,7 @@ Main building blocks are
 - Stereotypes are instantiated when applied on an instance of the metaclass its extends
 - Shapes of standard diagram elements notations can also be replaced by Stereotypes
 
-![[01_UML/image/Pasted image 20250105155428.png]]
+![[01_01_UML/image/Pasted image 20250105155428.png]]
 
 ## 6.3 Extensions
 
@@ -631,7 +631,7 @@ Main building blocks are
 − Multiple extension possible
 − Application of a Stereotype only to exactly one! instance of the meta-class at any point in time
 
-![[01_UML/image/Pasted image 20250105155459.png]]
+![[01_01_UML/image/Pasted image 20250105155459.png]]
 
 
 ## 6.4 UML Profiles adoption

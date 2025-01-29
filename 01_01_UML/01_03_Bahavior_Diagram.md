@@ -1,7 +1,7 @@
 
-![[01_UML/image/Pasted image 20250105160525.png]]
+![[01_01_UML/image/Pasted image 20250105160525.png]]
 
-![[01_UML/image/Pasted image 20250115230935.png]]
+![[01_01_UML/image/Pasted image 20250115230935.png]]
 
 - Behavior diagrams express dynamic aspects of the system (Activities, State Machines etc.)
 - The following diagrams types are briefly introduced
@@ -71,7 +71,7 @@ Interaktionsdiagramme
 # 2 USE CASE DIAGRAM
 
 
-![[01_UML/image/Pasted image 20250105161459.png]]
+![[01_01_UML/image/Pasted image 20250105161459.png]]
 
 **Use case diagrams** are usually referred to as [behavior diagrams](https://www.uml-diagrams.org/uml-25-diagrams.html#behavior-diagram) used to describe a set of actions ([use cases](https://www.uml-diagrams.org/use-case.html)) that some system or systems ([subject](https://www.uml-diagrams.org/use-case-subject.html)) should or can perform in collaboration with one or more **external users** of the system ([actors](https://www.uml-diagrams.org/use-case-actor.html)). Each use case should provide some observable and valuable result to the actors or other stakeholders of the system.
 
@@ -88,7 +88,7 @@ Interaktionsdiagramme
 - UseCases define the offered Behaviors of the system without reference to its internal structure.
 - May include possible variations of its basic behavior, including exceptional behavior and error handling.
 
-![[01_UML/image/Pasted image 20250105162129.png]]
+![[01_01_UML/image/Pasted image 20250105162129.png]]
 
 
 
@@ -100,7 +100,7 @@ Interaktionsdiagramme
 - Actor might be a human being or another external system
 - Associations between Actor and UseCase describe the system interface at very high level
 
-![[01_UML/image/Pasted image 20250105162335.png]]
+![[01_01_UML/image/Pasted image 20250105162335.png]]
 
 
 ## 2.3 Extension/Inclusion
@@ -116,14 +116,14 @@ card identification: An included UseCase
 Withdraw: An including UseCase
 
 
-![[01_UML/image/Pasted image 20250105162459.png]]
+![[01_01_UML/image/Pasted image 20250105162459.png]]
 
-![[01_UML/image/Pasted image 20250105162807.png]]
+![[01_01_UML/image/Pasted image 20250105162807.png]]
 
 
 # 3 STATE MACHINE DIAGRAM
 
-![[01_UML/image/Pasted image 20250105163611.png]]
+![[01_01_UML/image/Pasted image 20250105163611.png]]
 
 ---
 
@@ -137,7 +137,7 @@ Main constituents are
 − Guard
 − Effect/Entry/Do/Exit behavior
 
-![[01_UML/image/Pasted image 20250105163725.png]]
+![[01_01_UML/image/Pasted image 20250105163725.png]]
 
 ## 3.1 StateMachine
 
@@ -147,7 +147,7 @@ Main constituents are
 − Events trigger the transition from one state to another state
 − External or internal Events possible
 
-![[01_UML/image/Pasted image 20250105163847.png]]
+![[01_01_UML/image/Pasted image 20250105163847.png]]
 
 ## 3.2 States
 
@@ -156,7 +156,7 @@ Main constituents are
 − Conditions and invariants for a State are often only implicitly defined (by label)
 − States can be further decomposed into composite states
 
-![[01_UML/image/Pasted image 20250105164128.png]]
+![[01_01_UML/image/Pasted image 20250105164128.png]]
 
 ## 3.3 Transition, Event, Trigger
 
@@ -170,7 +170,7 @@ Events of a Trigger can be one of
 − AnyReceiveEvent (any other invokation)
 − CompletionEvent (otherwise)
 
-![[01_UML/image/Pasted image 20250105164500.png]]
+![[01_01_UML/image/Pasted image 20250105164500.png]]
 
 
 ## 3.4 guard
@@ -182,7 +182,7 @@ Events of a Trigger can be one of
 	- Transition effect
 	- State exit/entry/do Behavior
 
-![[01_UML/image/Pasted image 20250105164811.png]]
+![[01_01_UML/image/Pasted image 20250105164811.png]]
 
 ## 3.5 Effect/Entry/Do/Exit behavior
 
@@ -192,7 +192,7 @@ Events of a Trigger can be one of
 	- Do Behavior: Executed after any potential entry-Behavior is finished
 - Do-Behavior can be interrupted by subsequent triggering Events and will terminate its execution immediately
 
-![[01_UML/image/Pasted image 20250105165102.png]]
+![[01_01_UML/image/Pasted image 20250105165102.png]]
 
 ---
 
@@ -202,7 +202,7 @@ Events of a Trigger can be one of
 	- Represents just a fragment of the invoked Operation (CallEvent) or Reception (SignalEvent) Behavior
 - Usually used to do calculations and send responses to the environment
 
-![[01_UML/image/Pasted image 20250105165203.png]]
+![[01_01_UML/image/Pasted image 20250105165203.png]]
 
 ## 3.6 Run-to-Completion semantics
 
@@ -220,7 +220,7 @@ Run-to-Completion semantics (abstracted)
 
 # 4 ACTIVITY DIAGRAM
 
-![[01_UML/image/Pasted image 20250105165844.png]]
+![[01_01_UML/image/Pasted image 20250105165844.png]]
 
 
 An Activity is a Behavior specified as sequencing of subordinate executable Actions, using a control and data flow model
@@ -244,12 +244,12 @@ Main building blocks are
 − ControlNode/ObjectNode
 − Structured Actions
 
-![[01_UML/image/Pasted image 20250105165930.png]]
+![[01_01_UML/image/Pasted image 20250105165930.png]]
 
 ## 4.1 Aktivitätsdiagramme
 
 - Aktivität wird dargestellt als gerichteter Graph
-	- ![[01_UML/image/Pasted image 20250116204049.png]]
+	- ![[01_01_UML/image/Pasted image 20250116204049.png]]
 	- Knoten: Aktionen, Objekte, Kontrollknoten
 	- Kanten: Kontroll-, Datenfluss
 - Aktionen sind kleinste Ausführungseinheiten, z.B.:
@@ -263,7 +263,7 @@ Main building blocks are
 - Token-basierte Semantik
 	- Knoten wird erreicht (ausgeführt), sobald Vorgänger-Aktion beendet ist
 
-![[01_UML/image/Pasted image 20250116204412.png]]
+![[01_01_UML/image/Pasted image 20250116204412.png]]
 
 ---
 
@@ -273,14 +273,14 @@ Start-/Endknoten
 - Kontrollflussendknoten: Beendet einen Pfad in der Aktivität, andere Pfade können weiter laufen
 
 
-![[01_UML/image/Pasted image 20250116204441.png]]
+![[01_01_UML/image/Pasted image 20250116204441.png]]
 
 
  ---
  
  Entscheidung/Zusammenführung
 
-![[01_UML/image/Pasted image 20250116204631.png]]
+![[01_01_UML/image/Pasted image 20250116204631.png]]
 
 Entscheidung
 - 可以看到两个 Entscheidung之间 的 SchnitteMenge 交集 为 leer, 就是 两个里面只能选一个 
@@ -299,7 +299,7 @@ Beliebig viele Ein-/Ausgänge der Verzweigungsknoten möglich
  Guards
 
 
-![[01_UML/image/Pasted image 20250116204804.png]]
+![[01_01_UML/image/Pasted image 20250116204804.png]]
 
 
 Splitting/Synchronisation
@@ -307,7 +307,7 @@ Splitting/Synchronisation
 	- 不同于Entscheidung, spliting 出来的两个操作. 这两个是可以在同一时间 一起执行的. 
 - Synchronisation (Join): Nebenläufige Pfade wieder zusammenführen
 
-![[01_UML/image/Pasted image 20250116205116.png]]
+![[01_01_UML/image/Pasted image 20250116205116.png]]
 
 
 Der Kontrollfluss wird in mehrere Kontrollflüsse aufgeteilt bzw. wieder vereinigt (Tokens vervielfältigt oder vereinigt)
@@ -315,7 +315,7 @@ Wichtig: Getrennte Pfade werden i.A. entweder zusammengeführt oder einzeln gest
 - Verbindungen der nebenläufigen Pfade mit Elementen außerhalb Fork/Join sind meist nicht sinnvoll
 - nebenläufigen Pfade 其中一个撤回 是不允许的, 因为 nebenläufigen Pfade 两个是同时必须一起存在的 , 撤销其中一个, 会使得另一个无意义了
 
-![[01_UML/image/Pasted image 20250116205332.png]]
+![[01_01_UML/image/Pasted image 20250116205332.png]]
 
 
 ---
@@ -323,7 +323,7 @@ Wichtig: Getrennte Pfade werden i.A. entweder zusammengeführt oder einzeln gest
 Connector
 Falls die Verbindungen zu unübersichtlich werden: Überbrückung mit Connector (nur Notation)
 
-![[01_UML/image/Pasted image 20250116205513.png]]
+![[01_01_UML/image/Pasted image 20250116205513.png]]
 
 ---
 
@@ -333,9 +333,9 @@ Objekte fügen dem Kontrollfluss Datenabhängigkeiten hinzu, beinhalten Ergebnis
 
 - Darstellung durch Objektknoten (eckig)
 	- Transportieren Daten von einer Aktion zur nächsten
-	- ![[01_UML/image/Pasted image 20250116205731.png]]
+	- ![[01_01_UML/image/Pasted image 20250116205731.png]]
 - Alternative Pin-Notation für Objekte
-	- ![[01_UML/image/Pasted image 20250116205750.png]]
+	- ![[01_01_UML/image/Pasted image 20250116205750.png]]
 
 
 ---
@@ -347,27 +347,27 @@ Parameter
 - Ausgabeparameter einer Aktivität
 	- Wenn kein Endknoten vorhanden: Objektrückgabe beendet Aktivität
 
-![[01_UML/image/Pasted image 20250116210002.png]]
+![[01_01_UML/image/Pasted image 20250116210002.png]]
 
 
 ----
 
 Ereignisse
 - Sonderform von Aktionen für Interaktionen außerhalb der Aktivität, z.B. Nachrichten mit Komponenten außerhalb des Systems
-	- ![[01_UML/image/Pasted image 20250116210100.png]]
+	- ![[01_01_UML/image/Pasted image 20250116210100.png]]
 - Können auch zusammen verwendet werden um auf externen Input zu warten
-	- ![[01_UML/image/Pasted image 20250116210109.png]]
+	- ![[01_01_UML/image/Pasted image 20250116210109.png]]
 
 
 ---
 
 Zeitereignisse
 - Beschreiben, dass Aktionen zu bestimmten Zeitpunkten ausgeführt werden sollen: Möglich als Start einer Aktivität
-	- ![[01_UML/image/Pasted image 20250116210320.png]]
+	- ![[01_01_UML/image/Pasted image 20250116210320.png]]
 - Zeit kann auch explizit vergehen (Zeitereignis mit eingehender Kante)
-	- ![[01_UML/image/Pasted image 20250116210240.png]]
+	- ![[01_01_UML/image/Pasted image 20250116210240.png]]
 - Verhalten kann außerdem mit Zeitereignissen synchronisiert werden
-	- ![[01_UML/image/Pasted image 20250116210249.png]]
+	- ![[01_01_UML/image/Pasted image 20250116210249.png]]
  
 
 
@@ -376,7 +376,7 @@ Zeitereignisse
 Aktivitätsbereich
 Gliederung in z.B. organisatorische Einheiten oder Standorte
 Können auch externes Verhalten in einer Aktivität darstellen
-![[01_UML/image/Pasted image 20250116210654.png]]
+![[01_01_UML/image/Pasted image 20250116210654.png]]
 
 ---
 
@@ -385,7 +385,7 @@ Darstellungsform für komplexeres Verhalten innerhalb einer Aktion
 - Kann durch separates Aktivitätsdiagramm modelliert sein
 - Abstraktion erhöht Lesbarkeit
 
-![[01_UML/image/Pasted image 20250116210934.png]]
+![[01_01_UML/image/Pasted image 20250116210934.png]]
 
 
 
@@ -396,14 +396,14 @@ Workflow
 Aktivitätsdiagramm kann beliebig zur Modellierung von anderen Abläufen im System verwendet werden
 •Beispiel für typischen Dokument-Workflow in einem ContentManagementSystem:
 
-![[01_UML/image/Pasted image 20250116210958.png]]
+![[01_01_UML/image/Pasted image 20250116210958.png]]
 
 
 
 
 ## 4.2 ActivityNode
 
-![[01_UML/image/Pasted image 20250105170101.png]]
+![[01_01_UML/image/Pasted image 20250105170101.png]]
 
 
 
@@ -426,7 +426,7 @@ Semantics of execution flow of Activities resembles the token flow semantics of 
 − Actions may emit values on OutputPins
 − Actions are either predefined (OO-related) or user-defined (opaque) Actions
 
-![[01_UML/image/Pasted image 20250105170258.png]]
+![[01_01_UML/image/Pasted image 20250105170258.png]]
 
 ## 4.4 ControlFlows and ObjectFlows
 
@@ -437,7 +437,7 @@ Semantics of execution flow of Activities resembles the token flow semantics of 
 − Actions can only execute if they receive a token (control or object token) on all incoming flows
 
 
-![[01_UML/image/Pasted image 20250105170258.png]]
+![[01_01_UML/image/Pasted image 20250105170258.png]]
 
 
 ## 4.5 ControlNodes
@@ -449,14 +449,14 @@ ControlNodes control the routing of control and object tokens
 − JoinNode synchronizes multiple concurrent execution flows
 − MergeNode combines multiple flows without synchronization (similar to Join)
 
-![[01_UML/image/Pasted image 20250105170832.png]]
+![[01_01_UML/image/Pasted image 20250105170832.png]]
 
 ## 4.6 Structured Action: Invocation Actions 
 
 
 UML defines a set of predefined Actions that are related to the object-oriented paradigm
 
-![[01_UML/image/Pasted image 20250105171432.png]]
+![[01_01_UML/image/Pasted image 20250105171432.png]]
 
 
 Invocation Actions  调用，启用
@@ -467,31 +467,31 @@ Invocation Actions  调用，启用
 	- Send Signal Action/Send Object Action: Sends a Signal to a receiver
 	- Start Object Behavior Action: Starts the classifier Behavior of an Object (active Class)
 
-![[01_UML/image/Pasted image 20250105171638.png]]
+![[01_01_UML/image/Pasted image 20250105171638.png]]
 
 
 ## 4.7 Structured Action: Accept Event Actions
 
-![[01_UML/image/Pasted image 20250105171840.png]]
+![[01_01_UML/image/Pasted image 20250105171840.png]]
 
 − Accept Event Actions are Actions that are triggered by the dispatching of an external Event within the context Classifier
 − Similar to the Trigger of a Transitions (same Events
 − ==AcceptEventActions start when a matching Event is dispatched; no ControlFlow activation needed, but possible nonetheless==
 
-![[01_UML/image/Pasted image 20250105172005.png]]
+![[01_01_UML/image/Pasted image 20250105172005.png]]
 
-![[01_UML/image/Pasted image 20250105172013.png]]
+![[01_01_UML/image/Pasted image 20250105172013.png]]
 
 
 ## 4.8 Structured Action:  Other 
 
-![[01_UML/image/Pasted image 20250105172216.png]]
+![[01_01_UML/image/Pasted image 20250105172216.png]]
 
 
 
 # 5 SEQUENCE DIAGRAM
 
-![[01_UML/image/Pasted image 20250105172246.png]]
+![[01_01_UML/image/Pasted image 20250105172246.png]]
 
 - Sequence diagrams describe the interaction of roles of a system
 - Sequence diagrams are the mostly used Interaction diagram
@@ -501,7 +501,7 @@ Invocation Actions  调用，启用
 - Inspired by ITU Message Sequence Charts
 - Heavily used diagram for communication purposes due to intuitive notation
 
-![[01_UML/image/Pasted image 20250105172922.png]]
+![[01_01_UML/image/Pasted image 20250105172922.png]]
 
 
 
@@ -515,7 +515,7 @@ Main constituents are
 − CombinedFragment
 − InteractionUse
 
-![[01_UML/image/Pasted image 20250105173016.png]]
+![[01_01_UML/image/Pasted image 20250105173016.png]]
 
 ## 5.1 Lifelines and OccurrenceSpecifications
 
@@ -523,7 +523,7 @@ Main constituents are
 − OccurrenceSpecifications are executable parts of Interactions (e.g., sending a Message etc.)
 − OccurrenceSpecifications that cover a Lifeline are ordered from top to down and supposed to be executed accordingly
 
-![[01_UML/image/Pasted image 20250105173155.png]]
+![[01_01_UML/image/Pasted image 20250105173155.png]]
 
 ## 5.2 Messages
 
@@ -533,7 +533,7 @@ Main constituents are
 
 
 
-![[01_UML/image/Pasted image 20250105173426.png]]
+![[01_01_UML/image/Pasted image 20250105173426.png]]
 
 ## 5.3 ExecutionSpecifications
 
@@ -544,7 +544,7 @@ Main constituents are
 	- Often there is no Behavior referenced
 - ExecutionSpecifications can be completely omitted if not required
 
-![[01_UML/image/Pasted image 20250105173543.png]]
+![[01_01_UML/image/Pasted image 20250105173543.png]]
 
 
 ## 5.4 CombinedFragment
@@ -558,7 +558,7 @@ Main constituents are
 	- …
 - Used to express complex situations over the entire communication scenario
 
-![[01_UML/image/Pasted image 20250105173736.png]]
+![[01_01_UML/image/Pasted image 20250105173736.png]]
 
 ## 5.5 InteractionUse
 
@@ -570,10 +570,10 @@ Main constituents are
 两个 Lifelines  Web Customer and Online Bookshop
 一个 InteractionUse:  Checkout 
 
-![[01_UML/image/Pasted image 20250105173820.png]]
+![[01_01_UML/image/Pasted image 20250105173820.png]]
 
 
-![[01_UML/image/Pasted image 20250105174053.png]]
+![[01_01_UML/image/Pasted image 20250105174053.png]]
 
 
 
