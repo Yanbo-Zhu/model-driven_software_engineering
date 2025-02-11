@@ -25,11 +25,6 @@ postcondition ‘post3’ is true
 Abbildung 1: Klassendiagramm der Autowerkstatt wie bei autowerkstatt.use
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211101526.png]]
 
-
-
-
-
-
 # 1 Aufgabe 1: OCL Invarianten
 
 ## 1.1 知识储备 
@@ -41,14 +36,9 @@ constrains 必须嵌入 .use 文件 才会对这个model自动生效
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211112007.png]]
 
 
+用 软件 载入 load otl 文件 
 
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211112218.png]]
-
-
-用 软件 load otl 文件 
-
-然后 create incvatiantes 
-
+然后 使用 class invariants 窗口去 检查 那些 invariants 北邮被满足  
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211112343.png]]
 ## 1.2 
 
@@ -74,10 +64,9 @@ j) F¨ur jede beendete Inspektion existiert mindestens ein Reparaturauftrag f¨u
 
 
 a) Die ID jedes Mitarbeitenden muss gr¨oßer als 0 sein. 
+`context EmployeeData inv: self.id > 0 `
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211112115.png]]
-
-context EmployeeData inv: self.id > 0 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211112408.png]]
 
@@ -87,14 +76,11 @@ context EmployeeData inv: self.id > 0
 
 
 b) Der Name jedes Mitarbeitenden darf kein leerer String sein. 
-
-context EmployeeData inv: user <> '' and user <> null  
+`context EmployeeData inv: user <> '' and user <> null  `
 
 c) Die ID’s aller Mitarbeitenden m¨ussen eindeutig sein. 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211112654.png]]
-
-
 
 
 d) Zu jedem Fahrzeug darf es h¨ochstens einen Inspektionsauftrag geben, der noch nicht abgeschlossen ist.
@@ -102,6 +88,7 @@ e) Der Besitzer/die Besitzerin eines Fahrzeugs hat dieses auch in der Menge sein
 
 f) Ein Auftrag muss immer vom Typ Reparatur, Inspektion oder Reifenwechsel sein. 
 g) Jeder Auftrag, der beendet ist, muss einem Mitarbeitenden zugewiesen sein, der ihn beendet hat.
+
 h) Zu jedem Fahrzeug gibt es h¨ochstens einen offenen Auftrag von jedem Typ. 
 
 `let <temporary variable > in   xx Bedingung `
@@ -110,14 +97,20 @@ h) Zu jedem Fahrzeug gibt es h¨ochstens einen offenen Auftrag von jedem Typ.
 
 
 i) Alle Auftr¨age f¨ur Fahrzeuge vom Typ “jaguar” sollen mehr als 1000 Euro kosten. 
-
-
 j) F¨ur jede beendete Inspektion existiert mindestens ein Reparaturauftrag f¨ur das gleiche Fahrzeug.
 
-
-
-
 # 2 Aufgabe 2: OCL Contracts
+
+Abbildung 2: Beispiel-Objektdiagramm wie bei autowerkstatt.soil
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211101657.png]]
+
+## 2.1 使用
+
+在程序中 
+会显示 出来 preconfition, postcondition 
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211114205.png]]
+
+## 2.2 ##
 
 ==Vor- und Nachbedingungen von Operationen beschreiben den Systemzustand und die Eingabe- bzw. Ausgabeparameter. Zusammen mit Invarianten l¨asst sich dadurch formal feststellen, ob z.B. eine bestimmte Abfolge von Operationen m¨oglich ist. ==
 
@@ -130,7 +123,7 @@ a) Die Operation createCustomer erh¨alt die Daten Name, Adresse und Telefonnumm
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211113142.png]]
 
-prufen id 
+pruefen id 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211113628.png]]
 
 
@@ -140,12 +133,6 @@ k: Customer 的作用就是  宣称一下 k 的 type 是 customer 类型的
 在 .use 程序中 写下 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211113904.png]]
 
-
---
-
-在程序中 
-会显示 出来 
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211114205.png]]
 
 测试 : 去创造一个 createCustomer 看看 这个 contracts 有没有生效 
 
@@ -164,17 +151,14 @@ postcondition ‘post3’ is true
 ```
 
 1 测试  precondition 
+使用 !openter 命令 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211114337.png]]
-
 
 2  去创造 一个 customner 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211114438.png]]
 
-
 3测试 post condition 
-
-命令是什么?  
-!opexit
+使用 !opexit
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211114501.png]]
 
 
@@ -185,12 +169,4 @@ b) Die Operation addCar in der Klasse Customer wird zus¨atzlich ben¨otigt. Auc
 
 c) Die Operation hasCar in der Klasse Customer soll pr¨ufen ob ein Fahrzeug mit einem bestimmten Kennzeichen existiert und das Ergebnis als Bool zur¨uckgeben.
 
-
-
-
-
 @pre  的意义是 找到之前 状态 这个 attribue 的值 
-
-
-Abbildung 2: Beispiel-Objektdiagramm wie bei autowerkstatt.soil
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211101657.png]]

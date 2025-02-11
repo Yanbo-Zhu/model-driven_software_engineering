@@ -1,10 +1,10 @@
 
 
-# 1 USE-OCL
+# 1 USE OCL application 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102340.png]]
 
-开一个 ock 文件 
+开一个 ocl 文件 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102512.png]]
 
@@ -16,23 +16,16 @@ help
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102944.png]]
 
-
-
-
 # 2 UML 
 
-layout of used class diagramm 
-
+layout of used class Diagramm 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102708.png]]
 
 
-
-
-
-
-
 # 3 .soil 
+
+用于创建 真实的object
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103012.png]]
 
@@ -40,10 +33,9 @@ layout of used class diagramm
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103208.png]]
 
 
-
 ---
 
-load layout   另一个文件 
+load layout , 使用 另一个文件 .olt 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103322.png]]
 
@@ -181,6 +173,9 @@ c) Hat das Kennzeichen des Fahrzeugs f1 einen nicht-leeren Wert? :
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205105834.png]]
 
 
+---
+
+
 d) Ist der Auftrag i1 eine Inspektion? :
 
  Ob ein Objekt Typ von einer Klasse ist,  wenn diese Klasse von einer anderen Klasse erbt sollte ich immer alles teilbar benutzen.
@@ -188,6 +183,8 @@ d) Ist der Auftrag i1 eine Inspektion? :
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205110112.png]]
 
+
+---
 
 
 e) Ist das Objekt i1 ein Auftrag?
@@ -203,6 +200,7 @@ direkt zugehorigkeit
 
 oclIskindof
 这个 class 是否继承了某个 class 
+
 
 
 # 7 Aufgabe 4: OCL Collections
@@ -228,7 +226,6 @@ bekommen a set wieder , da in car object, jedem object einzigartig , deshalb bek
 
 ----
 
-
 b) Die Fahrzeuge von c1 :
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111143.png]]
@@ -240,15 +237,11 @@ b) Die Fahrzeuge von c1 :
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111252.png]]
 
 
-
 ---
 
 c) Die Fahrzeuge von c1 und das Fahrzeug f4 :
 
-
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111451.png]]
-
-
 
 ---
 
@@ -333,64 +326,62 @@ size() gibt Menge einer Collection an
 count(X) gibt an wie oft etwas X in der Collection vorkommt
 
 
-
-## 7.1 
+## 7.1 一些说明
 
 1
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111117.png]]
 
-bekommen a set wieder , da in car object, jedem object einzigartig , deshalb bekommen man eine Set 
+bekommen a set wieder , da in car object, jedem object einzigartig , deshalb bekommen man eine Set zuruck 
 
 2 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111316.png]]
 
 
-
-
-
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211103421.png]]
 
-c1.car  得到  一个 set 因为   car 那边是 小星星 . 即使 一个 set 里面只有一个 object 也是set datentyp 
-因为 每个 car 都是一个独立的 不同的 object 
-hier ist ein Stern bei Car auf de Linie also ein customer kann beliebig viele cars haben. Heißt c1 also customer 1 zu car kann ein set an cars haben und selbst wenn es nur ein car gibt, wird das dann als set ausgegeben
+2.1
+c1.car  得到  一个 set 因为  
+- car 那边是 小星星 . 就是说 一个 set 里面只有一个 object 也是set datentyp 
+- 因为 每个 car 都是一个独立的 不同的 object 
+- hier ist ein Stern bei Car auf de Linie. Also ein customer kann beliebig viele cars haben. Heißt c1 also customer 1 zu car kann ein set an cars haben und selbst wenn es nur ein car gibt, wird das dann als set ausgegeben
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211104203.png]]
 
 
+2.2
 
-3 
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211172429.png]]
 
-
-Wenn die Multiplizität 1 ist, dann kommt aber kein Set raus? Sondern eine Object bekommen 
+Wenn die Multiplizität 1 ist, dann kommt aber kein Set raus? 
+YEs. sondern eine Object bekommen 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211103342.png]]
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211103332.png]]
 
 
-4 
-下面 0...1   也不会得到一个 set, 只是得到一个object 或者 null 
+2.4 
+下面 0...1   Oder.EmployeeData 也不会得到一个 set, 只是得到一个object 或者 null 
 liefert dann Datentyp EmployeeData oder OclAny?  
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211103621.png]]
 
+2.5 
 0...5 的话 可能会到 set, 或者 object m 或者 null 
 
 
+---
 
-----
-
-set und bag 区别 
+3 set und bag 区别 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211103800.png]]
 
-c1.car.typ 
-kriegen  eine Bag zuruck liek {'A', 'B', 'C, }
-Set: nicht sortiert, nur jeden Object .  das wäre nicht möglich wenn ich zweimal den gleichen String in einem Set
+c1.car.typ  kriegen  eine Bag zuruck liek {'A', 'B', 'C, }
+
+Set: Element in Set sind nicht sortiert, nur jeden Object .  das wäre nicht möglich wenn ich zweimal den gleichen String in einem Set
 Bag: dasselbe wert von attribute kann merhmals enthalten in Bag 
 
 
-
 ----
-
+4 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211104854.png]]
 
@@ -408,12 +399,12 @@ intersection: 两边 都是 set , 提取到 schnitte menge
 
 ¨Uberpr¨uft mithilfe von OCL ob folgende Aussagen ¨uber den Systemzustand stimmen. Beginnt mit der Navigation immer bei der Mitarbeiter-Controller Instanz m.
 
-## 8.1 前期只是 
+## 8.1 基础知识
 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211110015.png]]
 
-m.allOrders 返回的是  一个 set , 不是 object,
+m.allOrders 返回的是  一个 set , 不是 单独一个object,
 因为  kante 上 一个 empoyee 对应多个 *  Order 
 ## 8.2 ##
 
@@ -424,14 +415,14 @@ a) Alle Auftr¨age sind beendet.
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205112815.png]]
 
- a:Order   gibt es an, dass a immer in Type Oder 
- forAll 采取 a.closed 的 object. 但是我们要先假定   a ist in type Order 
+`a:Order`  gibt es an, dass a immer in Type `Order`
+
+ forAll 采取 a.closed 的 object.   但是我们要先假定  A ist in type Order 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211110611.png]]
 
 
 ---
-
 
 b) Mindestens ein Auftrag ist noch nicht beendet. 
 
@@ -492,10 +483,9 @@ f) Die IDs der Fahrzeuge sind eindeutig.
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211110735.png]]
 
-
 Extrahiert folgende Information mit iterate oder closure aus dem Systemzustand.
 
-a) Wie viel Geld bringen alle Auftr¨age zusammen? :
+a) Wie viel Geld bringen alle Auftr¨age zusammen?
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205115028.png]]
 
