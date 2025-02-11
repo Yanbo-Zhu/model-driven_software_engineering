@@ -16,7 +16,7 @@ b) Ueberlegt, ob Beziehungen zwischen Use-Cases die Beschreibung der Anforderung
 
 ---
 
-![[01_02_UMl例子/image/Pasted image 20250123220558.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250123220558.png]]
 
 - `<<include>>`: erzwungende gemacht  .  create customers 后必须 create car
 - `<<extend>>`:  create car 后 不一定create order
@@ -32,29 +32,29 @@ b) An welchen Stellen hattet ihr verschiedene Moeglichkeiten zur Modellierung de
 
 c) Ueberlegt, wie Stereotype nach dem entity-boundary-control Pattern auf unser Beispiel angewendet werden koennten.
 
-![[01_02_UMl例子/image/d21973bcee8377c44fdf92e79053b2d.jpg]]
+![[01_02_UMl_OCL_例子/image/d21973bcee8377c44fdf92e79053b2d.jpg]]
 
 
-![[01_02_UMl例子/image/cb7b526847e381a54e2803707180664.jpg]]
+![[01_02_UMl_OCL_例子/image/cb7b526847e381a54e2803707180664.jpg]]
 
 
-![[01_02_UMl例子/image/f9e35338e5ce49d1c6c984ddd931d92.jpg]]
+![[01_02_UMl_OCL_例子/image/f9e35338e5ce49d1c6c984ddd931d92.jpg]]
 
 
 ---
 
 整理前 
 
-![[01_02_UMl例子/image/Pasted image 20250123223251.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250123223251.png]]
 
 
 整理后 
 
-![[01_02_UMl例子/image/Pasted image 20250123223544.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250123223544.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250123223559.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250123223559.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250123223616.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250123223616.png]]
 
 
 

@@ -13,35 +13,35 @@ Um Missbrauch vorzubeugen, m¨ussen sich Mitarbeitende am Browser mit ID und Pas
 
 # 1 Beispiel von aktivitatsdiagramm 和这个作业无关 
 
-![[01_02_UMl例子/image/Pasted image 20250129101858.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129101858.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250129102055.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102055.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250129102213.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102213.png]]
 Entscheidlung 的连个 Guard 间 没有 schnittemenge 
 
 
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102344.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102344.png]]
 
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102433.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102433.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102452.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102452.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102613.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102613.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102625.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102625.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129102646.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102646.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250129102734.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129102734.png]]
 
 
 
@@ -64,9 +64,9 @@ a) Erstellt ein Aktivit¨atsdiagramm zur Modellierung des Arbeitsablaufes (Workf
 - car  是否已经在系统了,  如果还没在系统里 就创造这个 car 
 	- 然后两个 aktion zusammenfuegen
 - 最后是 endknote
-![[01_02_UMl例子/image/Pasted image 20250129105322.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129105322.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250129104517.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129104517.png]]
 
 
 ## 2.2 b
@@ -74,7 +74,7 @@ b) Wie m¨usste das Aktivit¨atsdiagramm erweitert werden, um die Abarbeitung be
 
 就是 从 endknote 拓展出来一条线 
 
-![[01_02_UMl例子/image/Pasted image 20250129105020.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129105020.png]]
 
 
 ## 2.3 c
@@ -91,12 +91,12 @@ a) Erstellt ein Aktivit¨atsdiagramm zur Modellierung des Kontrollflusses innerh
 
 针对 CreateCar 这个 action 画一个 Kontrollflusses  Aktivitaettsdiagramm 
 
-![[01_02_UMl例子/image/Pasted image 20250129105909.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129105909.png]]
 
 müsste es nicht einen rechteckigen kasten geben für car data?  also der mit den eckigen Kanten
 可以加入 
 
-![[01_02_UMl例子/image/Pasted image 20250129110108.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129110108.png]]
 
 
 
@@ -120,25 +120,25 @@ Dabei soll die Arbeitszeit in Minuten eingegeben werden oder die Kosten f¨ur ei
 - ZeitUhr 通过一个特殊符号添加 
 - 用splitting . 就是说 send invoice 给不同人  . Abhangigen ausgefuhrt 
 - - kontrollfluss-endknote ,  Aktivitätsendknoten
-	- ![[01_02_UMl例子/image/Pasted image 20250129112139.png]]
+	- ![[01_02_UMl_OCL_例子/image/Pasted image 20250129112139.png]]
 		- Kontrollfluss endknote  endet nur ein kontrollfluss.  Er endet die gesamte ganze Aktivität nicht 
 		- 其中一个 Kontrollfluss 结束的时候,   其他的 splitted parallel kontrolfluss 可以 继续被执行
-	- ![[01_02_UMl例子/image/Pasted image 20250129112215.png]]
+	- ![[01_02_UMl_OCL_例子/image/Pasted image 20250129112215.png]]
 		- Aktivitätsendknote. Er endet die gesamte ganze Aktivität 
 		- 其中一个 Kontrollfluss 结束的时候,   其他的 splitted parallel kontrolfluss 不可以 继续被执行. 因为 整个 Aktivität 都被结束了 
 
 
 
-![[01_02_UMl例子/image/Pasted image 20250129111441.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129111441.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129111833.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129111833.png]]
 
 
-![[01_02_UMl例子/image/Pasted image 20250129112100.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129112100.png]]
 
-![[01_02_UMl例子/image/Pasted image 20250129112150.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129112150.png]]
 
 
 
-![[01_02_UMl例子/image/Pasted image 20250129112452.png]]
+![[01_02_UMl_OCL_例子/image/Pasted image 20250129112452.png]]
