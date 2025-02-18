@@ -1,7 +1,40 @@
 
+# 1 use-ocl 的使用 
+
 Wie auch auf dem letzten ¨Ubungsblatt k¨onnt ihr auch alle in dieser ¨Ubung entwickelten OCL Invarianten und Contracts mit dem Tool USE-OCL der Uni Bremen testen.
 
-Um Invarianten mit USE-OCL zu evaluieren, k¨onnt ihr den ”Create class invariant view” button verwenden (mit dem gelben Blitz). Dort seht ihr f¨ur jede Invariante, ob sie f¨ur euer aktuelles Objektdiagramm erf¨ullt ist. Durch Doppelklick auf eine Zeile k¨onnt ihr außerdem sehen, wie die einzelnen Teilbedingungen einer Invariante belegt sind.
+## 1.1 Invarianten mit USE-OCL zu evaluieren
+
+Um Invarianten mit USE-OCL zu evaluieren, k¨onnt ihr den ”Create class invariant view” button verwenden (mit dem gelben Blitz). Dort seht ihr f¨ur jede Invariante, ob sie f¨ur euer aktuelles Objektdiagramm erf¨ullt ist. Durch Doppelklick auf eine Zeile k¨onnt ihr außerdem sehen, wie die einzelnen Teilbedingungen einer Invariante belegt sind. 
+
+
+use .use datei 
+
+
+![[01_02_UMl_OCL_例子/image/Pasted image 20250212102535.png]]
+
+
+constrains 必须写入 .use 文件 才会对这个model自动生效 
+
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211112007.png]]
+
+
+用 软件 载入 load .otl 文件 
+
+然后 使用 class invariants 窗口去 检查 那些 invariants 北邮被满足  
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211112343.png]]
+
+
+
+![[01_02_UMl_OCL_例子/image/Pasted image 20250212102548.png]]
+
+
+
+Abbildung 1: Klassendiagramm der Autowerkstatt wie bei autowerkstatt.use
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211101526.png]]
+
+
+## 1.2 Contracts mit USE-OCL zu evaluieren
 
 Um Contracts mit USE-OCL zu evaluieren, k¨onnt ihr einzelne Operationen ¨uber die Kommandozeile ausf¨uhren. Hierzu werden in der Konsole die Operationen !openter und !opexit verwendet. Dazwischen muss die Operation simuliert werden!
 
@@ -21,27 +54,20 @@ postcondition ‘post3’ is true
 ```
 
 
+打开 object diagramm 
 
-Abbildung 1: Klassendiagramm der Autowerkstatt wie bei autowerkstatt.use
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211101526.png]]
-
-
-# 1 use .use datei 
-
-
-![[01_02_UMl_OCL_例子/image/Pasted image 20250212102535.png]]
-
-![[01_02_UMl_OCL_例子/image/Pasted image 20250212102548.png]]
-
-
-
-.use Datei 
-
-在 use open soil 文件 
+打开 soil 文件 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212103410.png]]
+
 
 进而打开 soil 中 daten 对应的 object diagramm 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212103456.png]]
+
+
+在程序中 
+会显示 出来 preconfition, postcondition 
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211114205.png]]
+
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212111800.png]]
 
@@ -49,31 +75,29 @@ Abbildung 1: Klassendiagramm der Autowerkstatt wie bei autowerkstatt.use
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212111920.png]]
 
 
-## 1.1 ocl 语法
+
+
+在 .use 程序中 写下 
+![[01_02_UMl_OCL_例子/image/Pasted image 20250211113904.png]]
+
+
+# 2 ocl 语法
 
 implies  的意思
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212112128.png]]
 
 a implies b: wenn a gilt,  dann d sollte auch geht 
-# 2 Aufgabe 1: OCL Invarianten
 
-## 2.1 知识储备 
+# 3 Aufgabe 1: OCL Invarianten
+
+## 3.1 知识储备 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212102350.png]]
 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211111811.png]]
 
-constrains 必须嵌入 .use 文件 才会对这个model自动生效 
-
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211112007.png]]
-
-
-用 软件 载入 load otl 文件 
-
-然后 使用 class invariants 窗口去 检查 那些 invariants 北邮被满足  
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211112343.png]]
-## 2.2 
+## 3.2 
 
 ==Invarianten sind Bedingungen, die zu jeder Zeit und f¨ur jedes Objekt einer Klasse gelten m¨ussen.== Formalisiert die folgenden Invarianten f¨ur das gegebene Klassendiagramm aus Abbildung 1. Welche Invarianten sind in dem Zustand der Abbildung 2 verletzt? Korrigiert den Zustand, damit alle Invarianten erf¨ullt sind.
 
@@ -246,12 +270,12 @@ j) F¨ur jede beendete Inspektion existiert mindestens ein Reparaturauftrag f¨u
 ```
 context Order inv J: self.closed implies
 ```
-# 3 Aufgabe 2: OCL Contracts
+# 4 Aufgabe 2: OCL Contracts
 
 Abbildung 2: Beispiel-Objektdiagramm wie bei autowerkstatt.soil
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211101657.png]]
 
-## 3.1 知识储备 
+## 4.1 知识储备 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250212112245.png]]
 
@@ -268,13 +292,7 @@ p1 und p2 现在的 storedQuantity 是 18 和 19
 
 
 
-## 3.2 使用
-
-在程序中 
-会显示 出来 preconfition, postcondition 
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211114205.png]]
-
-## 3.3 ##
+## 4.2 ##
 
 ==Vor- und Nachbedingungen von Operationen beschreiben den Systemzustand und die Eingabe- bzw. Ausgabeparameter. Zusammen mit Invarianten l¨asst sich dadurch formal feststellen, ob z.B. eine bestimmte Abfolge von Operationen m¨oglich ist. ==
 
@@ -283,7 +301,7 @@ Formalisiert die folgenden Vor- und Nachbedingungen. Benutzt hierzu das gegebene
 Hinweis
 Ihr k¨onnt davon ausgehen, dass kein Eingabeargument mit null belegt ist.
 
-### 3.3.1 a
+### 4.2.1 a
 
 a) Die Operation createCustomer erh¨alt die Daten Name, Adresse und Telefonnummer des Kunden/der Kundin. Es d¨urfen keine leeren Daten gespeichert werden und der Kunde/die Kundin darf auch nicht mehrfach existieren. Außerdem muss eine eindeutige ID generiert werden.
 
@@ -350,12 +368,12 @@ postcondition ‘post3’ is true
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211114501.png]]
 
 
-### 3.3.2 b
+### 4.2.2 b
 
 b) Die Operation addCar in der Klasse Customer wird zus¨atzlich ben¨otigt. Auch sie soll spezifiziert werden und sie erh¨alt ein Kennzeichen als String. Das Fahrzeug mit dem ¨ubergebenen Kennzeichen wird neu erstellt. Ein anderes Fahrzeug mit dem gleichen Kennzeichen darf vorher nicht existieren.
 
 
-### 3.3.3 c
+### 4.2.3 c
 
 
 c) Die Operation hasCar in der Klasse Customer soll pr¨ufen ob ein Fahrzeug mit einem bestimmten Kennzeichen existiert und das Ergebnis als Bool zur¨uckgeben.

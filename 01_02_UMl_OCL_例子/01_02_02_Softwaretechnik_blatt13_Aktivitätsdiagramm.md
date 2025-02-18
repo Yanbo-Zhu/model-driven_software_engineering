@@ -69,19 +69,25 @@ a) Erstellt ein Aktivit¨atsdiagramm zur Modellierung des Arbeitsablaufes (Workf
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250129104517.png]]
 
 
+
 ## 2.2 b
+
 b) Wie m¨usste das Aktivit¨atsdiagramm erweitert werden, um die Abarbeitung beliebig : vieler Kunden und Kundinnen an einem Arbeitstag zu modellieren?
+
+bspw. Kante zur¨uck zu Kunden-/Kundinnenauswahl, wenn nicht Feierabend
 
 就是 从 endknote 拓展出来一条线 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250129105020.png]]
 
 
+
 ## 2.3 c
 c) Welche Aktionen k¨onnten sinnvoll als Aktivit¨atsaufrufe in eurem Aktivit¨atsdiagramm : modelliert werden? Welchem Zweck dient eine detailliertere Modellierung?
 
 
-
+F¨ur jeden Use Case/ jede Aktion (Kunde/Kundin erstellen, Fahrzeug erstellen, Auftrag erstellen) k¨onnte ein eigenes Aktivit¨atsdiagramm erstellt werden. Damit k¨onnte die Implementierung vorbereitet oder dokumentiert werden. In beiden F¨allen macht man sich zu Nutze, dass die graphische Darstellung intuitiv verst¨andlich ist und der Ablauf damit oft einfacher zu verstehen und nachzuvollziehen. 
+M¨oglicher vorteil: Randf¨alle werden schon dokumentiert, damit der Programmierer sie nicht vergisst.
 
 # 3 Kontrollfluss-Modellierung
 
@@ -99,7 +105,9 @@ müsste es nicht einen rechteckigen kasten geben für car data?  also der mit de
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250129110108.png]]
 
 
+Im Video werden die m¨ogliche Detaillierungsgrade besprochen, und welche Aspekte modelliert oder weggelassen werden k¨onnen. Oft sind Modellen f¨ur eine Implementierung detaillierter. Mehr Details helfen nicht immer, z.B. bei CreateCar w¨urden weitere Details zum Datenfluss (Fahrzeugdaten auch zu “Fahrzeug speichern”) eher verwirren.
 
+Alternativ k¨onnte man den Ablauf textuell beschreiben. I.d.R. sind Diagramme f¨ur komplexere Abl¨aufe verst¨andlicher. Es gibt keine feste Grenze, ab wann ein Diagramm sich lohnt.
 
 ## 3.2 b 
 
@@ -126,6 +134,10 @@ Dabei soll die Arbeitszeit in Minuten eingegeben werden oder die Kosten f¨ur ei
 	- ![[01_02_UMl_OCL_例子/image/Pasted image 20250129112215.png]]
 		- Aktivitätsendknote. Er endet die gesamte ganze Aktivität 
 		- 其中一个 Kontrollfluss 结束的时候,   其他的 splitted parallel kontrolfluss 不可以 继续被执行. 因为 整个 Aktivität 都被结束了 
+
+
+![[01_02_UMl_OCL_例子/image/Pasted image 20250218213419.png]]
+
 
 
 

@@ -1,13 +1,27 @@
 
-
 # 1 USE OCL application 
 
+
+
+使用 bin/use oder bin/start use.bat 打开 GUI 和 command line fenster 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102340.png]]
+
 
 开一个 ocl 文件 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102512.png]]
 
+==Klassendiagramm (autowerkstatt.use) sowie ein Objekt-Skript (autowerkstatt.soil)==
+
+.clt 文件 和 .olt 的文件 是辅助于 .use 文件 和 .soil 文件的 
+
+## 1.1 Klassendiagramm  `.use`
+
+载入 Klassendiagramm
+Das Klassendiagramm k¨onnt ihr in der GUI ¨uber den Dialog ’File → Open specification’ laden, 
+
+
+use autowerkstatt.use   进入 use 模式 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102543.png]]
 
@@ -16,14 +30,18 @@ help
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102944.png]]
 
-# 2 UML 
 
 layout of used class Diagramm 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205102708.png]]
 
 
-# 3 .soil 
+## 1.2 objectdiagramm  .soil
+
+
+载入 objectdiagramm 
+zum Laden des Objekt-Skripts m¨usst ihr in der Kommandozeile folgendes eingeben: `use> open autowerkstatt.soil`
+
 
 用于创建 真实的object
 
@@ -33,7 +51,7 @@ layout of used class Diagramm
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103208.png]]
 
 
----
+## 1.3 .olt
 
 load layout , 使用 另一个文件 .olt 
 
@@ -44,18 +62,21 @@ load layout , 使用 另一个文件 .olt
 
 
 
-# 4 aufgabe 1
+# 2 Aufgabe 1: Objektdiagramme
 
-## 4.1 a 
+## 2.1 a 
 
 a) Wodurch unterscheidet sich das Objektdiagramm vom Klassendiagramm? Warum gibt es keine Multiplizit¨aten?
+
 
 通过 menu bar 中 有个 check diagram 的功能 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103442.png]]
 
+![[01_02_UMl_OCL_例子/image/Pasted image 20250218220131.png]]
 
-# 5 Aufgabe 2: OCL Werte
+
+# 3 Aufgabe 2: OCL Werte
 
 Verwendet OCL um folgende Werte des Systemzustands zu erhalten.
 a) Die Id des Kunden/der Kundin c1 :
@@ -64,6 +85,18 @@ c) Der Name des Besitzers/der Besitzerin des Fahrzeugs f1 :
 d) Der Mitarbeiter/die Mitarbeiterin, der/die den Auftrag r2 beendet hat :
 e) Diejenige Reparatur aus re3 und re4 mit dem h¨oheren Preis :
 f) Den ersten Buchstaben des Kennzeichens von Fahrzeug f1
+
+a) c1.id
+b) f1.licensePlate
+c) f1.customer.name
+d) r2.closing (siehe Rollenbezeichner / Assoziationsenden im Klassendiagramm)
+e) if re3.price > re4.price then re3 else re4 endif
+f) f1.licensePlate.substring(1,1)
+
+
+---
+
+a) Die Id des Kunden/der Kundin c1 :
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205103819.png]]
 
@@ -142,11 +175,30 @@ e) Diejenige Reparatur aus re3 und re4 mit dem h¨oheren Preis
 
 
 
-# 6 Aufgabe 
+# 4 Aufgabe 3: OCL Bedingungen 
 
 
 Logische Ausdr¨ucke sind statisch verifizierbar und werden auf verschiedene Weise eingesetzt.
 Formalisiert die folgenden logischen Aussagen f¨ur das gegebene Klassenmodell.
+
+a) Sind die Namen der Kund:innen c1 und c2 gleich? :
+b) Geh¨ort das Fahrzeug f1 dem Kunden/der Kundin c1? : 
+c) Hat das Kennzeichen des Fahrzeugs f1 einen nicht-leeren Wert? :
+d) Ist der Auftrag i1 eine Inspektion? :
+e) Ist das Objekt i1 ein Auftrag?
+
+a) c1.name = c2.name
+b) f1.customer = c1 (hier noch auf Mengen verzichten)
+c) f1.licensePlate <> ’’ oder f1.licensePlate.size() > 0
+Hier auch m¨oglich Undefined (null) zu ber¨ucksichtigen:
+f1.licensePlate <> Undefined and f1.licensePlate <> ’’ oder
+f1.licensePlate <> null and f1.licensePlate <> ’’
+d) i1.oclIsTypeOf(Inspection)
+e) i1.oclIsKindOf(Order)
+
+
+
+---
 
 a) Sind die Namen der Kund:innen c1 und c2 gleich? :
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205105535.png]]
@@ -203,8 +255,10 @@ oclIskindof
 
 
 
-# 7 Aufgabe 4: OCL Collections
+# 5 Aufgabe 4: OCL Collections
 
+
+## 5.1 基础知识 
 OCL Collection: set, sequenz, Bag
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205110744.png]]
@@ -215,7 +269,33 @@ OCL Collection: set, sequenz, Bag
 
 
 
-Definiert die folgenden Mengen:
+## 5.2 题目 
+
+
+a) Alle Fahrzeuge im System :
+b) Die Fahrzeuge von c1 :
+c) Die Fahrzeuge von c1 und das Fahrzeug f4 :
+d) Alle Fahrzeuge von c1 und c2 :
+e) Die Fahrzeuge die gleichzeitig c1 und c2 geh¨oren. : 
+f) Die Typen aller Fahrzeuge des Customers c1. :
+g) Die Preise aller Auftr¨age im System. : 
+h) Die Anzahl der Auftr¨age f¨ur das Fahrzeug f4. :
+i) Die Anzahl der Kund:innen mit der ID 12
+
+a) Car.allInstances()
+b) c1.car
+c) c1.car->including(f4)
+d) c1.car->union(c2.car)
+e) c1.car->intersection(c2.car)
+f) c1.car.typ
+g) Auftrag.allInstances().price
+h) f4.order->size()
+i) Customer.allInstances.id->count(12)
+
+
+
+---
+
 a) Alle Fahrzeuge im System :
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205111117.png]]
 
@@ -315,18 +395,14 @@ i) Die Anzahl der Kund:innen mit der ID 12
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211105334.png]]
 
 
-
 Was ist Unterschied zwischen size() und count()?
-
 size. Anzahl von elemente
-
 count(12): Anzahl von elemente, die geleich zu werte x ist.   Count sollte auch bei Set funktionieren 
-
 size() gibt Menge einer Collection an 
 count(X) gibt an wie oft etwas X in der Collection vorkommt
 
 
-## 7.1 一些说明
+## 5.3 一些说明
 
 1
 
@@ -391,22 +467,42 @@ union: 两边都是 set
 intersection: 两边 都是 set , 提取到 schnitte menge 
 
 
-# 8 Aufgabe 5: OCL Aussagen
+# 6 Aufgabe 5: OCL Aussagen
 
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211105745.png]]
+¨Uberpr¨uft mithilfe von OCL ob folgende Aussagen ¨uber den Systemzustand stimmen.
+Beginnt mit der Navigation immer bei der Mitarbeiter-Controller Instanz m.
+a) Alle Auftr¨age sind beendet. :
+b) Mindestens ein Auftrag ist noch nicht beendet. :
+c) Alle Auftr¨age, die keine Inspektionen sind, sind beendet. : 
+d) Alle beendeten Auftra¨ge haben einenMitarbeiter/eineMitarbeiterin als Beender/Beende:rin vermerkt.
+e) Alle Auftr¨age die einen Mitarbeiter/eine Mitarbeiterin als Beender vermerkt haben :
+sind auch beendet.
+f) Die IDs der Fahrzeuge sind eindeutig.
+
+a) m.allOrders->forAll(a:Order | a.closed) oder
+m.allOrders->select(not closed)->size() = 0
+b) m.allOrders->exists(not closed) oder
+m.allOrders->select(not closed)->size() > 0 oder
+m.allOrders.closed->count(true) > 0
+c) m.allOrders->select(not oclIsTypeOf(Inspection))->forAll(closed) oder
+m.allOrders->forAll(not oclIsTypeOf(Inspection) implies closed)
+d) m.allOrders->select(closed = true)->forAll(closing <> null)
+e) m.allOrders->select(closing <> null)->forAll(closed = true)
+f) m.car.id->asSet()->size() = m.car.id->size()
+
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211105810.png]]
 
 ¨Uberpr¨uft mithilfe von OCL ob folgende Aussagen ¨uber den Systemzustand stimmen. Beginnt mit der Navigation immer bei der Mitarbeiter-Controller Instanz m.
 
-## 8.1 基础知识
+## 6.1 基础知识
 
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250211110015.png]]
 
 m.allOrders 返回的是  一个 set , 不是 单独一个object,
 因为  kante 上 一个 empoyee 对应多个 *  Order 
-## 8.2 ##
+## 6.2 题目 
 
 a) Alle Auftr¨age sind beendet. 
 
@@ -479,11 +575,26 @@ f) Die IDs der Fahrzeuge sind eindeutig.
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205114905.png]]
 
-# 9 Aufgabe 6: Rekursion in OCL
-
-![[01_02_UMl_OCL_例子/image/Pasted image 20250211110735.png]]
+# 7 Aufgabe 6: Rekursion in OCL
 
 Extrahiert folgende Information mit iterate oder closure aus dem Systemzustand.
+a) Wie viel Geld bringen alle Auftr¨age zusammen? 
+b) Wie groß ist der Anteil der Inspektionen am gesamten Umsatz in Prozent? 
+c) Erstellt einen String, in dem die Kund:innen mit den Fahrzeugtypen aller ihrer Autos aufgelistet werden.
+d) Erstellt ein Set mit allen geraden positiven Zahlen bis 100. 
+
+L¨osung:
+![[01_02_UMl_OCL_例子/image/Pasted image 20250218215957.png]]
+
+a) m.allOrders->iterate(a;s : Integer = 0 | s + a.price)
+b) 
+m.allOrders->select(oclIsTypeOf(Inspection))->iterate(i;s : Integer = 0 | s + i.price) / m.allOrders->iterate(a;s : Integer = 0 | s + a.price) * 100
+c) m.customer->iterate(k; s : String = ’’ | s + k.name + ’ hat:’ + k.car->iterate(f; s2 : String = ’’ | s2 + ’ ein ’ + f.typ) + ’. ’)
+d) Set{0}->closure(i | if i < 100 then (i+2) else (i) endif)
+
+Extrahiert folgende Information mit iterate oder closure aus dem Systemzustand.
+
+---
 
 a) Wie viel Geld bringen alle Auftr¨age zusammen?
 
@@ -493,13 +604,6 @@ a) Wie viel Geld bringen alle Auftr¨age zusammen?
 
 ![[01_02_UMl_OCL_例子/image/Pasted image 20250205115122.png]]
 
-
-
-b) Wie groß ist der Anteil der Inspektionen am gesamten Umsatz in Prozent? : 
-
-
-c) Erstellt einen String, in dem die Kund:innen mit den Fahrzeugtypen aller ihrer Autos : 
-aufgelistet werden.
 
 
 

@@ -121,6 +121,7 @@ Ist von jedem Produkt min. eins in den Warenkörben von Lisa oder John?
 k.cart.product->union(pk.cart.product) = os.product
 k.cart.product->union(pk.cart.product) : Set(Product) = Set{p1,p2,p3} = os.product : Set(Product)
 
+这两个 Product 组成一个 union, 这个 这个 product 同时在 os:onlineshop 中存在. alle Product, die in os:onlineshop gibt 
 
 ---
 
@@ -150,6 +151,7 @@ Welche Produktnummern sind im System vergeben?
 os.product->select(p : Product | p.storedQuantity > 30) ≡ Set{p2,p3} : Set(Product)
 os.product->collect(p : Product | p.productId) ≡ Bag{1568,3663,8785} : Bag(Integer)
 
+select: 从中选择符合添加到呢 
 
 ## 5.1 Auswahl select reject 
 
@@ -213,7 +215,7 @@ c->iterate(x : T; acc : T2 = startwert | E(acc, x))
 Beispiele
 Set{1,2,3}->iterate(x : Integer; acc : Integer = 0 | acc + x) ≡ 6 : Integer
 Set{1,2,3}->iterate(x : Integer; acc : String = ‘‘ | acc + x.toString()) ≡ '321' : String  Set hat keine
-Reihenfolge
+Reihenfolge, 可以使 321 , 也可以是 123, 213, 
 
 T[] c;
 T2 iterate(T2 startwert) {
@@ -339,5 +341,121 @@ k.oclIsKindOf(PremiumCustomer)≡ false
 ![[01_03_OCL/image/Pasted image 20250214113429.png]]
 
 # 11 VoidType als Nullwert
+
+Es gibt einen speziellen Nullwert vom Typ OclVoid
+• Kann als null oder Undefined verwendet werden
+• Kann mit allen anderen Objekten verglichen werden
+
+```
+null : OclVoid
+1/0 ≡ Undefined : OclVoid
+1/0 = Undefined ≡ true : Boolean
+1/0 = null ≡ true : Boolean
+(1/0).oclIsUndefined ≡ true : Boolean
+Sequence{1,2,null,4,5} : Sequence(Integer)
+Sequence{1,2,null,4,5}->size() ≡ 5 : Integer
+```
+
+# 12 Dreiwertige Logik in OCL
+
+
+Durch den Nullwert ergibt sich in OCL eine dreiwertige Logik
+
+![[01_03_OCL/image/Pasted image 20250218170723.png]]
+
+
+
+# 13 Abkürzungen
+
+OCL kann in vielen Fällen den Typ ableiten
+
+```
+Set{-1,2,-3}->select(i : Integer | i.abs() > 0)
+Set{-1,2,-3}->select(i | i.abs() > 0)   // OCL „weiß“, dass i ein Integer sein muss
+Set{-1,2,-3}->select(abs() > 0)    // Und dass die Werte als Argument dienen
+```
+
+
+Aus praktischen Gründen gibt es auch eine Kurzschreibweise für collect
+• Wird immer bei Anwendung der Punknotation auf Collections angenommen
+
+```
+Set{-1,2,-3}->collect(i | i.abs()) ≡ Bag{1,2,3} : Bag(Integer)
+Set{-1,2,-3}.abs() ≡ Bag{1,2,3} : Bag(Integer)
+```
+
+Beispiele
+![[01_03_OCL/image/Pasted image 20250218171026.png]]
+
+Wie viele Produkte sind zur Zeit im Lager?
+os.product.storedQuantity->iterate(m; s : Integer = 0 | s + m)≡ 163 : Integer
+
+Wer kauft Produkte über 80€?
+os.product->select(price > 80).cart.customer.name->asSet()≡ Set{'Lisa'}
+
+
+
+# 14 Collect und CollectNested
+
+```
+os.kunde.cart->collect(product)    // Eigentlich müsste das eine Menge von Mengen sein…
+
+os.customer.cart≡ Bag{wk,wpk} : Bag(Cart)
+Bag{wk,wpk} ->collect(product)≡ Bag{p1,p2,p3} : Bag(Product)   // …ist es aber nicht.
+
+collect beinhaltet immer auch flatten - collectNested nicht:
+Bag{wk,wpk}->collectNested(product) ≡ Bag{Set{p3},Set{p1,p2}} : Bag(Set(Product))
+
+
+Bag{wk,wpk}->collect(product) = Bag{wk,wpk}->collectNested(product)->flatten()
+```
+
+- Use `collect` when you want a **flat collection** of transformed elements.
+	-  就是说 返回的值 是一个 collection, 里面每个element 都只包含一个 单一的值
+- Use `collectNested` when you need to **preserve the structure** of nested collections.
+	-  返回的 collection 中 , 里面每个element 都可以包含 一个 collection (一个collection 中可以包含多个元素 )  , 这些就被成为 nestedCollection 
+
+
+---
+
+The `collect` operator is used to create a new collection by applying a specific property or computation to each element in an existing collection.
+- Produces a **flat** (non-nested) collection.
+- Transforms elements of the original collection but does not keep them as nested collections.
+
+```
+context Person
+inv: self.friends->collect(p | p.name)
+```
+
+Explanation
+- `self.friends` is a collection of `Person` objects.
+- `collect(p | p.name)` extracts the `name` property of each `Person`.
+- The result is a **flat collection** of names.
+
+---
+
+The `collectNested` operator works similarly to `collect`, but it **preserves** the structure of nested collections instead of flattening them.
+- Produces a **nested** collection.
+- If each element in the original collection produces another collection, `collectNested` keeps these subcollections instead of merging them into one.
+
+```
+context Person
+inv: self.friends->collectNested(p | p.hobbies)
+```
+
+Explanation
+- `self.friends` is a collection of `Person` objects.
+- Each friend has multiple hobbies (a collection).
+- ==`collectNested(p | p.hobbies)` results in a **nested collection of hobbies**, where each subcollection corresponds to a specific friend.==
+
+
+
+
+
+
+
+
+
+
 
 
