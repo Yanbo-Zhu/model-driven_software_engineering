@@ -1,4 +1,6 @@
 
+aus lecture SoftwaretechnikUndParadigmen
+VL07_RequirementsEngineering
 
 # 1 Textuelle Anforderungsspezifikation
 
@@ -53,6 +55,7 @@ Beispielsweise:
 
 
 # 2 Grafische Anforderungsspezifikation
+
 
 ## 2.1 Verhaltensmodellierung mit UML
 
