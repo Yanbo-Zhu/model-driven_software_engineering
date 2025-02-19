@@ -1,0 +1,612 @@
+
+# 1 USE OCL application 
+
+
+
+使用 bin/use oder bin/start use.bat 打开 GUI 和 command line fenster 
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205102340.png]]
+
+
+开一个 ocl 文件 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205102512.png]]
+
+==Klassendiagramm (autowerkstatt.use) sowie ein Objekt-Skript (autowerkstatt.soil)==
+
+.clt 文件 和 .olt 的文件 是辅助于 .use 文件 和 .soil 文件的 
+
+## 1.1 Klassendiagramm  `.use`
+
+载入 Klassendiagramm
+Das Klassendiagramm k¨onnt ihr in der GUI ¨uber den Dialog ’File → Open specification’ laden, 
+
+
+use autowerkstatt.use   进入 use 模式 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205102543.png]]
+
+
+help 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205102944.png]]
+
+
+layout of used class Diagramm 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205102708.png]]
+
+
+## 1.2 objectdiagramm  .soil
+
+
+载入 objectdiagramm 
+zum Laden des Objekt-Skripts m¨usst ihr in der Kommandozeile folgendes eingeben: `use> open autowerkstatt.soil`
+
+
+用于创建 真实的object
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103012.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103208.png]]
+
+
+## 1.3 .olt
+
+load layout , 使用 另一个文件 .olt 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103322.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103247.png]]
+
+
+
+# 2 Aufgabe 1: Objektdiagramme
+
+## 2.1 a 
+
+a) Wodurch unterscheidet sich das Objektdiagramm vom Klassendiagramm? Warum gibt es keine Multiplizit¨aten?
+
+
+通过 menu bar 中 有个 check diagram 的功能 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103442.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250218220131.png]]
+
+
+# 3 Aufgabe 2: OCL Werte
+
+Verwendet OCL um folgende Werte des Systemzustands zu erhalten.
+a) Die Id des Kunden/der Kundin c1 :
+b) Das Kennzeichen des Fahrzeugs f1 : 
+c) Der Name des Besitzers/der Besitzerin des Fahrzeugs f1 :
+d) Der Mitarbeiter/die Mitarbeiterin, der/die den Auftrag r2 beendet hat :
+e) Diejenige Reparatur aus re3 und re4 mit dem h¨oheren Preis :
+f) Den ersten Buchstaben des Kennzeichens von Fahrzeug f1
+
+a) c1.id
+b) f1.licensePlate
+c) f1.customer.name
+d) r2.closing (siehe Rollenbezeichner / Assoziationsenden im Klassendiagramm)
+e) if re3.price > re4.price then re3 else re4 endif
+f) f1.licensePlate.substring(1,1)
+
+
+---
+
+a) Die Id des Kunden/der Kundin c1 :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103819.png]]
+
+
+查询某个 class 的attribute 的值 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205103956.png]]
+
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104004.png]]
+
+
+通过这个 可以查询值 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104108.png]]
+
+
+----
+
+b) Das Kennzeichen des Fahrzeugs f1 : 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104258.png]]
+
+
+---
+
+
+(c) Der Name des Besitzers/der Besitzerin des Fahrzeugs f1
+
+使用 azoziation 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104813.png]]
+
+
+----
+
+(d)
+Der Mitarbeiter/die Mitarbeiterin, der/die den Auftrag r2 beendet hat
+
+benutzt immer  raumBezeichnung 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104529.png]]
+
+
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205104750.png]]
+
+
+----
+
+e) Diejenige Reparatur aus re3 und re4 mit dem h¨oheren Preis
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105004.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105039.png]]
+
+?? 会得到更多信息 
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105110.png]]
+
+
+----
+
+(f) Den ersten Buchstaben des Kennzeichens von Fahrzeug f1
+
+
+注意加上 ? 
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105311.png]]
+
+
+
+因为 f1.licensePlate 是 string, 不是 collection 没法用 first()
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105433.png]]
+
+
+
+# 4 Aufgabe 3: OCL Bedingungen 
+
+
+Logische Ausdr¨ucke sind statisch verifizierbar und werden auf verschiedene Weise eingesetzt.
+Formalisiert die folgenden logischen Aussagen f¨ur das gegebene Klassenmodell.
+
+a) Sind die Namen der Kund:innen c1 und c2 gleich? :
+b) Geh¨ort das Fahrzeug f1 dem Kunden/der Kundin c1? : 
+c) Hat das Kennzeichen des Fahrzeugs f1 einen nicht-leeren Wert? :
+d) Ist der Auftrag i1 eine Inspektion? :
+e) Ist das Objekt i1 ein Auftrag?
+
+a) c1.name = c2.name
+b) f1.customer = c1 (hier noch auf Mengen verzichten)
+c) f1.licensePlate <> ’’ oder f1.licensePlate.size() > 0
+Hier auch m¨oglich Undefined (null) zu ber¨ucksichtigen:
+f1.licensePlate <> Undefined and f1.licensePlate <> ’’ oder
+f1.licensePlate <> null and f1.licensePlate <> ’’
+d) i1.oclIsTypeOf(Inspection)
+e) i1.oclIsKindOf(Order)
+
+
+
+---
+
+a) Sind die Namen der Kund:innen c1 und c2 gleich? :
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105535.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105542.png]]
+
+----
+
+b) Gehoert das Fahrzeug f1 dem Kunden/der Kundin c1? : 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105621.png]]
+
+
+---
+
+c) Hat das Kennzeichen des Fahrzeugs f1 einen nicht-leeren Wert? :
+
+<> -> nicht 的意思
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105659.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105745.png]]
+
+?f1.licensePlate.size()
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205105834.png]]
+
+
+---
+
+
+d) Ist der Auftrag i1 eine Inspektion? :
+
+ Ob ein Objekt Typ von einer Klasse ist,  wenn diese Klasse von einer anderen Klasse erbt sollte ich immer alles teilbar benutzen.
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110112.png]]
+
+
+---
+
+
+e) Ist das Objekt i1 ein Auftrag?
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110544.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110531.png]]
+
+oclIsTypeOf  使用来检验
+direkt zugehorigkeit 
+这个 class 就是 这个 type 的, 不是继承关系 
+
+
+oclIskindof
+这个 class 是否继承了某个 class 
+
+
+
+# 5 Aufgabe 4: OCL Collections
+
+
+## 5.1 基础知识 
+OCL Collection: set, sequenz, Bag
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110744.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110911.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205110938.png]]
+
+
+
+## 5.2 题目 
+
+
+a) Alle Fahrzeuge im System :
+b) Die Fahrzeuge von c1 :
+c) Die Fahrzeuge von c1 und das Fahrzeug f4 :
+d) Alle Fahrzeuge von c1 und c2 :
+e) Die Fahrzeuge die gleichzeitig c1 und c2 geh¨oren. : 
+f) Die Typen aller Fahrzeuge des Customers c1. :
+g) Die Preise aller Auftr¨age im System. : 
+h) Die Anzahl der Auftr¨age f¨ur das Fahrzeug f4. :
+i) Die Anzahl der Kund:innen mit der ID 12
+
+a) Car.allInstances()
+b) c1.car
+c) c1.car->including(f4)
+d) c1.car->union(c2.car)
+e) c1.car->intersection(c2.car)
+f) c1.car.typ
+g) Auftrag.allInstances().price
+h) f4.order->size()
+i) Customer.allInstances.id->count(12)
+
+
+
+---
+
+a) Alle Fahrzeuge im System :
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111117.png]]
+
+bekommen a set wieder , da in car object, jedem object einzigartig , deshalb bekommen man eine Set 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211102808.png]]
+
+
+----
+
+b) Die Fahrzeuge von c1 :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111143.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111228.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111252.png]]
+
+
+---
+
+c) Die Fahrzeuge von c1 und das Fahrzeug f4 :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111451.png]]
+
+---
+
+d) Alle Fahrzeuge von c1 und c2 :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111551.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111613.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111629.png]]
+
+Wie könnte man die Fahrzeuge von c1 und c2 und c3 bekommen? 
+c1.car -> union(c2.car) -> union(c2.car) 
+
+---
+
+
+e) Die Fahrzeuge die gleichzeitig c1 und c2 geh¨oren. : 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111743.png]]
+
+
+
+---
+
+
+f) Die Typen aller Fahrzeuge des Customers c1. :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111829.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111931.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112024.png]]
+
+
+---
+
+g) Die Preise aller Auftr¨age im System. : 
+
+collect gibe Bag zuruck 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112118.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211105130.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211105134.png]]
+
+---
+
+h) Die Anzahl der Auftr¨age f¨ur das Fahrzeug f4. :
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211105312.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112232.png]]
+
+würde s auch mit .size() funktionieren  oder muss dieses -> size() sein
+Ne, ich glaube das wurde auf alle Instanzen in der Collection size anwenden
+> collection 不能用 .size  , `.<funtionName>` 只能对 Objekt 使用 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112521.png]]
+
+---
+
+i) Die Anzahl der Kund:innen mit der ID 12
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112317.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211105334.png]]
+
+
+Was ist Unterschied zwischen size() und count()?
+size. Anzahl von elemente
+count(12): Anzahl von elemente, die geleich zu werte x ist.   Count sollte auch bei Set funktionieren 
+size() gibt Menge einer Collection an 
+count(X) gibt an wie oft etwas X in der Collection vorkommt
+
+
+## 5.3 一些说明
+
+1
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111117.png]]
+
+bekommen a set wieder , da in car object, jedem object einzigartig , deshalb bekommen man eine Set zuruck 
+
+2 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205111316.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211103421.png]]
+
+2.1
+c1.car  得到  一个 set 因为  
+- car 那边是 小星星 . 就是说 一个 set 里面只有一个 object 也是set datentyp 
+- 因为 每个 car 都是一个独立的 不同的 object 
+- hier ist ein Stern bei Car auf de Linie. Also ein customer kann beliebig viele cars haben. Heißt c1 also customer 1 zu car kann ein set an cars haben und selbst wenn es nur ein car gibt, wird das dann als set ausgegeben
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211104203.png]]
+
+
+2.2
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211172429.png]]
+
+Wenn die Multiplizität 1 ist, dann kommt aber kein Set raus? 
+YEs. sondern eine Object bekommen 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211103342.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211103332.png]]
+
+
+2.4 
+下面 0...1   Oder.EmployeeData 也不会得到一个 set, 只是得到一个object 或者 null 
+liefert dann Datentyp EmployeeData oder OclAny?  
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211103621.png]]
+
+2.5 
+0...5 的话 可能会到 set, 或者 object m 或者 null 
+
+
+---
+
+3 set und bag 区别 
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211103800.png]]
+
+c1.car.typ  kriegen  eine Bag zuruck liek {'A', 'B', 'C, }
+
+Set: Element in Set sind nicht sortiert, nur jeden Object .  das wäre nicht möglich wenn ich zweimal den gleichen String in einem Set
+Bag: dasselbe wert von attribute kann merhmals enthalten in Bag 
+
+
+----
+4 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211104854.png]]
+
+-> Pfeil-Opeartor:    ausgefuhrt auf eine Set 
+
+union: 两边都是 set
+intersection: 两边 都是 set , 提取到 schnitte menge 
+
+
+# 6 Aufgabe 5: OCL Aussagen
+
+¨Uberpr¨uft mithilfe von OCL ob folgende Aussagen ¨uber den Systemzustand stimmen.
+Beginnt mit der Navigation immer bei der Mitarbeiter-Controller Instanz m.
+a) Alle Auftr¨age sind beendet. :
+b) Mindestens ein Auftrag ist noch nicht beendet. :
+c) Alle Auftr¨age, die keine Inspektionen sind, sind beendet. : 
+d) Alle beendeten Auftra¨ge haben einenMitarbeiter/eineMitarbeiterin als Beender/Beende:rin vermerkt.
+e) Alle Auftr¨age die einen Mitarbeiter/eine Mitarbeiterin als Beender vermerkt haben :
+sind auch beendet.
+f) Die IDs der Fahrzeuge sind eindeutig.
+
+a) m.allOrders->forAll(a:Order | a.closed) oder
+m.allOrders->select(not closed)->size() = 0
+b) m.allOrders->exists(not closed) oder
+m.allOrders->select(not closed)->size() > 0 oder
+m.allOrders.closed->count(true) > 0
+c) m.allOrders->select(not oclIsTypeOf(Inspection))->forAll(closed) oder
+m.allOrders->forAll(not oclIsTypeOf(Inspection) implies closed)
+d) m.allOrders->select(closed = true)->forAll(closing <> null)
+e) m.allOrders->select(closing <> null)->forAll(closed = true)
+f) m.car.id->asSet()->size() = m.car.id->size()
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211105810.png]]
+
+¨Uberpr¨uft mithilfe von OCL ob folgende Aussagen ¨uber den Systemzustand stimmen. Beginnt mit der Navigation immer bei der Mitarbeiter-Controller Instanz m.
+
+## 6.1 基础知识
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211110015.png]]
+
+m.allOrders 返回的是  一个 set , 不是 单独一个object,
+因为  kante 上 一个 empoyee 对应多个 *  Order 
+## 6.2 题目 
+
+a) Alle Auftr¨age sind beendet. 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112807.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112815.png]]
+
+`a:Order`  gibt es an, dass a immer in Type `Order`
+
+ forAll 采取 a.closed 的 object.   但是我们要先假定  A ist in type Order 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211110611.png]]
+
+
+---
+
+b) Mindestens ein Auftrag ist noch nicht beendet. 
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205112951.png]]
+
+或者用 select 也行 
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113047.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113058.png]]
+
+
+其实不用加()
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113152.png]]
+
+
+
+c) Alle Auftr¨age, die keine Inspektionen sind, sind beendet. 
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113352.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113437.png]]
+
+
+
+
+
+d) Alle beendeten Auftra¨ge haben einenMitarbeiter/eineMitarbeiterin als Beender/Beende:rin vermerkt.
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113646.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113656.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113708.png]]
+
+
+e) Alle Auftr¨age die einen Mitarbeiter/eine Mitarbeiterin als Beender vermerkt haben sind auch beendet.
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205113857.png]]
+
+答案是 false : Boolean 
+
+
+f) Die IDs der Fahrzeuge sind eindeutig.
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205114850.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205114311.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205114557.png]]
+
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205114905.png]]
+
+# 7 Aufgabe 6: Rekursion in OCL
+
+Extrahiert folgende Information mit iterate oder closure aus dem Systemzustand.
+a) Wie viel Geld bringen alle Auftr¨age zusammen? 
+b) Wie groß ist der Anteil der Inspektionen am gesamten Umsatz in Prozent? 
+c) Erstellt einen String, in dem die Kund:innen mit den Fahrzeugtypen aller ihrer Autos aufgelistet werden.
+d) Erstellt ein Set mit allen geraden positiven Zahlen bis 100. 
+
+L¨osung:
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250218215957.png]]
+
+a) m.allOrders->iterate(a;s : Integer = 0 | s + a.price)
+b) 
+m.allOrders->select(oclIsTypeOf(Inspection))->iterate(i;s : Integer = 0 | s + i.price) / m.allOrders->iterate(a;s : Integer = 0 | s + a.price) * 100
+c) m.customer->iterate(k; s : String = ’’ | s + k.name + ’ hat:’ + k.car->iterate(f; s2 : String = ’’ | s2 + ’ ein ’ + f.typ) + ’. ’)
+d) Set{0}->closure(i | if i < 100 then (i+2) else (i) endif)
+
+Extrahiert folgende Information mit iterate oder closure aus dem Systemzustand.
+
+---
+
+a) Wie viel Geld bringen alle Auftr¨age zusammen?
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205115028.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250211110911.png]]
+
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_06_07_UML_OCL/01_02_UMl_OCL_例子/image/Pasted image 20250205115122.png]]
+
+
+
+
+d) Erstellt ein Set mit allen geraden positiven Zahlen bis 100.
+
+mit closure 可以解决 
