@@ -1,8 +1,13 @@
 
+− Graphical representation for business processes
+− Used to specify business processes in a business process model
+
+
 BPMN specification describes
 − Notation: How the elements of a diagram have to look
 − Meta Model & Syntax: How the elements can be combined with each other
 − Semantics: What a diagram means
+
 ![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_09_BPMN_BusinessProcessModelNotation/image/Pasted image 20241130002230.png]]
 
 

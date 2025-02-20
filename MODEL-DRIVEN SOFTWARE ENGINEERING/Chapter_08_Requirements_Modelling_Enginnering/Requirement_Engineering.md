@@ -2,7 +2,10 @@
 aus lecture SoftwaretechnikUndParadigmen
 VL07_RequirementsEngineering
 
-# 1 Textuelle Anforderungsspezifikation
+
+# 1 Anforderung
+
+## 1.1 Textuelle Anforderungsspezifikation
 
 1. Spezifikation in natürlicher Sprache
 	1. Ausführliche textuelle Beschreibung der Anforderungen an ein System bzw. einer Funktionalität
@@ -10,13 +13,13 @@ VL07_RequirementsEngineering
 2. Strukturierte Spezifikation
 	1. Übersichtlichere Erfassung von Anforderungen im Vergleich zu natürlicher Sprache
 	2. Tabellarische Erfassung von Anforderungen mit einheitlichen Eckdaten wie z.B.
-	3. ![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104163253.png]]
+	3. ![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104163253.png]]
 3. Mathematische Spezifikation
 	1. Nutzen eines mathematischen Formalismus zur Beschreibung der Anforderung
 	2. Formalismen: Formale Logiken, Automaten, (Object) Z, OCL, Prozesskalküle, …
 
 
-## 1.1 Strukturierte Spezifikation
+### 1.1.1 Strukturierte Spezifikation
 
 
 Informelle, tabellarische Darstellung nach einheitlichem Schema
@@ -32,7 +35,7 @@ Typische Felder:
 
 
 
-## 1.2 User Stories
+### 1.1.2 User Stories
 
 Agile Methoden gehen von häufigen Anforderungsänderungen aus
 ➢Detaillierte/vollständige Dokumentation vorab nicht möglich (oder Zeitverschwendung)
@@ -54,10 +57,10 @@ Beispielsweise:
 
 
 
-# 2 Grafische Anforderungsspezifikation
+## 1.2 Grafische Anforderungsspezifikation
 
 
-## 2.1 Verhaltensmodellierung mit UML
+### 1.2.1 Verhaltensmodellierung mit UML
 
 Verhaltensmodellierung betrifft dynamische Aspekte des Systems
 
@@ -71,7 +74,7 @@ Grundformen der Verhaltensbeschreibung zur Unterstützung verschiedener Sichten 
 • Aktivitäten
 • Interaktionen
 
-## 2.2 Use cases
+### 1.2.2 Use cases
 
 Spezifikation eines fachlichen Ziels von Akteur:in (Anwendungsfall)
 • Akteur:in (Rolle) wird identifiziert
@@ -104,7 +107,7 @@ Use-Case Diagramm möglichst einfach halten
 • Darstellung von Details/Abläufen nicht im Use-Case-Diagramm!
 ➢ Grundlage für detailliertere Verhaltensdiagramme
 
-### 2.2.1 Use-Case Modellierung 
+#### 1.2.2.1 Use-Case Modellierung 
 
 Sie werden gebeten für einen kleines Unternehmen, das Schuhe und Kleidung verkauft, die Verwaltungssoftware eines Online-Shops zu entwickeln. Der Onlineshop soll es den Kunden und Kundinnen ermöglichen, Produkte in einen Warenkorb zu legen und diesen zu bezahlen. Als Bezahlmethoden sind zunächst Bankeinzug und Kreditkartenzahlung vorgesehen. Bevor die Bestellung aufgegeben wird, muss sichergestellt werden, dass die Bezahlung tatsächlich erfolgen kann. 
 
@@ -114,31 +117,31 @@ Produkte sollen über das Webinterface auch gesucht werden können. Dabei sollen
 
 Alle Funktionen werden von Nicht-Entwickler:innen ausgiebig getestet.
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104170632.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104170632.png]]
 
 
 Extension 的作用 
 Use Case mit `<<extend>>` kann, aber muss nicht direkt mit ausgeführt werden (Zur Modellierung von Spezial-/Fehlerfällen)
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104170644.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104170644.png]]
 
 ---
 
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104171142.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104171142.png]]
 
 include 
 Use Case mit `<<include>>` muss direkt mit ausgeführt werden
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104171316.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104171316.png]]
 
 ---
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104171601.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104171601.png]]
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104171847.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104171847.png]]
 
-# 3 Nicht-funktionale Anforderungen
+## 1.3 Nicht-funktionale Anforderungen
 
 
 Funktionale vs. Nicht-Funktionale Anforderungen
@@ -155,7 +158,7 @@ Nicht-Funktional
 • Kann nicht immer direkt überprüft werden
 • Wieviel Speicher wird maximal gebraucht? Wie lange braucht die Berechnung schlimmstenfalls? …
 
-![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Enginnering/image/Pasted image 20250104172331.png]]
+![[MODEL-DRIVEN SOFTWARE ENGINEERING/Chapter_08_Requirements_Modelling_Enginnering/image/Pasted image 20250104172331.png]]
 
 
 
