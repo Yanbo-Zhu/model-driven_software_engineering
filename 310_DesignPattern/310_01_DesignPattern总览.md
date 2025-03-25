@@ -1,4 +1,7 @@
 
+
+TU Berlin Softwaretechnik 课程
+
 Implementierung stellt eigene Anforderungen an das Modell
 • Durch Vielfalt der Probleme/Lösungsmöglichkeiten sind Vorgaben an Implementierung schwierig „Gute Erfahrungen“ in Mustern beschrieben
 • Muster für Gesamtstruktur: Architekturstile
@@ -12,7 +15,12 @@ Generische Lösung für wiederkehrendes Entwurfsproblem
 
 
 Design Patterns: Elements of Reusable Object-Oriented Software.
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219162404.png]]
+![[310_DesignPattern/image/Pasted image 20250219162404.png]]
+
+| Erzeugungsmuster                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Strukturmuster                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Verhaltensmuster                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| - [_Singleton_ (Einzelstück)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-singleton)<br>- [_Factory Method_ (Fabrikmethode)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-factory_method)<br>- [_Abstract Factory_ (abstrakte Fabrik)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-factory_method)<br>- _Builder_ (Erbauer)<br>- _Prototype_ (Prototyp) | - [_Composite_ (Kompositum)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-composite)<br>- [_Adapter_ (Adapter)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-adapter)<br>- [_Facade_ (Fassade)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-facade)<br>- [_Proxy_ (Stellvertreter)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-proxy)<br>- _Decorator_ (Dekorierer)<br>- _Bridge_ (Brücke)<br>- _Flyweight_ (Fliegengewicht) | - [_Observer_ (Beobachter](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-observer))<br>- [_Strategy_ (Strategie)](https://moodle.oncampus.de/modules/ir843/onmod/public/index.html?uid=zhuyanb&cid=BHT-MIB-20-W24-015987#unit-strategy)<br>- _State_ (Zustand)<br>- _Command_ (Kommando)<br>- _Memento_ (Memento)<br>- _Visitor_ (Besucher)<br>- _Iterator_ (Iterator)<br>- _Interpreter_ (Interpreter)<br>- _Template Method_ (Schablonenmethode)<br>- _Mediator_ (Vermittler)<br>- _Chain of Responsibility_ (Zuständigkeitskette) |
+
 
 # 1 Erzeugungsmuster 
 
@@ -31,7 +39,7 @@ Lösung
 
 Logging
 Logger schreibt applikationsweit in die gleiche Datei
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219162547.png]]
+![[310_DesignPattern/image/Pasted image 20250219162547.png]]
 
 
 Beispielhafte Implementierung in JAVA
@@ -149,9 +157,9 @@ public class Cake {
 ---
 
 Builder 的例子 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219164140.png]]
+![[310_DesignPattern/image/Pasted image 20250219164140.png]]
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219164153.png]]
+![[310_DesignPattern/image/Pasted image 20250219164153.png]]
 
 
 
@@ -182,13 +190,13 @@ Lösung
 • für das Programm transparent, was für ein Objekt behandelt wird (gemeinsame abstrakte Operation für alle Knoten)
 
 Struktur 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219165429.png]]
+![[310_DesignPattern/image/Pasted image 20250219165429.png]]
 
 Vorteile
 • vereinfacht den Client-Code
 • neue Komponenten können leicht hinzugefügt werden
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219165247.png]]
+![[310_DesignPattern/image/Pasted image 20250219165247.png]]
 
 
 ## 2.2 Proxy
@@ -206,7 +214,7 @@ Lösung
 
 
 Struktur 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219165403.png]]
+![[310_DesignPattern/image/Pasted image 20250219165403.png]]
 
 • Proxy und „echte“ Klasse erben von abstrakten Typ
 • Proxy reicht Abfragen weiter und fügt eigene Funktionalität hinzu
@@ -216,7 +224,7 @@ Struktur
 
 Beispiel 
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219165744.png]]
+![[310_DesignPattern/image/Pasted image 20250219165744.png]]
 
 
 Beispiel: Virtual Proxy
@@ -224,7 +232,7 @@ Beispiel: Virtual Proxy
 • Proxy stellt Thumbnail zur Verfügung 先载入小图片 
 • lädt echtes Bild nur, wenn nötig
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219165811.png]]
+![[310_DesignPattern/image/Pasted image 20250219165811.png]]
 
 ---
 
@@ -257,7 +265,7 @@ Lösung:
 
 
 Struktur 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219170004.png]]
+![[310_DesignPattern/image/Pasted image 20250219170004.png]]
 
 • Die Beobachter erweitern die abstrakte Klasse Observer und werden beim Subjekt registriert
 • Das Subjekt führt die Aktualisierung in allen Beobachtern mit „notify“ durch
@@ -274,7 +282,7 @@ Beispiel: GUI mit MVC
 
 model 发生了什么改变 , like通知所有的 observer. 但是 model 自己不知道有那些observer 
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219170049.png]]
+![[310_DesignPattern/image/Pasted image 20250219170049.png]]
 
 
 ---
@@ -303,7 +311,7 @@ https://blog.csdn.net/suifeng3051/article/details/51263718
 
 ### 3.1.1 例子
 
-![[300_Softwaretechnik/DesignPattern/image/20160427192029534.png]]
+![[310_DesignPattern/image/20160427192029534.png]]
 
 主题对象类
 ```java
@@ -404,7 +412,7 @@ Beispiel: Bildbearbeitung
 • Kommandos werden im GUI-Framework für Buttons konfiguriert
 • Aufzeichnung aller Kommandos für Rückgängig-Funktion
 
-![[300_Softwaretechnik/DesignPattern/image/Pasted image 20250219170355.png]]
+![[310_DesignPattern/image/Pasted image 20250219170355.png]]
 
 
 
