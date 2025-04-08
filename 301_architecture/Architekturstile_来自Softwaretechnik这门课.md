@@ -32,7 +32,7 @@ Arbeitsschritte nur durch Daten verknüpft
 • typisch für Systeme, die Daten schrittweise weiterverarbeiten
 • Bearbeitung sequenziell und parallel möglich
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219155901.png]]
+![[301_architecture/image/Pasted image 20250219155901.png]]
 
 
 Vorteile
@@ -55,14 +55,14 @@ Aufteilung in mehrere Abstraktionsschichten
 
 
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160002.png]]
+![[301_architecture/image/Pasted image 20250219160002.png]]
 
 
 TCP/IP-Referenzmodell (Wikipedia)
 verschiedene Schichten und Protokolle der Internet-Kommunikation
 Klar festgeschriebene Schnittstellen!
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160016.png]]
+![[301_architecture/image/Pasted image 20250219160016.png]]
 
 Vorteile
 - Abstraktion von Details der einzelnen Schichten. 
@@ -94,7 +94,7 @@ Controller (Steuerung)
 • führt Benutzeranfragen aus und gibt sie ggf. an das Modell weiter
 
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160344.png]]
+![[301_architecture/image/Pasted image 20250219160344.png]]
 
 Ermöglicht verschiedene Interaktionen mit dem System
 • Typisch in Systemen mit Fokus auf Benutzerschnittstellen
@@ -103,7 +103,7 @@ Ermöglicht verschiedene Interaktionen mit dem System
 
 MVC ähnelt dem ECB-Pattern: Aufteilung in boundary, entity & control
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160407.png]]
+![[301_architecture/image/Pasted image 20250219160407.png]]
 
 
 # 4 Event-based Architecture
@@ -113,7 +113,7 @@ Komponenten sind unabhängig von einander
 • oder lösen Ereignisse aus (producer)
 • zentrale Komponente (event channel) verteilt die Ereignisse
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160503.png]]
+![[301_architecture/image/Pasted image 20250219160503.png]]
 
 Vorteile
 • Reaktion auf Ereignisse kann unmittelbar erfolgen
@@ -131,7 +131,7 @@ Spezialfall von event-based architectures
 • Verwendet Interrupts als Hardware(„low-level“)-Events
 • Interrupts können maskiert (ignoriert) werden
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160600.png]]
+![[301_architecture/image/Pasted image 20250219160600.png]]
 
 
 # 6 Repository-based Architecture
@@ -140,7 +140,7 @@ Organisation des Systems um einen zentralen Datenspeicher
 • Komponenten sind über gemeinsame Daten (z.B. Datenbank) verbunden
 • Koordination von Komponenten im Repository (z.B.: Trigger, Locks)
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160802.png]]
+![[301_architecture/image/Pasted image 20250219160802.png]]
 
 Vorteile
 • wenig Schnittstellen
@@ -159,12 +159,12 @@ Architekturstil für verteilte Systeme
 • jede Systemfunktion wird als Dienst auf einem zentralen Server angeboten
 • Clients können diese Funktion in Anspruch nehmen
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160844.png]]
+![[301_architecture/image/Pasted image 20250219160844.png]]
 
 Keine direkte Kommunikation zwischen Clients
 • Interaktion zwischen Clients nur über Server möglich
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219160942.png]]
+![[301_architecture/image/Pasted image 20250219160942.png]]
 
 
 Vorteile
@@ -192,7 +192,7 @@ Skype (in den Anfängen)
 Abrufen des Status der Kontakte
 
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219161019.png]]
+![[301_architecture/image/Pasted image 20250219161019.png]]
 
 Vorteile
 • effiziente Kommunikation (keine Umwege)
@@ -227,10 +227,10 @@ Nachteile
 • Registry ist „single point of failure“
 
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219161113.png]]
+![[301_architecture/image/Pasted image 20250219161113.png]]
 
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219161123.png]]
+![[301_architecture/image/Pasted image 20250219161123.png]]
 
 
 # 10 方式
@@ -242,7 +242,7 @@ Vorgehensweise
 • Grundlegende Architektur ( 蓝色方框 ,  蓝色圆圈 ) kann nach Anforderungsspezifikationentworfen werden
 • Top-Down-Implementierung möglich: abstrakte Implementierung der Architektur (Grundgerüst), gefolgt von Details und Features
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219161430.png]]
+![[301_architecture/image/Pasted image 20250219161430.png]]
 
 Vorteile
 • Berücksichtigung späterer Anforderungen, wodurch eine strukturierte Entwicklung der Architektur möglich wird
@@ -264,7 +264,7 @@ Vorgehensweise
 • Iterative Weiterentwicklung der Architektur anhand der nächsten Anforderungen
 • Prinzip Einfachheit: Aktuelle Implementierung sollte simple sein und somit spätere Änderungen erlauben
 
-![[300_Softwaretechnik/architecture/image/Pasted image 20250219161912.png]]
+![[301_architecture/image/Pasted image 20250219161912.png]]
 
 Vorteile
 • Demokratischer Prozess: Architektur orientiert an technischer Umsetzung
