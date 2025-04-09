@@ -177,6 +177,7 @@ Cake yummy = newCake.Builder(500, 500).butter(250).chocolate(200).build();
 
 
 # 2 Strukturmuster
+
 ## 2.1 Composite
 
 Kompositum (composite)
@@ -243,7 +244,6 @@ Anwendungsbeispiele
 • Smart Reference: Führt zusätzliche Aktionen beim Zugriff aus (z.B. Zugriffszähler)
 
 Kann in PYTHON auch für Properties eingesetzt werden
-
 
 
 
