@@ -82,7 +82,7 @@ public class DatabaseConnection {
 
 
 2 
-static 和 pricate 的使用 
+static 和 private 的使用 
 “static 关键字的作用可以用一句话来描述：'方便在没有创建对象的情况下进行调用，包括变量和方法'。也就是说，只要类被加载了，就可以通过类名进行访问
 
 It is sufficient if this database connection is only established once when the application starts, and therefore there is only one object of this class. This object corresponds to a global variable. It should not be possible for `DatabaseConnection`instances to be created from methods in any other classes in our project or by third parties who continue to use our class. To prevent this, the visibility of the class's constructor is set `DatabaseConnection`to `private`. This means that instances can only be created from the class itself. A static attribute of type is created in the class itself `DatabaseConnection`, which can be accessed via a static and public method. In the following code, the attribute is `instance`instantiated when the class is loaded.
@@ -128,3 +128,14 @@ The following model corresponds to the Java code above. Underlined attributes or
 ![[310_DesignPattern/310_01_Erzeugungsmuster/image/Pasted image 20250325212228.png]]
 
 The pattern implements simple access control to the singleton object. Subclassing allows a general singleton class to be specialized. However, the singleton pattern should not be used as a replacement for all global variables. If this is done excessively, a large number of classes would be created, but the object-oriented concept would still be undermined.
+
+
+# 2 Factory method 
+
+如何创造一个 
+
+The _factory method_ is a creation pattern that describes ==how an object is created by calling a method instead of a constructor==. This method is part of a so-called factory class, which is responsible for creating objects. It is misleading that, in common usage among software developers, the factory method describes both any static method for creating objects and one of the original GoF design patterns.
+
+
+
+
