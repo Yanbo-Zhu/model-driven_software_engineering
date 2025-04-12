@@ -45,7 +45,7 @@ We can imagine the following example: The observed object is a date picker field
 
 The observed object (observable ) often stores data in the form of a `List<T>`or a `Map<T,T>`, which is displayed in the user interface (UI) at various points using different views , e.g., as a table or chart. These views in the UI are then the observers, which must update their display when the state of the observable changes. The basic goal of the observer pattern is therefore to decouple the observable and the observer from each other, which in practice often corresponds to the separation of the model and the observing views.
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327144146.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327144146.png]]
 
 
 ## 1.2 observer pattern is publish-subscribe pattern
@@ -80,14 +80,14 @@ model 发生了什么改变 , like通知所有的 observer. 但是 model 自己�
 
 ---
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327145141.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327145141.png]]
 
 An Observable provides methods for registering ( `addObserver`) and removing ( `deleteObserver`) observers and manages its observers in a corresponding list ( `observers`). The following UML sequence diagram illustrates the basic flow of the Observer pattern. As soon as the state of the concrete Observable is changed externally ( `setState`), the Observable informs all registered concrete observers about the method `notifyObservers`by `update`calling their method and passing the new state, as well as itself as the source of this new state.
 
 In an alternative variant of the pattern, the method can `update`also be represented without arguments. In this case, after the notification, an observer must `getState`retrieve the new state from the observable itself using a corresponding method.
 
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327150007.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327150007.png]]
 
 
 
@@ -99,7 +99,7 @@ In an alternative variant of the pattern, the method can `update`also be repres
 
 ### 1.4.1 例子 
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327150313.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327150313.png]]
 
 #### 1.4.1.1 Observable 和 Observer 的实现
 
@@ -380,7 +380,7 @@ If alternative algorithms exist that can achieve the desired result, the client 
 
 The strategy pattern allows the specific strategy to be changed at runtime. It is visualized in the following UML class diagram.
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327160128.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327160128.png]]
 
 The application's surrounding context ( `Context`) does not implement the alternative algorithms itself, but only knows an interface `Strategy` that specifies the signature for the algorithm and `ConcreteStrategyA` is expressed at runtime by concrete strategies (e.g. ). 
 
@@ -396,7 +396,7 @@ The advantages of this pattern are obvious:
 
 ## 2.3 例子
 
-![[310_DesignPattern/310_03_Verhaltensmuster/image/Pasted image 20250327163332.png]]
+![[310_DesignPattern/310_03_BehavioralPattern_Verhaltensmuster/image/Pasted image 20250327163332.png]]
 
 
 This example can be easily applied to route optimization in a navigation system. Depending on the context, the search can be for the fastest, shortest, or cheapest route, meaning that the goal is to minimize either travel time, distance, or travel costs. Here, too, there are different concrete paths with a uniform interface for reaching the specified destination.
