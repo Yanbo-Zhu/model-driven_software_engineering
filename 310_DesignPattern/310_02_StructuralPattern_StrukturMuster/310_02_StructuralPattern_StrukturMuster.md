@@ -76,7 +76,6 @@ class CompositeShape extends Shape {
 ```
 
 
-
 Examples of compound shapes are the rectangle shown below, which consists of 4 lines, and the stick figure, which consists of a circle and 4 lines.
 
 Compound shapes
@@ -91,7 +90,6 @@ The following object diagram illustrates such a nested tree structure, which fur
 
 Composite form "Vitruvian Man"
 ![[310_DesignPattern/310_02_StructuralPattern_StrukturMuster/image/Pasted image 20250412112752.png]]
-
 
 
 ---

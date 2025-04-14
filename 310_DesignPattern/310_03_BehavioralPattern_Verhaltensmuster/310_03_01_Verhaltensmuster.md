@@ -3,7 +3,6 @@
 
 The Observer pattern (also known as "Observer" or "Listener ") is used when multiple objects continuously monitor the state of another object. When the state of the observed object changes, it should inform all of its observers so that they can reactively update themselves. The pattern thus corresponds to the principle: "Don't call us, we'll call you!"
 
-
 https://blog.csdn.net/suifeng3051/article/details/51263718
 
 被观察对象是Observable，观察者是Observer
