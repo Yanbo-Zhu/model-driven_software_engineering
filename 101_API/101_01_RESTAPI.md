@@ -19,7 +19,18 @@ REST steht für Representational State Transfer
 - 安全性：安全的方法被期望不会产生任何副作用，当我们使用GET操作获取资源时，不会引起资源本身的改变，也不会引起服务器状态的改变。
 - 幂等性：幂等的方法保证了重复进行一个请求和一次请求的效果相同（并不是指响应总是相同的，而是指服务器上资源的状态从第一次请求后就不再改变了)，在数学上幂等性是指N次变换和一次变换相同。
 
-# 1 常用的相关的 HTTP Method 
+
+# 1 REST 代编什么 
+
+- **RE**presentational: Die Daten können in verschiedenen Repräsentationen abgerufen werden, beispielsweise in XML, JSON, HTML, JPEG und SVG.
+
+- **S**tate **T**ransfer: Die Kommunikation ist "stateless" (zustandslos) und somit werden keine vorhergegangenen Kommunikationsprozesse gespeichert. Die Übermittlung in einem zustandslosen Protokoll wurde im Kapitel [HTTP 1.1 zustandslos und persistent](https://isp.eduloop.de/loop/HTTP_1.1_zustandslos_und_persistent "HTTP 1.1 zustandslos und persistent") vertieft.
+    - Jede Anfrage enthält alle Informationen.
+    - Jede Anfrage ist in sich geschlossen.
+
+REST selbst ist ein Architekturstil für die Datenübertragung in der Maschine-zu-Maschine-Kommunikation und unabhängig von HTTP und Web. In der Praxis jedoch nutzt man REST für eine HTTP-basierte Kommunikation über Web-Schnittstellen, also **RESTfull Services via HTTP**, die wir im Folgenden beschreiben.
+
+# 2 常用的相关的 HTTP Method 
 
 ![[101_API/image/Pasted image 20250221113206.png]]
 
@@ -27,12 +38,12 @@ REST steht für Representational State Transfer
 
 ![[101_API/image/Pasted image 20250221113355.png]]
 
-# 2 Query Parameters
+# 3 Query Parameters
 
 ![](image/Pasted%20image%2020250104124016.png)
 
 
-# 3 Beispiel REST-Schnittstelle
+# 4 Beispiel REST-Schnittstelle
 
 1 Beschreibung: Alle TODOs auflisten die noch nicht abgeschlossen sind
 Resource: /todos
