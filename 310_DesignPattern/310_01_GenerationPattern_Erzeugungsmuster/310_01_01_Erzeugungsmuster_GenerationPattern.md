@@ -130,13 +130,304 @@ The following model corresponds to the Java code above. Underlined attributes or
 The pattern implements simple access control to the singleton object. Subclassing allows a general singleton class to be specialized. However, the singleton pattern should not be used as a replacement for all global variables. If this is done excessively, a large number of classes would be created, but the object-oriented concept would still be undermined.
 
 
+# 2 Builder 
 
-# 2 Factory method
+Our final pattern, **the Builder Pattern,** is also a **creation pattern** . The **Builder Pattern** consists of two parts: the concrete Builder, which can assemble a complex construct from objects, and the (optional) Director, which controls the Builder.
+
+**Changing requirements**  
+With the expansion of orders, we have created many combinations and want to offer customers the opportunity to choose a menu and get it at a lower price.
+
+**Menus**
+
+- Burger, salad and fries menu (discount €1.50)
+    - A burger of your choice
+    - lettuce
+    - Fries with ketchup or mayonnaise
+    - A cola or lemonade
+
+- Burger and fries menu (discount €1.00)
+    - A burger of your choice
+    - Fries with ketchup or mayonnaise
+    - A cola or lemonade
+
+- Salad and fries menu (discount €1.00)
+    - lettuce
+    - Fries with ketchup or mayonnaise
+    - A cola or lemonade
+
+- French Fries Menu (Discount €0.50)
+    - Fries with ketchup or mayonnaise
+    - A cola or lemonade
+
+
+**The revised software design. In the** [Composite](https://isp.eduloop.de/loop/Composite_Pattern_\(dt._Kompositum\) "Composite Pattern")  
+subsection , we already created the _**MainOrder**_ class , which can accept partial orders. In the _**Factory**_ subsection , we created special factories for all order types, which simplify the creation of the objects.[](https://isp.eduloop.de/loop/Composite_Pattern_\(dt._Kompositum\) "Composite Pattern")
+
+We now need two more things
+
+- The orders must be able to be combined into a menu. To do this, we create the classes _**MenuBuilderInterface**_ , _**MenuBuilder**_ , and _**MenuDirector**_ .
+- The calculation of the discount for a menu is done by a _**DiscountDecorator**_
+
+
+---
+
+MenuBuilderInterface and MenuBuilder
+The MenuBuilderInterface defines, as always, the necessary methods thatmust be programmed in the MenuBuilder .
+
+MenuBuilderInterface
+```php
+<?php  declare ( strict_types  =  1 );
+/**
+* Interface for menu builders.
+*/
+
+interface  MenuBuilderInterface
+{
+    public  function  getMenu () :  OrderInterface ;
+    public  function  setBurger ( OrderInterface  $burger ) :  void ;
+    public  function  setSalad ( OrderInterface  $salad ) :  void ;
+    public  function  setFries ( OrderInterface  $fries ) :  void ;
+    public  function  setDrink ( OrderInterface  $drink ) :  void ;
+}
+```
+
+
+MenuBuilder
+
+```php
+<?php  declare ( strict_types  =  1 );
+/**
+* Builds a menu with the given orders.
+*/
+
+class  MenuBuilder  implements  MenuBuilderInterface
+{
+    protected  $burger ;
+    protected  $drink ;
+    protected  $fries ;
+    protected  $salad ;
+    protected  $customer ;
+
+    public  function  __construct ( string  $customer )
+    {
+        $this -> customer  =  $customer ;
+    }
+
+    public  function  getMenu () :  OrderInterface
+    {
+        $menu  =  new  MainOrder ( $this -> customer ,  $this -> getOrders ());
+
+        return  new  DiscountDecorator ( $menu ,  $this -> getDiscount ());
+    }
+
+    protected  function  getOrders () :  array
+    {
+        $orders  =  [];
+        if  ( $this -> burger )  {
+            $orders [] =  $this -> burgers ;
+        }
+        if  ( $this -> drink )  {
+            $orders []  =  $this -> drink ;
+        }
+        if  ( $this -> fries )  {
+            $orders []  =  $this -> fries ;
+        }
+        if  ( $this -> salad )  {
+            $orders []  =  $this -> salad ;
+        }
+
+        return  $orders ;
+    }
+
+    protected  function  getDiscount () :  int
+    {
+        $discount  =  0 ;
+        if  ( $this -> drink  instanceof  OrderInterface )  {
+            if  ( $this -> fries  instanceof  OrderInterface )  {
+                $discount  +=  50 ;
+            }
+            if   ( $this -> salad  instanceof  OrderInterface )  {
+                $discount  +=  50 ;
+            }
+            if  ( $this -> burger  instanceof  OrderInterface )  {
+                $discount  +=  50 ;
+            }
+        }
+
+        return  $discount ;
+    }
+
+    public  function  setBurger ( OrderInterface  $burger ) :  void
+    {
+        $this -> burger  =  $burger ;
+    }
+
+    public  function  setDrink ( OrderInterface  $drink ) :  void
+    {
+        $this -> drink  =  $drink ;
+    }
+
+    public  function  setFries ( OrderInterface  $fries ) :  void
+    {
+        $this -> fries  =  $fries ;
+    }
+
+    public  function  setSalad ( OrderInterface  $salad ) :  void
+    {
+        $this -> salad  =  $salad ;
+    }
+
+}
+
+'''''MenuDirector'''''  controls  the  factories  and  creates  the  menu .
+< source  lang = "php"  line >
+<? php  declare ( strict_types  =  1 );
+/**
+* Directs the creation of a menu.
+*/
+
+class  MenuDirector
+{
+    protected  $burgerFactory ;
+    protected  $drinkFactory ;
+    protected  $friesFactory ;
+    protected  $saladFactory ;
+    protected  $menuBuilder ;
+
+
+    public  function  __construct (
+        BurgerFactory  $burgerFactory ,
+        DrinkFactory  $drinkFactory ,
+        FriesFactory  $friesFactory ,
+        SaladFactory  $saladFactory ,
+        MenuBuilderInterface  $menuBuilder
+    )  {
+        $this -> burgerFactory  =  $burgerFactory ;
+        $this -> drinkFactory  =  $drinkFactory ;
+        $this -> friesFactory  =  $friesFactory ;
+        $this -> saladFactory  =  $saladFactory ;
+        $this -> menuBuilder  =  $menuBuilder ;
+    }
+
+
+    public  function  createOrder (
+        string  $customer ,
+        ? string  $burger ,
+        ? array  $burgerExtras ,
+        ? string  $fries ,
+        ? array  $friesExtras ,
+        ? string  $salad ,
+        ? array  $saladExtras ,
+        ? string  $drink ,
+        ? array  $drinkExtras
+    ) :  OrderInterface  {
+        if  ( is_string ( $burger ))  {
+            $this -> menuBuilder -> setBurger (
+                $this -> burgerFactory -> createOrderForCustomer (
+                    $burger ,  $customer ,  $burgerExtras
+                )
+            );
+        }
+
+        if  ( is_string ( $drink ))  {
+            $this -> menuBuilder -> setDrink (
+                $this -> drinkFactory -> createOrderForCustomer (
+                    $drink ,  $customer ,  $drinkExtras
+                )
+            );
+        }
+
+        if  ( is_string ( $fries ))  {
+            $this -> menuBuilder -> setFries (
+                $this -> friesFactory -> createOrderForCustomer (
+                    $fries ,  $customer ,  $friesExtras
+                )
+            );
+        }
+
+        if  ( is_string ( $salad ))  {
+            $this -> menuBuilder -> setSalad (
+                $this -> saladFactory -> createOrderForCustomer (
+                    $salad ,  $customer ,  $saladExtras
+                )
+            );
+        }
+
+        return  $this -> menuBuilder -> getMenu ();
+    }
+
+}
+```
+
+
+The Decorator classes always increase the price per ingredient for the products. Now we need a corresponding DiscountDecorator to provide the discount.
+```php
+<?php  declare ( strict_types  =  1 );
+/**
+* Substrates the given discount from the order.
+*/
+
+class  DiscountDecorator  extends  AbstractOrderDecorator
+{
+    protected  $discount ;
+
+    public  function  __construct ( OrderInterface  $order ,  int  $discount )
+    {
+        parent :: __construct ( $order );
+        $this -> discount  =  $discount ;
+    }
+
+    public  function  getPrice () :  int
+    {
+        return  parent :: getPrice ()  -  $this -> discount ;
+    }
+}
+```
+
+
+**Adapting the main program:**  
+We can now replace the _**createOrder function with the method of the**_ _**MenuDirector**_ class instance . We pass all factories and the _**MenuBuilder**_ into it via the constructor.
+
+```php
+if  ( $customer  &&  ( $burger  ||  $fries  ||  $salad  ||  $drink ))  {
+    $menuDirector  =  new  MenuDirector (
+        new  BurgerFactory (),
+        new  DrinkFactory (),
+        new  FriesFactory (),
+        new  SaladFactory (),
+        new  MenuBuilder ( $customer )
+    );
+
+    $order  =  $menuDirector -> createOrder (
+        $customer ,
+        $burger ,
+        $burgerExtras ,
+        $fries ,
+        $friesExtras ,
+        $salad ,
+        $saladExtras ,
+        $drink ,
+        $drinkExtras
+    );
+
+    printOrderSummary ( $order );
+}  else  {
+    printOrderForm ();
+}
+```
+Calling _**createOrder**_ returns an instance of OrderInterface, so the rest of our main program continues to work the same way.
+
+
+
+
+# 3 Factory method
+
+The **Factory Pattern** , also called Abstract Factory Pattern, creates related classes at runtime and thus belongs to the group **of creation patterns** .
 
 The _factory method_ is a creation pattern that describes how ==an object is created by calling a method instead of a constructor==. This method is part of a so-called factory class, which is responsible for creating objects. It is misleading that, in common usage among software developers, the factory method describes both any static method for creating objects and one of the original GoF design patterns.
 
 
-## 2.1 Static factory method
+## 3.1 Static factory method
 
 > A class can provide a public static factory method, which is simply a static method that returns an instance of the class." (Joshua Bloch)
 > the factory class itself does not need to be instantiated to create objects,  and no interface needs to be defined for the creating method
@@ -280,7 +571,7 @@ logger.log(Level.INFO, "Hello World!");
 ```
 
 
-## 2.2 Design pattern factory method
+## 3.2 Design pattern factory method
 
 Now we want to extend the existing static factory method to the GoF Factory Method design pattern. The goal of the pattern is to allow new classes to be added to an existing interface or inheritance hierarchy by third parties, and objects of these new classes to be created via an associated factory method. We can imagine, for example, that a third party `MyLogger`might want to implement another logger for the above interface, e.g., a `JDBCLogger`or a `RedisLogger`to store the log in a database. However, ==the third party does not have access to our code, especially not to the class `LoggerFactory`. Therefore, the must `LoggerFactory`itself be extensible from outside.== A solution could look like this, where the existing class is renamed `LoggerFactory`to `LoggerCreator`:
 
@@ -360,7 +651,7 @@ The disadvantage of the factory method design pattern is that two parallel speci
 If the products to be created differ in the necessary arguments (就是 product 这个 interface 中 针对不同情况 必须包含不同的 argument ) when calling the constructor and therefore cannot agree on a common interface for instantiation, the Builder design pattern can [be _used_ ,](https://en.wikipedia.org/wiki/Builder_pattern) possibly in combination with the factory method.
 
 
-## 2.3 Abstract Factory
+## 3.3 Abstract Factory
 
 If the factory class is intended to create not just one product, but an entire family of related products, the factory method is quickly expanded into the [Abstract Factory _design_ pattern. A popular example of this in the context of UI frameworks is the creation of UI elements (such as buttons, text fields, etc.), each of which is intended to follow a specific design style (](https://en.wikipedia.org/wiki/Abstract_factory_pattern) such as Cupertino or Material Design). 
 
@@ -406,7 +697,7 @@ TextField textField = factory.createTextField();
 ```
 
 
-# 3 Dependecy Injection 
+# 4 Dependecy Injection 
 
 用这个的目的是 decoupling oder loose coupling 
 _Dependency injection_ is best translated as "introducing dependencies" and is a well-known term in software development. Like the factory method, it involves outsourcing constructor calls for object creation. ==The goal of dependency injection is `import`to reduce the dependencies between classes created by statements, thereby decoupling the classes.== [Loose coupling](https://en.wikipedia.org/wiki/Loose_coupling) of classes (or components in general) has the advantage that changes can be implemented more easily, as they only have a local effect.
@@ -470,7 +761,7 @@ Such a configuration is usually provided and managed by a framework in its funct
 值得注意的是，这两个框架都利用了 **Java 的反射 API**，通过运行时反射机制来确定哪一个具体类应当被注入到某个接口类型中。
 
 
-## 3.1 Spring
+## 4.1 Spring
 
 In order for the Spring Framework to inject a class's objects into constructors, methods, or directly into attributes, they must be made known to the framework as so-called _[beans](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html)_ . Spring defines beans as follows, with the framework itself acting as an IoC container:
 
@@ -478,7 +769,7 @@ In order for the Spring Framework to inject a class's objects into constructors,
 
 All classes annotated with the annotation `@Component`(from the package `org.springframework.stereotype`) or one of its specializations such as `@Service`, , `@Repository`or `@Controller`, ==are automatically recognized and registered as beans by Spring. Registered beans can be accessed at runtime via the application context==. 
 
-### 3.1.1 @Component
+### 4.1.1 @Component
 In the following code example, an object of the class should be `CapsLockConsoleLogger`able to be included as a bean in other locations. Therefore, the class is `@Component`annotated as (line 1).
 
 ```java
@@ -491,7 +782,7 @@ class CapsLockConsoleLogger implements MyLogger {
 ```
 
 
-### 3.1.2 @SpringBootApplication and @Autowired 
+### 4.1.2 @SpringBootApplication and @Autowired 
 
 In the following class, `SpringClient`this bean is injected into the attribute `MyLogger logger`(lines 4-5), meaning this is precisely where dependency injection occurs. Although ==no constructor call is visible==, the logger can be used later (line 13). The annotation ==`@Autowired`ensures that the framework uses reflection to `MyLogger`search for a suitable bean for the interface and binds this bean to the attribute==. It is important that exactly one suitable bean is found—not none or multiple.
 
@@ -518,7 +809,7 @@ class SpringClient { // this example is a Spring Boot application
 ```
 
 
-### 3.1.3 @configuration and @Bean and @Qualifier
+### 4.1.3 @configuration and @Bean and @Qualifier
 
 If multiple beans satisfy the same interface, a qualifying name must be used to determine which bean the framework should inject. For this purpose, a configuration class can be created—such as the following class `MyConfiguration`, which defines the three beans (2 of type `MyLogger`, 1 of type `String`).
 
@@ -593,7 +884,7 @@ logger.log("Hello World!");
 
 Instead of in the configuration class, MyConfigurationthe beans can also be defined in a corresponding XML configuration file, which must then be loaded as an application context or added to it.
 
-### 3.1.4 define bean in a xml configuration file 
+### 4.1.4 define bean in a xml configuration file 
 
 Instead of in the configuration class, MyConfigurationthe beans can also be defined in a corresponding XML configuration file, which must then be loaded as an application context or added to it.
 
@@ -630,7 +921,7 @@ class SpringXMLConfigClient {
 ```
 
 
-## 3.2 Google Guice
+## 4.2 Google Guice
 
 Google Guice offers a proven alternative for dependency injection if a project intentionally chooses not to use Spring. When Guice was released by Google in 2008, it was the first framework to enable dependency injection in Java using annotations. In Guice, the configuration class that binds interfaces to concrete implementation classes is called a module.
 

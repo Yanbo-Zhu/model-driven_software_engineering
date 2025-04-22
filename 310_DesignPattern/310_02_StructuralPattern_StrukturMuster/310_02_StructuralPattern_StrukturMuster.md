@@ -1,6 +1,8 @@
 
 # 1 Composite
 
+The **Composite Pattern** is a **structural pattern** used when structures are required that can be combined and where the interface should remain the same in both cases. The resulting tree structures are accessed by a client in the same way as a subcomponent.
+
 ==The _Composite_ pattern is a structural pattern used to combine objects that share a common interface into a hierarchical tree structure. The basic idea of ​​the Composite pattern is to represent both primitive objects and composite objects, which consist of multiple primitive objects, in one interface==. This allows individual objects and their compositions to be treated consistently.
 
 ==The pattern is intended to answer the following question: How can individual objects be cleverly combined as parts (= components) to form a whole (= compound) in an object-oriented language?==
@@ -121,6 +123,201 @@ class Composite implements Component {
 	
 	void addComponent(Component c) { components.add(c); }
 	void removeComponent(Component c) { components.remove(c); }
+}
+```
+
+
+## 1.1 
+
+**Changed requirements:**  
+The restaurant now also allows ordering side dishes and drinks. Each of these items, as well as the burgers, can be ordered in any combination. Side dishes include a salad for €2.50 or French fries for €3.00. The salad can be ordered with yogurt dressing or vinaigrette for €0.50 each. The fries can be ordered with ketchup or mayonnaise for €0.50 each. Drinks are Coke for €2.50 or lemonade for €2.
+
+  
+**The revised software design.**  
+Given the sheer number of options for side dishes and drinks, our class diagram naturally becomes extensive. However, we already learned about the _**OrderInterface**_ interface (see [Fig. 89](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b82f93b9b0 "Fig. 89") ) and the abstract class _**AbstractOrderDecorator**_ [for the decorator](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\) "Decorator Pattern") in the Decorator subsection. Based on this, we can now create "decorations" for the French fries and the salad. The following class diagram may look extensive, but it only contains additional child classes for the decorator (and is rotated 90° in the illustration, see [Fig. 88](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b801b85712 "Fig. 88") ).[](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b82f93b9b0 "Fig. 89")[](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b801b85712 "Fig. 88")
+
+[![DecoratorsUML.puml.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/9/92/DecoratorsUML.puml.png/450px-DecoratorsUML.puml.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/9/92/DecoratorsUML.puml.png)
+
+ Fig. 92 :  The already known decorator with additional classes.
+
+  
+On the right side of the original class diagram [(Fig. 89),](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b82f93b9b0 "Fig. 89") we depict the actual burgers, which are connected to the _**OrderInterface via the**_ _**OrderTemplate**_ . We further refined this section of the class diagram in the last chapter [, "Strategy Pattern ." This right-hand section now contains, in addition to the](https://isp.eduloop.de/loop/Strategy_Pattern_\(dt._Strategie\) "Strategy Pattern") _**BurgerOrder**_ class (with its classes not shown in the subchapter ["Strategy](https://isp.eduloop.de/loop/Strategy_Pattern_\(dt._Strategie\) "Strategy Pattern") "), the additional classes for "FrenchFries," "Salad," "Cola," and "Lemonade."
+
+To combine these orders, we create a new class, _**MainOrder**_ , which now plays the central role in the Composite Pattern. This _**MainOrder**_ class can, in turn, contain other orders, i.e., classes that implement _OrderInterface_ . This theoretically makes it possible to implement an order for a group of people, since different main orders can also be combined.
+
+---
+
+
+_**Here's an example of the ColaOrder**_ class , which contains no "surprises" and looks like our original _BeefBurgerOrder_ class from the [Template Pattern subsection. The](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\) "Template Pattern") _**SaladOrder**_ and _**FrenchFriesOrder**_ classes have the same structure.
+
+```php
+? php  declare ( strict_types  =  1 );
+/**
+* Represents an order of a cola.
+* @author Thorsten 'stepo' Hallwas
+*/
+
+class  ColaOrder  extends  OrderTemplate
+{
+    public  function  getName () :  string
+    {
+        return  'Cola' ;
+    }
+
+    public  function  getPrice () :  int
+    {
+        return  250 ;
+    }
+
+    public  function  getPreparationTime () :  int
+    {
+        return  5 ;
+    }
+
+    public  function  getKiloCalories () :  int
+    {
+        return  300 ;
+    }
+}
+
+
+```
+
+
+As mentioned above, the MainOrder class is new and important for the Composite pattern. In line 10 , all individual orders are combined into an array in the $orders[] property . Hence the pattern's name "Composite."
+
+```php
+<?php  declare ( strict_types  =  1 );
+/**
+* Represents a main order in a restaurant.
+* @author Thorsten 'stepo' Hallwas
+*/
+
+class  MainOrder  extends  OrderTemplate
+{
+
+    protected  $orders  =  [];
+
+    public  function  __construct ( string  $customer ,  $orders )
+    {
+        parent :: __construct ( $customer );
+        $this -> orders  =  $orders ;
+    }
+
+    public  function  getName () :  string
+    {
+        $names  =  [];
+        foreach  ( $this -> orders  as  $order )  {
+            $names []  =  $order -> getName ();
+        }
+
+        return  implode ( ', ' ,  $names );
+    }
+
+    public  function  getPrice () :  int
+    {
+        $price  =  0 ;
+        foreach  ( $this -> orders  as  $order )  {
+            $price  +=  $order -> getPrice ();
+        }
+
+        return  $price ;
+    }
+
+    public  function  getPreparationTime () :  int
+    {
+        $preparationTime  =  0 ;
+        foreach  ( $this -> orders  as  $order )  {
+            $preparationTime  +=  $order -> getPreparationTime ();
+        }
+
+        return  $preparationTime ;
+    }
+
+    public  function  getKiloCalories () :  int
+    {
+        $kiloCalories  =  0 ;
+        foreach  ( $this -> orders  as  $order )  {
+            $kiloCalories  +=  $order -> getKiloCalories ();
+        }
+
+        return  $kiloCalories ;
+    }
+}
+```
+
+Adapting the Main Program:
+Our previous createOrder function is now renamed createBurgerOrder , and following the same example, we'll create the functions for the fries, drinks, and salad. In this example for the salad, you can see how the code has been prepared for potential adaptations for different salads without having to create much more code.
+
+```php
+function  createSaladOrder (
+    string  $customer , 
+    string  $salad , 
+    ? array  $saladExtras
+) :  OrderInterface  {
+    switch  ( $salad )  {
+        default :
+            $saladOrder  =  new  SaladOrder ( $customer );
+    }
+
+    if  ( is_array ( $saladExtras ))  {
+        foreach  ( $saladExtras  as  $saladExtra )  {
+            $saladOrder  =  addExtraToSaladOrder ( $saladExtra ,  $saladOrder );
+        }
+    }
+
+    return  $saladOrder ;
+}
+
+function  addExtraToSaladOrder (
+    string  $extraIdentifier , 
+    OrderInterface  $order
+) :  OrderInterface  {
+    switch  ( $extraIdentifier )  {
+        case  'vinaigrette' :
+            return  new  VinaigretteDecorator ( $order );
+        case  'yogurt' :
+            return  new  YogurtDressingDecorator ( $order );
+    }
+
+    return  $order ;
+}
+
+```
+
+
+Now we add a new function createOrder , which creates the main order and stores the partial orders.
+
+```php
+function  createOrder (
+    string  $customer ,
+    ? string  $burger ,
+    ? array  $burgerExtras ,
+    ? string  $fries ,
+    ? array  $friesExtras ,
+    ? string  $salad ,
+    ? array  $saladExtras ,
+    ? string  $drink
+) :  OrderInterface  {
+    $orders  =  [];
+
+    if  ( is_string ( $burger ))  {
+        $orders []  =  createBurgerOrder ( $customer ,  $burger ,  $burgerExtras );
+    }
+
+    if  ( is_string ( $salad ))  {
+        $orders []  =  createSaladOrder ( $customer ,  $salad ,  $saladExtras );
+    }
+
+    if  ( is_string ( $fries ))  {
+        $orders []  =  createFriesOrder ( $customer ,  $fries ,  $friesExtras );
+    }
+
+    if  ( is_string ( $drink ))  {
+        $orders []  =  createDrinkOrder ( $customer ,  $drink );
+    }
+
+    return  new  MainOrder ( $customer ,  $orders );
 }
 ```
 
@@ -529,5 +726,93 @@ The following UML class diagram corresponds to the code example for the proxy pa
 
 
 The code examples shown for the Proxy design pattern can be found in the /patterns/proxy directory of the module repository.
+
+
+
+# 5 Decorator Pattern
+
+The **Decorator Pattern** belongs to the group of **structural patterns** and can be used to avoid complicated inheritance hierarchies that would arise from the combination of properties.
+
+**Changed requirements:**  
+Our restaurant now allows the addition of ingredients (e.g., cheese) to burgers. This creates three additional ordering options for the cheese ingredient, in addition to the three existing burgers.
+
+  
+**How not to refactor software !**  
+To represent the three new possibilities with cheese, we could add three more classes. Without the Decorator pattern, we would now have the following class diagram:
+
+[![OrderTreeWithCheese.puml.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/8/85/OrderTreeWithCheese.puml.png/420px-OrderTreeWithCheese.puml.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/8/85/OrderTreeWithCheese.puml.png)
+ Fig. 87 :  Cheese as an ingredient in a child's class. It shouldn't be like this!
+ 
+Next, we'll look at implementing ordering options with Cucumber. Here, too, the approach could be to create an inheritance hierarchy with all options. However, the number of classes for just the new option grows to 12 due to the existing ordering options with Cucumber, and with each new option, the number doubles again. Since this class tree and the number of files grows too quickly, we need another solution: the decorator.
+
+---
+
+**The revised software design**  
+The better approach to solving this problem is the **Decorator pattern** . First, we again take an abstract class (here, _**AbstractOrderDecorator**_ ) and define a concrete ingredient in each of the child classes, e.g., cheese in the _CheeseDekorator_ class . This way, additional ingredients can be easily added later.
+
+[![DecoratorTreeUML.puml.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/5/5d/DecoratorTreeUML.puml.png/650px-DecoratorTreeUML.puml.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/5/5d/DecoratorTreeUML.puml.png)
+
+ Fig. 88 :  Class diagram for the ingredients
+
+We therefore have, on the one hand, the different burgers [(Fig. 86)](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\)#5f3b7dcf1ebca "Fig. 86") and, on the other hand, the different ingredients [(Fig. 88)](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b801b85712 "Fig. 88") .
+
+Now comes the trick: we need to connect the class diagram with the ingredients [(Fig. 88)](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b801b85712 "Fig. 88") with the class diagram for the different burgers [(Fig. 86)](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\)#5f3b7dcf1ebca "Fig. 86") . We achieve this connection with an interface that we use above the abstract classes.
+
+To make the decorator class diagram clear, we will now use only the _beef burger_ and only _cheese_ as an ingredient .
+
+---
+
+To make the decorator class diagram clear, we will now use only the _beef burger_ and only _cheese_ as an ingredient .
+
+[![OrderTreeUML.puml.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/6/65/OrderTreeUML.puml.png/400px-OrderTreeUML.puml.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/6/65/OrderTreeUML.puml.png)
+
+ Fig. 89 :  Class diagram Decorator Pattern with the class ''OrderInterface'' as connecting element between the ingredients (left) and the burgers (right)
+
+On the right side of the class diagram [in Figure 89,](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b82f93b9b0 "Fig. 89") we see our _**OrderTemplate**_ and its child class _**, BeefBurgerOrder**_ _. The VeganBurgerOrder_ and _ChickenBurgerOrder_ classes have been omitted from this illustration. These are, of course, also child classes of _OrderTemplate_ , as we demonstrated in the last subsection, [Template Pattern .](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\) "Template Pattern")
+
+On the left side of the class diagram [Fig. 89](https://isp.eduloop.de/loop/Decorator_Pattern_\(dt._Dekorierer\)#5f3b82f93b9b0 "Fig. 89") we see our class _**AbstractOrderDecorator**_ and below it all the ingredients can be listed.
+
+The connection between the two pages "Ingredients" and "Burger" is established via the _**OrderInterface**_ . This _OrderInterface_ has another special feature: an [aggregation](https://isp.eduloop.de/loop/Aggregation_und_Komposition "Aggregation and composition") between _the OrderInterface_ and _the AbstractOrderDecorator_ . This is how the ingredients are transmitted to the burger.
+
+
+---
+
+And this is what the important part of the source code for the _**AbstractOrderDecorator class looks like. The**_ _**AbstractOrderDecorator**_ class receives an instance of the OrderInterface in its constructor and thus has all the data for the burger (beef burger, chicken burger, or vegan burger) and can add the data for the ingredients.
+
+```php
+abstract  class  AbstractOrderDecorator  implements  OrderInterface
+{
+    protected  $order ;
+
+    public  function  __construct ( OrderInterface  $order )
+    {
+        $this -> order  =  $order ;
+    }
+
+    public  function  getCustomer () :  string
+    {
+        return  $this -> order -> getCustomer ();
+    }
+
+        public  function  getName () :  string
+    {
+        return  $this -> order -> getName ();
+    }
+    ...
+```
+
+The addition can be clearly seen in the snippet of the CheeseDecorator class.
+```php
+class  CheeseDecorator  extends  AbstractOrderDecorator
+{
+
+    public  function  getName () :  string
+    {
+        return  $this -> order -> getName () . 'with cheese' ;
+    }
+    ...
+```
+
+The name of the burger (e.g., Beef Burger) is read and supplemented with the text " _with cheese"_ ( **see line 6)** . The "Preparation Time," "Price," and "KiloCalories" are also added accordingly.
 
 
