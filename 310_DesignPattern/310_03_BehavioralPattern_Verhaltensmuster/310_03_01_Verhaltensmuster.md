@@ -368,6 +368,8 @@ public class ObserverPatternDemo {
 
 # 2 strategy
 
+The **Strategy Pattern** defines a family of interchangeable algorithms or classes and belongs to the group of **behavioral patterns** . Unlike the Decorator, it exchanges functionality internally.
+
 不同的 strategy , 能够得到 相同的goal, 但是  过程的 perfoamce 不一样 
 
 The Strategy design pattern (also known as "Strategy" or "Policy" ) addresses the fact that, even in software development, there can be different paths to the same goal. These paths correspond to algorithms that are implemented in methods and share a common interface. Simply put, the Strategy pattern simply emphasizes the consistent use of interfaces and the associated polymorphism in an object-oriented language.
@@ -472,3 +474,123 @@ class ChebyshevDistance implements DistanceFunctionStrategy {
     }
 }
 ```
+
+
+## 2.4 例子2
+
+
+**Changing requirements:**  
+Our restaurant wants to be even more flexible and allow customers to customize the patties and offer additional options. Since these have different preparation times and prices, this also affects the total price.
+
+The following burgers can now be ordered:
+
+- Beef burger
+- Chicken burger
+- Fish burger
+- Bean Burger (Vegan)
+- Seitan Burger (Vegan)
+
+
+
+  
+**The revised software design.**  
+Of course, the existing class diagram could easily be expanded to include more burgers. Therefore, it's not really necessary to introduce a new pattern here. And we want to do it anyway to demonstrate the Strategy pattern.
+
+And again, we're adding an abstraction layer (i.e., an interface). Previously, we had an _**OrderTemplate**_ (see [Figure 86](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\)#5f3b7dcf1ebca "Fig. 86") ) and, beneath it, the individual classes for the burgers. Now, as already mentioned, another layer is added. _**OrderTemplate**_ no longer has any specific child classes, but rather a general class _**BurgerOrder**_ , which in turn is connected to the _**BurgerPattyStrategyInterface**_ interface .
+
+[![OrderTreeUML2.puml-corrected.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/1/1b/OrderTreeUML2.puml-korrigiert.png/300px-OrderTreeUML2.puml-korrigiert.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/1/1b/OrderTreeUML2.puml-korrigiert.png)
+
+ Fig. 90 :  Class diagram of the Strategy Pattern
+
+Through the interface we can achieve interchangeability, as our order can include the desired patty (aggregation).
+
+And only below the _**BurgerPattyStrategyInterface**_ are the child classes with the actual burgers or patties available.
+
+[![StrategyTreeUML.puml.png](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/thumb/c/c0/StrategyTreeUML.puml.png/700px-StrategyTreeUML.puml.png)](https://isp.eduloop.de/mediawiki/images/isp.eduloop.de/c/c0/StrategyTreeUML.puml.png)
+
+ Fig. 91 :  ''BurgerPattyStrategyInterface'' with the corresponding child classes
+
+---
+
+Let’s take a look at the (boring) source code of BurgerPattyStrategyInterface .
+
+```
+interface  BurgerPattyStrategyInterface
+{
+    public  function  getName () :  string ;
+    public  function  getPrice () :  int ;
+    public  function  getPreparationTime () :  int ;
+    public  function  getKiloCalories () :  int ;
+}
+```
+
+In this example, these method headers are the same as in the _**OrderTemplate**_ class . In other software, however, the Strategy Pattern might cover a specific subset, resulting in a different interface. And that's exactly where the Strategy Pattern would be most useful. So, again: our application only has one part to swap (the patties). If we had two independent parts to swap, we could apply the Strategy Pattern twice below the _OrderTemplate_ .
+
+
+---
+
+  
+The source code for the _**BurgerPattyStrategyInterface**_ class does not look much different than the previous _**BeefBurgerOrder**_ class (see [Fig. 86](https://isp.eduloop.de/loop/Template_Pattern_\(dt._Schablone\)#5f3b7dcf1ebca "Fig. 86") ).
+
+```
+<?php  declare ( strict_types  =  1 );
+/**
+* Representation of a beef-burger order in a burger restaurant.
+* @author Thorsten 'stepo' Hallwas
+*/
+
+class  BeefBurgerPattyStrategy  implements  BurgerPattyStrategyInterface
+{
+
+    public  function  getName () :  string
+    {
+        return  'Beef' ;
+    }
+
+    public  function  getPrice () :  int
+    {
+        return  550 ;
+    }
+
+    public  function  getPreparationTime () :  int
+    {
+        return  200 ;
+    }
+
+    public  function  getKiloCalories () :  int
+    {
+        return  350 ;
+    }
+}
+```
+
+# 3 Template Pattern
+
+The **template behavior pattern** is used to provide common, usually abstract methods for subclasses. In other words, we provide the skeleton (or rather, template) of the program flow and delegate work steps to the child classes. To do this, we create an abstract class with abstract methods. These are then implemented in the concrete classes.
+
+![[image/Pasted image 20250422104808.png]]
+
+Wir können im Template die Erfassung des Kunden bereits vollständig implementieren, da dieses für alle Burger gleich ist.
+
+```
+    protected $customer;
+    public function __construct(string $customer)
+    {
+        $this->customer = $customer;
+    }
+    public function getCustomer(): string
+    {
+        return $this->customer;
+    }
+```
+
+  
+Die Methoden für den Namen, den Preis und die Engerie in KiloKalorien definieren wir als abstrakte Methoden, sodass sie in den Bestellungsklassen konkretisiert werden müssen.
+
+```
+    abstract public function getName(): string;
+    abstract public function getPrice(): int;
+    abstract public function getPreparationTime(): int;
+    abstract public function getKiloCalories(): int;
+```
+
