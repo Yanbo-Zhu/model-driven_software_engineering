@@ -336,6 +336,12 @@ The principle of reuse is generally efficient when external libraries are integr
 适配器（Adapter）：负责将Adaptee的接口转换为Target的接口。
 被适配者（Adaptee）：一个现存需要适配的接口。
 
+![[image/Pasted image 20250506132132.png]]
+
+
+The Adapter design patternallows otherwise incompatible classes (Client and Adaptee) to work together by converting the interface of one class (the Adaptee) into an interface expected by the clients (the Adaptor).
+
+
 ## 2.1 理论 
 
 ![[310_DesignPattern/310_02_StructuralPattern_StrukturMuster/image/Pasted image 20250412115855.png]]
