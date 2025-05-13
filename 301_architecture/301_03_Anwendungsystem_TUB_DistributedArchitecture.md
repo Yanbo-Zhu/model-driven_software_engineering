@@ -148,6 +148,9 @@ Examples: online banking (look for .jspin the URL!) or travel booking sites, …
 
 
 
+
+
+
 # 4 Quality of Service
 
 
@@ -176,11 +179,14 @@ Examples:
 - Adding items shall always be possible; annual downtime may not exceed 1 minute.
 
 
-## 4.2 Quality ofService
+## 4.2 Quality of Service
 
 QoS goalsareoftendescribedasservicelevelobjectives(SLOs) and listedin servicelevelagreements(SLAs).
 
 ![[image/Pasted image 20250506132355.png]]
+
+
+
 
 
 ## 4.3 Performance
