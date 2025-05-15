@@ -240,6 +240,8 @@ Describes whether a system is **able to respond to requests**.
 
 Describes how well a given system can **adapt to changes in load and resources**.
 
+Die Fahigkeit, large Last zu bedinen
+
 ---
 
 **Key Concepts:**
