@@ -89,6 +89,149 @@ Java analogy: (does not fit completely but is close enough)
 Elements 
 Self-defined types: <xs:simpleType>
 
+
+
+
+#### 1.1.1.1 题目
+
+Ordnen Sie die folgenden Fragmente aus XML-Schema- und XML-Dokumenten einander zu.
+Hinweis: Zum Teil gibt es mehrere M¨oglichkeiten oder auch keine richtige L¨osung
+
+```
+<xs:element name="dataentry" type="data"/>
+<xs:simpleType name="data" type="xs:string"/>
+```
+
+
+```
+<xs:element name="dataentry" type="data"/>
+<xs:simpleType name="data">
+	<xs:restriction base="xs:string">
+		<xs:maxLength value="6"/>
+	</xs:restriction>
+</xs:simpleType>
+```
+
+```
+<xs:element name="dataentry" type="data"/>
+<xs:simpleType name="data">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Monday"/>
+		<xs:enumeration value="Tuesday"/>
+		<xs:enumeration value="Wednesday"/>
+		<xs:enumeration value="Thursday"/>
+		<xs:enumeration value="Friday"/>
+		<xs:enumeration value="Weekend"/>
+	</xs:restriction>
+</xs:simpleType>
+```
+
+```
+<xs:element name="dataentry" type="data"/>
+<xs:complexType name="data">
+	<xs:choice>
+		<xs:element name="value" type="xs:string" maxOccurs="1"/>
+		<xs:element name="value2" type="xs:integer" maxOccurs="1"/>
+	</xs:choice>
+</xs:complexType>
+```
+
+```
+<xs:element name="dataentry" type="data"/>
+<xs:complexType name="data">
+	<xs:sequence>
+		<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="5"/>
+		<xs:element name="value2" type="xs:integer" minOccurs="0" maxOccurs="5"/>
+	</xs:sequence>
+</xs:complexType>
+```
+
+
+A)
+`<dataentry>some value</dataentry>`
+
+passt zu 1 
+
+B)
+`<data>some value</data>`
+zu gar nicht gehoren 
+
+C)
+`<dataentry>value</dataentry>`
+
+zu 1 und 2 
+
+
+
+D)
+`<dataentry>Monday</dataentry>`
+
+zu 1, 2,3 
+
+E)
+`<data>Monday</data>`
+
+zu gar nicht gehoren 
+
+`
+F)
+```
+<dataentry>
+<value>some value</value>
+<value2>12345</value2>
+</dataentry>
+```
+
+zu 5 
+
+
+G)
+```
+<data>
+	<value>some value</value>
+</data>
+```
+
+
+zu 4 oder 5 passen 
+
+
+
+H)
+```
+<dataentry>
+<value2>12345</value2>
+</dataentry>
+```
+
+zu 4 und 5 
+
+
+I)
+```
+<dataentry>
+<value2>123</value2>
+<value2>456</value2>
+<value2>789</value2>
+<value2>0</value2>
+</dataentry>
+```
+
+
+zu 
+
+J)
+```
+<dataentry>
+<value>Friday</value>
+</dataentry>
+```
+
+zu 4 5 
+
+warum nicht 1 ,2,3 passt , `weil <value> ist the kindelemnt von <datenentry> `
+
+
 ### 1.1.2 XPath
 
 通过 这个 xPath 去选中一个 element 
