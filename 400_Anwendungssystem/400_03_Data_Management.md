@@ -340,9 +340,39 @@ Node sets: distinct-values(nodeSet), index-of((nodeSet),item), count(nodeSet), a
 
 ## 1.2 Json 
 
+![[400_Anwendungssystem/image/Pasted image 20250610145214.png]]
+
+```
+//1. Objekt (unordered set of key/value pairs, Java map)
+{
+  "firstName": "John",
+  "lastName": "Smith"
+}
+
+//2. Array (ordered list of values). Speichert nur values, keine keys
+[ "a", "b", "c" ]
+
+
+
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York"
+  },
+  "phone": [
+    { "type": "home", "number": "212 555-1234" },
+    { "type": "fax", "number": "646 555-4567" }
+  ]
+}
+```
 
 
 ## 1.3 Protocol Buffers
+
+![[400_Anwendungssystem/image/Pasted image 20250610145302.png]]
 
 Developed (and used) at Google as
 • platform-independent,
@@ -353,11 +383,33 @@ serialization format targetting inter-machine communication.
 ![[image/Pasted image 20250515152436.png]]
 
 
-Proto syntax
+### 1.3.1 Wie funktionieren Protocol Buffers?
+
+1. Proto-Definition schreiben
+	1. Ähnlich wie ein XML-Schema (XSD) definiert man in .proto Dateien die Struktur der Nachrichten.
+2. Code generieren
+	1. Mit dem Tool protoc werden für die Zielprogrammiersprache Klassen (Stubs) erzeugt.
+3. Serialisieren / Deserialisieren
+	1. Die generierten Klassen werden verwendet, um Daten zu (de)serialisieren.
+
+
+### 1.3.2 Aufbau einer .proto Datei und Proto syntax
+
 Proto files look similar to OOP but, e.g., don‘t do inheritance. Generated stubs look similar to Java Beans.
+
+```
+message MessageName {
+  <Modifier> <Type> field_name = <TagNumber>;
+}
+```
+
+
 
 
 ![[image/Pasted image 20250515152559.png]]
+
+Message: Grundbaustein (ähnlich einer Java-Klasse)
+
 
 Modifiers can be:
 • optional: may or may not be set, if not default value is used
@@ -382,6 +434,14 @@ Style:
 • Use lowercase characters and separate concatenated words with
 underscores for fields
 => Generated code adheres to best practices of target language
+
+### 1.3.3 Genetierter Java-Code
+
+Für jede Message wird eine Klasse erzeugt, ggf. mit verschachtelten Klassen.
+![[400_Anwendungssystem/image/______________2025-05-26_154833.webp]]
+
+Eine statische BuilderKlasse erlaubt das Erstellen von Instanzen im Builder-Pattern.
+![[400_Anwendungssystem/image/______________2025-05-26_154925.webp]]
 
 
 # 2 Database systems
@@ -409,8 +469,17 @@ It builds on top of JDBC to provide a high-level API for interacting with RDBMS.
 ==JPA is a standard, not an implementation.==
 JPA introduced the concept of (persistent) entities.
 
+==Durch JPA  definiert Man Entitäten als Java-Klassen mit Metadaten (Annotationen). Dadurch ist keine SQL noetig==
+
 ==In contrast to JDBC, where developers write SQL queries, JPA allows developers to write regular Java objects (the entities) which use annotations to define the ORM.==
 Entities are typically POJOs, often Java Beans.
+
+```
+// JDBC
+Connection conn = DriverManager.getConnection(url);
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM Kunden");
+```
 
 
 ---
@@ -429,6 +498,9 @@ The EntityManager API is used to create and remove persistent entity instances, 
 Code example:
 myEntitymanager.persist(myEntityInstance);
 
+
+
+![[400_Anwendungssystem/image/Pasted image 20250610144938.png]]
 
 ---
 
@@ -469,18 +541,28 @@ The query is supposed to return a single customer, so the query method getSingle
 ![[image/Pasted image 20250515155216.png]]
 
 
+
 Writing entity classes 
-```
+```java
 @Entity
 public class Customer {
     @Id
     private int id;
     private String name;
-    @OneToMany(mappedBy = "customer")
+
+
+
+	// customer is not column name, but the field name in the related java class 
+	// 代表 在 order 这个 table 中 有一个 column 名字是 customer  . 这个 column 是一个 foreign key which refers to the id column in Table Customer 
+	// 在 Customer 这个 table 中 一个 column 名字叫 order . 这个 column 是一个 foreign key which refers to the id column in Table Order  
+	 
+    @OneToMany(mappedBy = "customer")   // 找到 Order table 中 那个 Column 和 Customer Table 有关系 
     private Collection<Order> orders;
     // + Getters and Setters
 }
 ```
+
+
 
 
 The following annotations are required for
@@ -494,20 +576,34 @@ To persist the one-to-many association between the class Customer and the class 
 
 
 • mappedBy="customer“: specifies that the field customer in class Order owns the relationship. The owner side of a relationship takes care of the foreign key column the relationship is mapped to
+```
+CREATE TABLE Course (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
 
+CREATE TABLE Student (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    course_id INT,
+    FOREIGN KEY (course_id) REFERENCES Course(id)
+);
+```
 
 ---
 
 
-```
+```java
 @Entity
 @Table(name = "ORDER_TABLE")
 public class Order {
     @Id
     @Column(name = "ORDER_ID")
     private int id;
+    
     @Column(name = "SHIPPING_ADDRESS")
     private String address;
+    
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
@@ -536,6 +632,51 @@ Foreign key placement in database tables:
 • One-to-one association: foreign key at any of both sides
 • One-to-many association: foreign key at many-side
 • Many-to-many association: additional table required
+
+
+### 2.1.5 例子 
+
+Why is `@Id` placed above the **getter** (`getVorlesungsnummer`) and not directly above the **field** (`vorlesungsnummer`)?
+
+This is because **JPA allows two styles of access** for mapping Java classes to database tables:
+
+1 Property Access (via Getters/Setters) — what you're using
+If you put annotations like `@Id`, `@Column`, etc. **on the getters**, JPA uses **property access**. That means JPA accesses the data **via the getter/setter methods**, not the fields directly.
+
+```
+@Id
+@Column(name="VorlNr", unique=true)
+public int getVorlesungsnummer() { return this.vorlesungsnummer; }
+
+```
+In this case, JPA knows `vorlesungsnummer` is the primary key **because it's annotated on the getter**.
+
+
+
+
+2 Field Access — alternative
+If you place the annotations directly **on the fields**, like:
+```
+@Id
+@Column(name="VorlNr", unique=true)
+private int vorlesungsnummer;
+
+```
+
+==Then JPA will use **field access**, and it will bypass the getters/setters during ORM mapping.==
+
+----
+
+
+Important Rule:
+
+JPA **does not mix** these two access types within a single class. The access type is determined by **where you place the first JPA annotation** (`@Id`, `@Column`, etc.) in that class:
+
+- First annotation on a **getter** → JPA uses **property access**
+    
+- First annotation on a **field** → JPA uses **field access**
+
+
 
 ## 2.2 Transactions
 
