@@ -709,6 +709,11 @@ if it were operating alone with resources to itself. Each transaction will “se
 (only modifications that result from committed transactions).
 
 
+
+Welche quality of seriver werden von Isolation am meisten beeinflusst 
+Availabilty, Latenz 
+
+
 Durability:
 When the executing program is notified that a transaction has been successfully completed
 (transaction commit) all updates that the transaction has made in the data are guaranteed to
