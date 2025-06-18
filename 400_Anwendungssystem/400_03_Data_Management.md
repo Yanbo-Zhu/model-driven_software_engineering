@@ -461,6 +461,7 @@ JPA is a standard, not an implementation. It is used by many other frameworks:
 
 
 ### 2.1.1 Java Database Connectivity (JDBC)
+
 ![[image/Pasted image 20250515153326.png]]
 
 JPA started out as a Java EE standard (=> Part VI) but now also works stand-alone.
@@ -507,15 +508,15 @@ myEntitymanager.persist(myEntityInstance);
 ### 2.1.3 Querying and modifying entities: JPQL
 
 Interaction with entities is provided by the Query and TypedQuery APIs, which accept various types of queries:
-
+Query in drei Form schreiben: 
 • Jakarta Persistence Query Language (JPQL): a fully-fledged query language with syntax similar to SQL. Uses the abstract persistence schemas of entities, including their relationships, for its data model, and it defines operators and expressions based on this data model.
 • Native SQL: Forwards the textual query “as is” to the underlying database. Required if the database uses custom or non-compatible SQL.
-• Criteria API: Queries are constructed by object-based query definition objects, rather than the string-based approach of the Jakarta Persistence query language Queries are executed by an EntityManager.
+• Criteria API: Queries are constructed by object-based query definition objects, rather than the string-based approach of the Jakarta Persistence query language Queries are executed by an EntityManager.  (nicht mehr sql, sondern OOP Sache )
 
 ==Queries are executed by an EntityManager.==
 
 
-```
+```java
 @PersistenceContext
 EntityManager em;
 
@@ -523,7 +524,7 @@ Query q = em.createQuery("select c from Customer c
     where c.name = :name")
     .setParameter("name", "Joe Smith");
 
-Customer c = (Customer)q.getSingleResult();
+Customer c = (Customer)q.getSingleResult();  // q.getSingleResult()   get Object back 
 ```
 
 
@@ -619,7 +620,7 @@ public class Order {
 ==一个customer 有很多的order, 很多个order 来自于同一个 customer ==
 
 
-• @JoinColumn: Specifies the name of the foreign key (join) column. Default join column name: relationship name in the owner side + “_” + name of primary key column(s) in the owned side.
+• @JoinColumn: Specifies the name of the foreign key (join) column (column name in this table, not another table ). Default join column name: relationship name in the owner side + “_” + name of primary key column(s) in the owned side.
 
 • @Table, @Column and @JoinColumn are particularly useful if the database schema already exists.
 
