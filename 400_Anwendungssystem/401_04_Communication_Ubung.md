@@ -149,31 +149,40 @@ und dem aktuellen Use-Case a
 ## 4.1 Beispielcode 
 
 echo.proto 
-
+![[400_Anwendungssystem/image/d85fa2d71990d0093689bc86a9cead8.jpg]]
 
 写完上面
 
-后通过 gradle 产生两个class , 如下 
+后通过 gradle build 产生两个class , 如下 
+EchoServiceGrpc.java 
 
+
+![[400_Anwendungssystem/image/4e53260cb9571290ba414eb1af58269.jpg]]
 
 
 
 ---
 
 EchoServiceImpl.java
+Server aufbauen 
+![[400_Anwendungssystem/image/12a5e309f104dd4a3e86e50c7d239c4.jpg]]
 
+![[400_Anwendungssystem/image/5e10166de7379d1f1d201232b04272e.jpg]]
 
-
-
+![[400_Anwendungssystem/image/e2c9c84717eedfded91b2c9f0deae49.jpg]]
 
 记得去 start Server 通过 run this classs file 
 
 ---
 
 EchoServiceClient.java 
+Client aufbauen
+![[400_Anwendungssystem/image/7c7030cf5134b079644454fdfd15fce.jpg]]
 
 
+![[400_Anwendungssystem/image/d4e66ce82264408a68fcba3eec0a22d.jpg]]
 
+![[400_Anwendungssystem/image/361af196887b347cd9480f8d5f3e82a.jpg]]
 
 
 # 5 Message Queues 
