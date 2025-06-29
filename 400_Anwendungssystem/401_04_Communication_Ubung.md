@@ -42,6 +42,9 @@ From: http://the-paper-trail.org/blog/consensus-protocols-two-phase-commit/
 
 # 4 RPC Remote Procedure Calls 
 
+RPC (Remote Procedure Call) ermöglicht es, Funktionen über Prozess- und Rechnergrenzen hinweg aufzurufen, ohne dass sich der Aufruf für den Entwickler wesentlich vom lokalen Aufruf unterscheidet.
+
+
 RPC communication is used to hide distribution:
 • Client calls a function which is executed remotely
 • Results are shipped back and returned as function result on the client
@@ -128,9 +131,21 @@ Funktion.
 ![[400_Anwendungssystem/image/Pasted image 20250626110148.png]]
 
 
+
+![[400_Anwendungssystem/image/Pasted image 20250628231315.png]]
+
+Zentrale Komponenten:
+- Client Stub: Nimmt den lokalen Funktionsaufruf entgegen und erstellt daraus eine RPC-Anfrage.
+- Server Skeleton: Empfängt die Anfrage, deserialisiert sie und leitet sie an die serverseitige Implementierung weiter.
+- Netzwerkbindung: Überträgt die Nachricht zwischen Client und Server.
+- Dienstregistry (optional): Ermöglicht das Auffinden und Binden von entfernten Diensten zur Laufzeit.
+
+
 ## 4.2 IDL
 
 An IDL compiler generates stubs/skeletons which are called by/interact with local code
+Eine IDL (Schnittstellenbeschreibungssprache) dient zur plattform- und sprachunabhängigen Definition von Dienstschnittstellen.
+Ermöglicht Interoperabilität zwischen Komponenten, die in unterschiedlichen Programmiersprachen oder auf verschiedenen Plattformen implementiert sind.
 
 How do we get stubs and skeletons
 Using an (ideally) platform-independent Interface Definition Language (IDL)
@@ -178,16 +193,45 @@ In practice, an IDL is often derived from the server-side implementation, i.e.,
 One note on the use of IDLs
 
 
----
+## 4.3 Entwicklung mit RPC und IDL
 
-![[400_Anwendungssystem/image/Pasted image 20250628231315.png]]
+Klassischer Entwicklungsablauf:
+1. Schreiben der IDL-Datei (z. B. .proto).
+2. Generieren von Stubs und Skeletons mittels Compiler.
+3. Implementieren der Serverlogik und Einbindung der generierten Klassen auf Client- und Serverseite.
+
+Modernes Vorgehen (z. B. bei gRPC):
+1. Implementierung des Servers mit Annotationen oder Metadaten.
+2. Generierung der IDL automatisch aus der Implementierung.
+3. Erzeugung von Client-Stubs auf Basis der IDL.
+4. Integration der Stubs in den Clientcode.
 
 
 
 
+Beispiel – IDL in gRPC:
+```protbuf
+service OrderService {
+  rpc PlaceOrder(Order) returns (OrderId);
+  rpc GetStatusForOrderId(OrderId) returns (OrderStatus);
+}
+
+message Order {
+  OrderId id = 1;
+  string customerId = 2;
+  repeated Item items = 3;
+}
+
+message Item {
+  int64 inventoryId = 1;
+  int64 count = 2;
+}
+```
 
 
 # 5 gRPC
+
+gRPC ist ein leistungsfähiges, quelloffenes RPC-Framework, das von Google entwickelt wurde. Es unterstützt viele Sprachen und nutzt Protocol Buffers als Standard für die Schnittstellenbeschreibung und Datenserialisierung.
 
 There are many popular (and modern) RPC frameworks which are used in different contexts.
 
@@ -200,6 +244,21 @@ They focus on efficient serialization and often are agnostic regarding transport
 Integrated functionality is kept minimal
 • Encryption and authentication are common
 • Everything else: plugins
+
+
+---
+
+Eigenschaften von gRPC:
+- Nutzung von prot03 als IDL
+- Unterstützung für zahlreiche Sprachen (z. B. Java, C++, Python, Go, Node.js)
+- Kommunikation über HTTP/2 für effizientes Streaming
+- Unterstützung von Authentifizierung und Verschlüsselung
+- Modular erweiterbar über Plugins
+
+Entwicklungsworkflow mit gRPC:
+1. Schnittstelle definieren: mit . proto Datei
+2. Code generieren: mittels Compiler ( protoc )
+3. Implementieren: von Server und Client mit den generierten Klassen
 
 
 ----
@@ -334,6 +393,129 @@ Client aufbauen
 ![[400_Anwendungssystem/image/361af196887b347cd9480f8d5f3e82a.jpg]]
 
 
+## 5.2 Anleitung gRPC Kommunikation in Java
+
+### 5.2.1 Client 
+
+1 Channel erstellen
+```
+ManagedChannel channel = Grpc.newChannelBuilder("localhost:9090", InsecureChannelCredentials.create()).build();
+```
+
+[localhost:9090](http://localhost:9090/) port des Servers
+
+
+2 Stub erstellen
+
+```
+<Name1>.<Name2> blockingStub = <Name1>.newBlockingStub(channel);
+```
+
+Name1 = Name der Datei aus “grpc-java”
+Name2 = Name der Methode aus der Datei “grpc-java” mit der Endung …BlockingStub
+![[400_Anwendungssystem/image/Pasted image 20250629195651.png]]
+
+3 Request erstellen
+```
+<Name3>.<Name4> request = <Name3>.<Name4>.newBuilder().set<Attribut>(<value>).build();
+```
+
+
+Name3 = Name der Datei aus “java” (siehe oben)
+Name4 = Name der Anfrage-Methode aus der Datei aus “java”
+Attribut = Name des Attributs
+
+4 Response erstellen
+```
+<Name3>.<Name5> response = blockingStub.<Name6>(request);
+```
+
+• Name5 = Name der Antwort-Methode aus der Datei aus "java"
+• Name6 = Name der service Methode (definiert in der proto Datei) aus der "grpc-java" Datei
+
+
+5  Response ausgeben/verarbeiten und Channel schliessen
+```
+channel.shutdown();
+channel.awaitTermination(30, TimeUnit.SECONDS);
+```
+
+
+
+### 5.2.2 Server
+1 Implementations-Methode erstellen
+
+```
+public static class <Klassenname>Impl extends <Name1>.<Name6>ImplBase {
+        @Override
+        public void <Name6>(<Name3>.<Name4> request, StreamObserver<<Name3>.<Name5>> responseObserver) {
+            //Implementationslogik (beliebig veränderbar):
+            String name = request.getName();
+            String greeting = "Hello, " + name;
+            
+            // Antwort erstellen
+            <Name3>.<Name5> response = <Name3>.<Name5>.newBuilder().set<Attribut>(greeting).build();
+            responseObserver.onNext(response); //Antwort absenden
+            responseObserver.onCompleted(); //signalisiert das Ende der Nachricht
+            System.out.println("Received request: " + request + " and returned: " + response);
+        }
+    }
+```
+
+2 Main Methode Server erstellen
+
+```
+Server server = Grpc.newServerBuilderForPort(9090, InsecureServerCredentials.create()).addService(new <Name6>ImplBase()).build();
+```
+
+3 Server starten
+server.start();
+
+4 Server beenden
+server.awaitTermination();
+
+### 5.2.3 Fehlerbehandlung:
+
+
+---
+
+
+
+Maven Build Tool in IntelliJ laden (Vorschlag unten rechts)
+![[400_Anwendungssystem/image/Pasted image 20250629200347.png]]
+
+---
+
+
+
+Maven Plugins neu laden (Maven-Button oben rechts)
+protobuf:compile
+![[400_Anwendungssystem/image/Pasted image 20250629200401.png]]
+
+
+
+---
+
+
+
+protobuf:compile-custom (to update the Grpc-related autogenerated code)
+![[400_Anwendungssystem/image/Pasted image 20250629200414.png]]
+
+
+---
+
+
+
+`jar:jar`
+![[400_Anwendungssystem/image/Pasted image 20250629200442.png]]
+
+Reload all Maven Projects
+![[400_Anwendungssystem/image/Pasted image 20250629200458.png]]
+
+Falls immer noch nicht kompilierbar, Projekt löschen und neu in IntelliJ laden
+
+
+
 
 # 6 Synchronous vs. asynchronous communication
 
@@ -344,7 +526,7 @@ Client aufbauen
 
 ![[400_Anwendungssystem/image/b007b9e15c3bb4a048790ada1e01094.jpg]]
 
-
+![[400_Anwendungssystem/image/Pasted image 20250629200611.png]]
 
 
 
@@ -422,6 +604,8 @@ Auswirkungen auf die Skalierbarkeit
 
 ## 6.2 Asynchrone Kommunikation System 
 
+![[400_Anwendungssystem/image/Pasted image 20250629200626.png]]
+
 
 Using asynchronous interaction, the caller sends a message that gets stored somewhere until the receiver reads it and sends a response. The response is sent in a similar manner. Asynchronous interaction can take place in two forms:
 • Non-blocking invocation (a service invocation but the call returns immediately without waiting for a response, at a later point in time a separate call, which also does not wait for a response, sends the result of the original call back)
@@ -454,6 +638,8 @@ Depending on the implementation, it tends to improve availability as partial sys
 
 # 7 Message Queues 
 
+
+![[400_Anwendungssystem/image/Pasted image 20250629200641.png]]
 
 Reliable message queuing turned out to be a very good idea and an excellent complement to synchronous interactions:
 • Suitable to modular design: the code for making a request can be in a different module (even a different machine!) than the code for dealing with the response
@@ -659,7 +845,7 @@ Auf welche Ebene kann es Abhangigkeiten zwischen Kompinenten geben
 
 # 12 Pub/Sub
 
-
+![[400_Anwendungssystem/image/Pasted image 20250629200703.png]]
 
 Wie unterscheidet sich pub/sub von Point-to-Point-Komunikation (RPC)
 
