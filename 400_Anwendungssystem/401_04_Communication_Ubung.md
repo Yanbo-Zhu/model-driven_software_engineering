@@ -3,113 +3,86 @@
 # 1 Distributed System 
 
 
+Was ist Distributed System :
+Trankstion auf meherer Server verteilen  mehrere Host, die physisch getrennt ist 
 
-Was ist Distributed System 
-Trankstion auf meherer Server verteilen 
-mehrere Host, die physisch getrennt ist 
+Any system which has multiple components that run distributed over multiple machines while exchanging information between the components to reach a common goal is a distributed system.
 
-
-
-
-Welche Problem haben wir in Distributed Systems 
+Welche Problem haben wir in Distributed Systems: 
 Fehler Toleranz,  wenn einen server kaputt ist, wie schafft man datan konsistenz , trade off cost 
 
 
+# 2 Socket-based communication
 
-# 2 Konzept von kommunikation in Distributed Systems
+![[400_Anwendungssystem/image/Pasted image 20250628225631.png]]
+
+Communication via sockets:
+• Manual implementation of application protocol
+• Mixes application logic and communication protocol
+• Complicated to use
+• Labor-intensive
+• Error-prone
+• Undesirable
 
 
+# 3 2-Phase-Commit Protokolls 
 
-Socket
+Erl¨autern Sie, wie auf Basis eines 2-Phase-Commit Protokolls entschieden werden kann, ob eine Transaktion
+in einer verteilten Datenbank committed oder abgebrochen wird.
+
+L¨osung:
+From: http://the-paper-trail.org/blog/consensus-protocols-two-phase-commit/
+1. Contact every database server, suggest a value and gather their responses
+2. If everyone agrees, contact every participant again to let them know. Otherwise, contact every participant to abort the consensus.
+
+![[400_Anwendungssystem/image/Pasted image 20250629064650.png]]
+
+![[400_Anwendungssystem/image/Pasted image 20250629064703.png]]
 
 
-Komunuzieren Sockets synchron oder asynchron 
-asynchron 
+# 4 RPC Remote Procedure Calls 
+
+RPC (Remote Procedure Call) ermöglicht es, Funktionen über Prozess- und Rechnergrenzen hinweg aufzurufen, ohne dass sich der Aufruf für den Entwickler wesentlich vom lokalen Aufruf unterscheidet.
 
 
+RPC communication is used to hide distribution:
+• Client calls a function which is executed remotely
+• Results are shipped back and returned as function result on the client
 
-## 2.1 synchrone Komunucationsystem
-![[400_Anwendungssystem/image/b007b9e15c3bb4a048790ada1e01094.jpg]]
-Client blocket, ins Idle Zeit eingeben, warte auf response aus Server 
+RPC usually relies on an (often and ideally) platform-independent IDL which describes the provided interface (=> again: coding to an interface on the client-side!)
+
+An IDL compiler generates stubs/skeletons which are called by/interact with local code
+
+
 
 ---
-
-
-Vor und Nachteile hat syncharone Komunication in Client Server? 
-
-in Welchen Anwendungsfallen wurdet ihre synchrone Komunikation verwending :  bank, geld transition,    . Ticket buchung system: Ticket reserversation 
-
-
-----
-
-
-Systemdeisgn mit synchroner Komunication brechen, wenn Komponent nicht mehr erreichbar ist? 
-
-CLient lange warten , ganz blockiert, nicht good -> Time out setzen 
-
-
-
----
-
-Synchrone Kommunication aus die Skalierbarkeit eines Systemes sich auswirken ? 
-
-Synchrone Kommunikation bedeutet, dass ein Systemteil (z. B. ein Service) auf die Antwort eines anderen warten muss, bevor es weiterarbeiten kann.
-
-Synchrone Kommunikation kann die **Skalierbarkeit eines Systems** deutlich beeinflussen – meistens **negativ**. 
-
-Auswirkungen auf die Skalierbarkeit
-
- **Erhöhte Kopplung**
-- Dienste hängen voneinander ab: Wenn Service B ausfällt oder langsam ist, blockiert auch Service A.
-- Das verhindert unabhängiges Skalieren.
-    
-**Ressourcenblockade**
-- Threads oder Verbindungen bleiben während der Wartezeit belegt.
-- Das begrenzt die Anzahl gleichzeitiger Nutzer oder Anfragen.
-    
-
- **Weniger Fehlertoleranz**
-- Bei einem Ausfall eines abhängigen Systems schlägt die gesamte Kette fehl.
-- Ein skalierbares System sollte robust gegen Ausfälle sein.
-    
-
- **Schlechtere Antwortzeiten**
-- Antwortzeiten addieren sich: 100 ms (Service A) + 200 ms (Service B) = 300 ms insgesamt.
-- Unter Last verlängert sich das weiter → schlechteres Nutzererlebnis.
-
-**Skalierung ist komplexer**
-- Um Leistung zu steigern, müssen mehrere Systeme gleichzeitig skaliert werden.
-- Das erhöht Infrastruktur- und Wartungskosten.
-
-## 2.2 Asynchrone Kommunikation System 
-
-Vor und Nachteile hast asynchrone Kommunikationsystem 
-
-Wann sollte wir asynchrone Kommunication eher als synchrone Kummnikation verwenden 
-
-
-Wie verandert sich die Verantwortung einer einzelnen komponente in einem asynchronen System 
-in syncrhonene Sytsem: eine ein komponent kaputt, dann alle system kaputt
-
-Asynchrone Kommunication aus die Skalierbarkeit eines Systemes sich auswirken ? 
-Positive , 
-
-
-
-Welche Teile der kommunkation wurde WhastsApp synchrone welche asyncrhone 
-
-asycrhone: telefonieren
-sychrone : groupen chatten 
-
-
-![[400_Anwendungssystem/image/Pasted image 20250626103622.png]]
-
-# 3 RPC 
-
-ermoglichen den Aufruf von Funktionen auf entfernten Comutern /programm 
+- Eermoglichen den Aufruf von Funktionen auf entfernten Computern / Programm 
+- Verbirgt Netzwerkdetails fuer den Entwickler (keine Sockets)
+- Synchrone Kommunication 
 
 ![[400_Anwendungssystem/image/2eed57dca3a3a2f3cc8929894e44782.jpg]]
 
+
+
+
+---
+
+Basic idea:
+• Call function inside process 1
+• Execute function inside process 2
+• Optionally: ship results from process 2 back to process 1 and return there as result
+
+Advantages:
+• Calling remote code is as simple as calling local code
+• Focus on core functionality
+• Platform-independence is possible
+
+Disadvantages:
+• Apparently local call with high latency
+• Dealing with failures: at most once/exactly once/at least once
+
+
+---
 
 RPC
 Stellen Sie sich vor, Sie sind Teil eines Dev-Teams in einem großen Unternehmen. Um von Ihrem Anwen-
@@ -140,7 +113,8 @@ guage) beschreiben. Wie genau dieses Interface aussieht h¨angt von den bereits 
 und dem aktuellen Use-Case a
 
 ---
-## 3.1 RPC Data Flow
+## 4.1 RPC Data Flow
+
 Ein Client ruft per RPC eine Prozedur auf einem Server auf. Beschreiben Sie, welche Komponenten auf
 dem Server und Client benutzt werden, um diesen Aufruf auszuf¨uhren, und wie diese zusammenspielen.
 
@@ -158,12 +132,229 @@ Funktion.
 
 
 
-# 4 gRPC
+![[400_Anwendungssystem/image/Pasted image 20250628231315.png]]
 
-![[400_Anwendungssystem/image/9a6eaa31b5e8a6dfc7848a33fb889d8.jpg]]
+Zentrale Komponenten:
+- Client Stub: Nimmt den lokalen Funktionsaufruf entgegen und erstellt daraus eine RPC-Anfrage.
+- Server Skeleton: Empfängt die Anfrage, deserialisiert sie und leitet sie an die serverseitige Implementierung weiter.
+- Netzwerkbindung: Überträgt die Nachricht zwischen Client und Server.
+- Dienstregistry (optional): Ermöglicht das Auffinden und Binden von entfernten Diensten zur Laufzeit.
 
 
-## 4.1 Beispielcode 
+## 4.2 IDL
+
+An IDL compiler generates stubs/skeletons which are called by/interact with local code
+Eine IDL (Schnittstellenbeschreibungssprache) dient zur plattform- und sprachunabhängigen Definition von Dienstschnittstellen.
+Ermöglicht Interoperabilität zwischen Komponenten, die in unterschiedlichen Programmiersprachen oder auf verschiedenen Plattformen implementiert sind.
+
+How do we get stubs and skeletons
+Using an (ideally) platform-independent Interface Definition Language (IDL)
+Generate platform-specific stubs and skeletons from the IDL
+
+
+Examples of IDLs:
+• Protocol Buffers for gRPC
+• Thrift IDL for Apache Thrift
+• Avro IDL for Apache Avro
+• WSDL for SOAP web services
+• OpenAPI/Swagger for REST
+• …
+
+---
+
+An interface definition language (or alternately, interface description language) is a specification language used to describe a component's interface in a programming language-neutral way
+
+```
+interface salestax {
+	float calculate_tax ( in float taxable_amount );
+}
+```
+
+IDLs are used for interoperability purposes as they facilitate communication between components that are written in different programming languages
+
+---
+
+RPC middleware: application development using IDL
+
+![[400_Anwendungssystem/image/Pasted image 20250628231050.png]]
+
+
+The textbook usage of IDLs is
+• Step 1: Write IDL
+• Step 2: Generate stubs/skeletons
+• Step 3: Write implementing/using code
+
+
+In practice, an IDL is often derived from the server-side implementation, i.e.,
+• Step 1: Write server-side implementation and optionally provide meta-data (e.g., in the form of annotations)
+• Step 2: Auto-generate IDL from the server implementation
+• Step 3: Generate client-side stub from IDL
+• Step 4: Use client-side stub in client code
+One note on the use of IDLs
+
+
+## 4.3 Entwicklung mit RPC und IDL
+
+Klassischer Entwicklungsablauf:
+1. Schreiben der IDL-Datei (z. B. .proto).
+2. Generieren von Stubs und Skeletons mittels Compiler.
+3. Implementieren der Serverlogik und Einbindung der generierten Klassen auf Client- und Serverseite.
+
+Modernes Vorgehen (z. B. bei gRPC):
+1. Implementierung des Servers mit Annotationen oder Metadaten.
+2. Generierung der IDL automatisch aus der Implementierung.
+3. Erzeugung von Client-Stubs auf Basis der IDL.
+4. Integration der Stubs in den Clientcode.
+
+
+
+
+Beispiel – IDL in gRPC:
+```protbuf
+service OrderService {
+  rpc PlaceOrder(Order) returns (OrderId);
+  rpc GetStatusForOrderId(OrderId) returns (OrderStatus);
+}
+
+message Order {
+  OrderId id = 1;
+  string customerId = 2;
+  repeated Item items = 3;
+}
+
+message Item {
+  int64 inventoryId = 1;
+  int64 count = 2;
+}
+```
+
+
+# 5 gRPC
+
+gRPC ist ein leistungsfähiges, quelloffenes RPC-Framework, das von Google entwickelt wurde. Es unterstützt viele Sprachen und nutzt Protocol Buffers als Standard für die Schnittstellenbeschreibung und Datenserialisierung.
+
+There are many popular (and modern) RPC frameworks which are used in different contexts.
+
+For instance, Apache Thrift originated at Facebook, gRPC at Google.
+
+They focus on efficient serialization and often are agnostic regarding transport protocol
+• Transport protocol could be standard HTTP (=> Part V) or a custom implementation
+• Serialization is often into efficient, compact binary representation
+
+Integrated functionality is kept minimal
+• Encryption and authentication are common
+• Everything else: plugins
+
+
+---
+
+Eigenschaften von gRPC:
+- Nutzung von prot03 als IDL
+- Unterstützung für zahlreiche Sprachen (z. B. Java, C++, Python, Go, Node.js)
+- Kommunikation über HTTP/2 für effizientes Streaming
+- Unterstützung von Authentifizierung und Verschlüsselung
+- Modular erweiterbar über Plugins
+
+Entwicklungsworkflow mit gRPC:
+1. Schnittstelle definieren: mit . proto Datei
+2. Code generieren: mittels Compiler ( protoc )
+3. Implementieren: von Server und Client mit den generierten Klassen
+
+
+----
+
+gRPC is a high-performance, open-source, multi-platform RPC framework.
+IDL definition is based on Protocol Buffers
+
+Open-sourced in 2016
+IDL and message format based on proto3 (Protocol Buffers => Part III)
+Bindings for C#, C++, Dart, Go, Java, Kotlin, Node.js, Objective-C, PHP, Python, Ruby
+
+
+![[400_Anwendungssystem/image/Pasted image 20250628234951.png]]
+
+
+gRPC workflow 
+
+![[400_Anwendungssystem/image/Pasted image 20250628235224.png]]
+
+1. ProtoFile definieren
+2. Stubs erzeugen (Client und Server seitig)
+3. Klasse die von der Stub-Klasse erbt schreiben 
+4. Methode überschreiben und die eigentliche Logik implementieren 
+
+---
+
+Defining gRPC IDLs
+
+
+The gRPC IDL is an extension of protobuf and uses the parts which you already know to describe message formats of parameters and return types.
+
+
+![[400_Anwendungssystem/image/Pasted image 20250628235314.png]]
+
+
+![[400_Anwendungssystem/image/Pasted image 20250628235421.png]]
+
+
+IDL Specification
+```
+service OrderService {
+	rpc PlaceOrder(Order) returns (OrderId);
+	rpc GetStatusForOrderId(OrderId) returns (OrderStatus);
+}
+
+message Order {
+	OrderId id = 1;
+	string customerId = 2;
+	repeated Item items = 3;
+}
+message OrderId {
+	int64 id = 1;
+}
+message Item {
+	int64 inventoryId = 1;
+	int64 count = 2;
+}
+message OrderStatus {
+	Status status = 1;
+	int64 timestamp = 2;
+}
+enum Status {
+...
+}
+```
+
+Generated Classes
+```
+public class Order {...}
+public class Item {...}
+public class OrderStatus {...}
+public enum Status {...}
+
+public static abstract class OrderServiceImplBase
+implements io.grpc.BindableService {...}
+```
+
+
+To implement (server-side):
+```
+public class OrderServiceServer extends
+OrderServiceGrpc.OrderServiceImplBase {...}
+```
+
+
+To run (server-side):
+```
+public static void main(String[] args) throws Exception {
+	OrderServiceServer server = new OrderServiceServer(80);
+	server.start();
+	server.blockUntilShutdown();
+}
+```
+
+
+## 5.1 Beispielcode 
 
 echo.proto 
 ![[400_Anwendungssystem/image/d85fa2d71990d0093689bc86a9cead8.jpg]]
@@ -202,12 +393,284 @@ Client aufbauen
 ![[400_Anwendungssystem/image/361af196887b347cd9480f8d5f3e82a.jpg]]
 
 
-# 5 Message Queues 
+## 5.2 Anleitung gRPC Kommunikation in Java
 
-![[400_Anwendungssystem/image/a3d9c7ab4be2e3528f432593d6dbbb5.jpg]]
+### 5.2.1 Client 
+
+1 Channel erstellen
+```
+ManagedChannel channel = Grpc.newChannelBuilder("localhost:9090", InsecureChannelCredentials.create()).build();
+```
+
+[localhost:9090](http://localhost:9090/) port des Servers
+
+
+2 Stub erstellen
+
+```
+<Name1>.<Name2> blockingStub = <Name1>.newBlockingStub(channel);
+```
+
+Name1 = Name der Datei aus “grpc-java”
+Name2 = Name der Methode aus der Datei “grpc-java” mit der Endung …BlockingStub
+![[400_Anwendungssystem/image/Pasted image 20250629195651.png]]
+
+3 Request erstellen
+```
+<Name3>.<Name4> request = <Name3>.<Name4>.newBuilder().set<Attribut>(<value>).build();
+```
+
+
+Name3 = Name der Datei aus “java” (siehe oben)
+Name4 = Name der Anfrage-Methode aus der Datei aus “java”
+Attribut = Name des Attributs
+
+4 Response erstellen
+```
+<Name3>.<Name5> response = blockingStub.<Name6>(request);
+```
+
+• Name5 = Name der Antwort-Methode aus der Datei aus "java"
+• Name6 = Name der service Methode (definiert in der proto Datei) aus der "grpc-java" Datei
+
+
+5  Response ausgeben/verarbeiten und Channel schliessen
+```
+channel.shutdown();
+channel.awaitTermination(30, TimeUnit.SECONDS);
+```
+
+
+
+### 5.2.2 Server
+1 Implementations-Methode erstellen
+
+```
+public static class <Klassenname>Impl extends <Name1>.<Name6>ImplBase {
+        @Override
+        public void <Name6>(<Name3>.<Name4> request, StreamObserver<<Name3>.<Name5>> responseObserver) {
+            //Implementationslogik (beliebig veränderbar):
+            String name = request.getName();
+            String greeting = "Hello, " + name;
+            
+            // Antwort erstellen
+            <Name3>.<Name5> response = <Name3>.<Name5>.newBuilder().set<Attribut>(greeting).build();
+            responseObserver.onNext(response); //Antwort absenden
+            responseObserver.onCompleted(); //signalisiert das Ende der Nachricht
+            System.out.println("Received request: " + request + " and returned: " + response);
+        }
+    }
+```
+
+2 Main Methode Server erstellen
+
+```
+Server server = Grpc.newServerBuilderForPort(9090, InsecureServerCredentials.create()).addService(new <Name6>ImplBase()).build();
+```
+
+3 Server starten
+server.start();
+
+4 Server beenden
+server.awaitTermination();
+
+### 5.2.3 Fehlerbehandlung:
+
+
+---
+
+
+
+Maven Build Tool in IntelliJ laden (Vorschlag unten rechts)
+![[400_Anwendungssystem/image/Pasted image 20250629200347.png]]
+
+---
+
+
+
+Maven Plugins neu laden (Maven-Button oben rechts)
+protobuf:compile
+![[400_Anwendungssystem/image/Pasted image 20250629200401.png]]
+
+
+
+---
+
+
+
+protobuf:compile-custom (to update the Grpc-related autogenerated code)
+![[400_Anwendungssystem/image/Pasted image 20250629200414.png]]
+
+
+---
+
+
+
+`jar:jar`
+![[400_Anwendungssystem/image/Pasted image 20250629200442.png]]
+
+Reload all Maven Projects
+![[400_Anwendungssystem/image/Pasted image 20250629200458.png]]
+
+Falls immer noch nicht kompilierbar, Projekt löschen und neu in IntelliJ laden
+
+
+
+
+# 6 Synchronous vs. asynchronous communication
+
+
+
+
+## 6.1 synchrone Kommunucationsystem
+
+![[400_Anwendungssystem/image/b007b9e15c3bb4a048790ada1e01094.jpg]]
+
+![[400_Anwendungssystem/image/Pasted image 20250629200611.png]]
+
+
+
+Client blocket, ins Idle Zeit eingeben, warte auf response aus Server 
+
+Traditionally, information systems use blocking, synchronous calls: the client sends a request to a service and waits for a response of the service to come back before continuing doing its work.
+
+This is intuitive and easy to understand (= it’s the same model as local function calls) but inefficient:
+• The caller needs to wait idly until the server answers
+• Caller and server need to be available at the same time
+
+
+Synchronous invocations require a session between the caller and the receiver and its management.
+
+Synchronous interaction requires a context for each call and a context management system for all incoming calls. The context needs to be passed around with each call as it identifies the session, the client, and the nature of the interaction. 
+
+Maintaining sessions is expensive and consumes CPU resources.
+
+There is also a limit on how many sessions can be active at the same time (thus limiting the number of concurrent clients connected to a server)
+
+![[400_Anwendungssystem/image/Pasted image 20250629001603.png]]
+
+
+---
+
+
+- Vor und Nachteile hat syncharone Komunication in Client Server? 
+	- in Welchen Anwendungsfallen wurdet ihre synchrone Komunikation verwending :  bank, geld transition,    . Ticket buchung system: Ticket reserversation 
+- Systemdeisgn mit synchroner Komunication brechen, wenn Komponent nicht mehr erreichbar ist? 
+	- CLient lange warten , ganz blockiert, nicht good -> Time out setzen 
+- Synchrone Kommunication aus die Skalierbarkeit eines Systemes sich auswirken ? 
+	- Synchrone Kommunikation bedeutet, dass ein Systemteil (z. B. ein Service) auf die Antwort eines anderen warten muss, bevor es weiterarbeiten kann.
+	- Synchrone Kommunikation kann die **Skalierbarkeit eines Systems** deutlich beeinflussen – meistens **negativ**. 
+
+
+Advantages:
+• Code is intuitive and easy to read (=developers see what they are used to)
+• Response gets processed as soon as possible (=minimize latency)
+
+Disadvantages:
+• All participants need to be available at the same time and finding the root cause of failures
+can be challenging (think of invocation chains!)
+• Managing connections/contexts wastes resources
+• Callers are blocked and cannot continue processing (idly wasting resources = bad for
+throughput)
+• Client and server are closely coupled – exchanging the server usually requires changes on
+the client.
+
+
+---
+
+Auswirkungen auf die Skalierbarkeit
+
+ **Erhöhte Kopplung**
+- Dienste hängen voneinander ab: Wenn Service B ausfällt oder langsam ist, blockiert auch Service A.
+- Das verhindert unabhängiges Skalieren.
+    
+**Ressourcenblockade**
+- Threads oder Verbindungen bleiben während der Wartezeit belegt.
+- Das begrenzt die Anzahl gleichzeitiger Nutzer oder Anfragen.
+    
+
+ **Weniger Fehlertoleranz**
+- Bei einem Ausfall eines abhängigen Systems schlägt die gesamte Kette fehl.
+- Ein skalierbares System sollte robust gegen Ausfälle sein.
+    
+
+ **Schlechtere Antwortzeiten**
+- Antwortzeiten addieren sich: 100 ms (Service A) + 200 ms (Service B) = 300 ms insgesamt.
+- Unter Last verlängert sich das weiter → schlechteres Nutzererlebnis.
+
+**Skalierung ist komplexer**
+- Um Leistung zu steigern, müssen mehrere Systeme gleichzeitig skaliert werden.
+- Das erhöht Infrastruktur- und Wartungskosten.
+
+## 6.2 Asynchrone Kommunikation System 
+
+![[400_Anwendungssystem/image/Pasted image 20250629200626.png]]
+
+
+Using asynchronous interaction, the caller sends a message that gets stored somewhere until the receiver reads it and sends a response. The response is sent in a similar manner. Asynchronous interaction can take place in two forms:
+• Non-blocking invocation (a service invocation but the call returns immediately without waiting for a response, at a later point in time a separate call, which also does not wait for a response, sends the result of the original call back)
+• Persistent (message) queues (the call and the response are persistently stored until they are accessed by the client and the server)
+
+- Vor und Nachteile hast asynchrone Kommunikationsystem 
+- Wann sollte wir asynchrone Kommunication eher als synchrone Kummnikation verwenden 
+- Wie verandert sich die Verantwortung einer einzelnen komponente in einem asynchronen System 
+	- in syncrhonene Sytsem: eine ein komponent kaputt, dann alle system kaputt
+- Asynchrone Kommunication aus die Skalierbarkeit eines Systemes sich auswirken ? 
+	- Positive , 
+- Welche Teile der kommunkation wurde WhastsApp synchrone welche asyncrhone 
+	- asycrhone: telefonieren
+	- sychrone : groupen chatten 
+
+
+![[400_Anwendungssystem/image/Pasted image 20250626103622.png]]
+
+---
+
+The sender is not blocked while waiting for the answer.
+
+Performance implications:
+• Throughput is maximized: all entities can have a backlog to work on and will not waste resources with periods of idleness (assuming the respective number of requests)
+• Latency is higher than in synchronous interaction as a request might wait in a buffer for a while before it gets processed
+Depending on the implementation, it tends to improve availability as partial systems can continue to function (=> graceful degradation)
+
+
+
+
+# 7 Message Queues 
+
+
+![[400_Anwendungssystem/image/Pasted image 20250629200641.png]]
+
+Reliable message queuing turned out to be a very good idea and an excellent complement to synchronous interactions:
+• Suitable to modular design: the code for making a request can be in a different module (even a different machine!) than the code for dealing with the response
+• It is easier to design sophisticated distribution modes (multicast, transfers, replication, …) and it also helps to handle communication sessions in a more abstract way
+• More natural way to implement complex interactions between heterogeneous systems
+
+
+
+![[400_Anwendungssystem/image/Pasted image 20250629002633.png]]
 
 
 ![[400_Anwendungssystem/image/d72d6ef473f9ec94d2fa4c5236dc903.jpg]]
+
+
+# 8 RPC vs MQ 
+
+
+Wie wirkt sich die Wahl von RPC oder MQ auf die sklierbarkeit des Systems aus 
+
+RPC:
+The component (server) exposes its functionality via an interface so that it
+can be accessed remotely by other components (clients) as a remote
+function. Clients and server must agree on the middleware as programming
+model and as infrastructure. The communication occurs in real-time and
+(typically) is synchronous
+
+Messaging:
+One application publishes a message to a common message channel. Other
+applications can read the message from the channel at a later time. The
+applications must agree on a channel as well as on the format of the
+message. The communication is asynchronous.
 
 ![[400_Anwendungssystem/image/15bb94207519b1fa652af4134044d7f.jpg]]
 
@@ -215,7 +678,56 @@ Client aufbauen
 
 
 
-# 6 How to send and deliver messages
+---
+
+
+Wof¨ur k¨onnen Queues in komplexen System eingesetzt werden? Erkl¨aren Sie die Unterschiede, Nachrichten synchron oder asynchron in die Queue einzuliefern und abzuhole
+
+load balancer 中使用 queue 
+
+L¨osung: 
+Queues k¨onnen unter anderem eingesetzt werden, um ==Komponenten voneinander zu entkoppeln==.
+Damit k¨onnen diese Komponenten z.B. unterschiedliche Technologien verwenden. Außerdem kann das
+empfangende System die Anfragen zu einem sp¨ateren Zeitpunkt bearbeiten. Damit kann die Reliability erh¨oht werden.
+
+Die Kommunikation insgesamt ist asynchron, aber einzelne Teile der Kommunikation mit der Queue k¨onnen trotzdem synchron sein, woraus sich folgende Matrix ergibt: 
+![[400_Anwendungssystem/image/Pasted image 20250618112220.png]]
+
+
+Nachteil  in Asyncrhoen mode of queue 
+- wenn queue leer ist, Empfanger fragt immer quere an, ob neue Nachrichten kommt -> uberlastet 
+- wenn queue voll  ist, Empfanger wird uberlastet 
+
+
+# 9 messaging System 
+
+
+![[400_Anwendungssystem/image/Pasted image 20250629003540.png]]
+
+
+
+![[400_Anwendungssystem/image/Pasted image 20250629003554.png]]
+
+
+A few messaging terms and concepts
+- Channel: The (virtual) pipe that connects a sender to a receiver
+- Message: The atomic packet of data that can be transmitted on a channel
+- Pipes and Filters: The architectural style to divide a larger processing task into a sequence of smaller, independent processing steps (the filters) that are connected by channels (the pipes), e.g., for purposes of routing, validating and transforming messages
+- Routing: The route a message must follow through multiple channels and intermediate destinations to reach its final destination
+- Transformation: The conversion of message formats
+
+
+How to implement messaging
+
+![[400_Anwendungssystem/image/Pasted image 20250629003700.png]]
+
+![[400_Anwendungssystem/image/Pasted image 20250629003649.png]]
+
+
+
+
+
+# 10 How to send and deliver messages
 
 While end-to-end communication (A) may be asynchronous, this doesn‘t say
 anything about the way in which B and C are realized and how they affect
@@ -259,6 +771,17 @@ the messaging client library.
 
 ---
 
+Delivering messages synchronously
+
+The recipient is responsible for fetching messages from the queue and makes a blocking getMessage() call, possibly with a time-out.
+
+Advantage: The recipient has control over the arrival rate of messages and cannot get overloaded.
+
+Disadvantage: When messages are sent rarely, the recipient will either make a single call and be blocked afterwards (idly wasting resources) or it needs to ask frequently with negative results (wasting resources with active polling). Messages will sit in the queue until the recipient asks (increasing latency).
+
+
+---
+
 Delivering messages asynchronously
 
 The messaging system is responsible for
@@ -275,7 +798,10 @@ messages might, as a mitigation mechanism, be
 queued again on the recipient (=> increases
 latency).
 
----
+![[400_Anwendungssystem/image/Pasted image 20250629003353.png]]
+
+
+----
 
 
 Messaging is the standard mechanism to realize asynchronous communication and loose
@@ -289,46 +815,13 @@ can be delivered synchronously (active polling) or asynchronously (observer/list
 
 
 
-# 7 Middleware - paradigmen 
-
-
-Welcbe Art der kommunikation wurdet Ihr wahlen wenn euer System, highly availbale sein soll? 
-
-Ayschronoe Komunikation,  
-Es should never akzpt, server kapuut 
-
-
-
-Wie wirkt sich die Wahl von RPC oder MQ auf die sklierbarkeit des Systems aus 
-
-
-# 8 Queues
-
-Wof¨ur k¨onnen Queues in komplexen System eingesetzt werden? Erkl¨aren Sie die Unterschiede, Nachrichten
-synchron oder asynchron in die Queue einzuliefern und abzuhole
-
-load balancer 中使用 queue 
-
-L¨osung: 
-Queues k¨onnen unter anderem eingesetzt werden, um ==Komponenten voneinander zu entkoppeln==.
-Damit k¨onnen diese Komponenten z.B. unterschiedliche Technologien verwenden. Außerdem kann das
-empfangende System die Anfragen zu einem sp¨ateren Zeitpunkt bearbeiten. Damit kann die Reliability erh¨oht werden.
-
-Die Kommunikation insgesamt ist asynchron, aber einzelne Teile der Kommunikation mit der Queue k¨onnen trotzdem synchron sein, woraus sich folgende Matrix ergibt: 
-![[400_Anwendungssystem/image/Pasted image 20250618112220.png]]
-
-
-Nachteil  in Asyncrhoen mode of queue 
-wenn queue leer ist, Empfanger fragt immer quere an, ob neue Nachrichten kommt -> uberlastet 
-
-wenn queue voll  ist, Empfanger wird uberlastet 
 
 
 
 
 
 
-# 9 Losse Coupling
+# 11 Losse Coupling
 
 Coupling =  Abhangigkeit zwischen 2 komponenten in einem system 
 
@@ -344,25 +837,15 @@ Lose gekoppelt impliziert Austauschbarkeit von Komponenten und auch eine insgesa
 
 
 
-
-
 Wie schaffst , so wenig Coupling zu machen : Druch Kafka oder another Mittelware , durch, die alle Traffic verwalten kann 
-
-
 Auf welche Ebene kann es Abhangigkeiten zwischen Kompinenten geben 
 
 
-![[400_Anwendungssystem/image/cb50aec2bc716ae4666603314398599.jpg]]
 
 
-# 10 Pub/Sub
+# 12 Pub/Sub
 
-
-
-
-![[400_Anwendungssystem/image/4c685028152f95a27312531492b4c8c.jpg]]
-
-
+![[400_Anwendungssystem/image/Pasted image 20250629200703.png]]
 
 Wie unterscheidet sich pub/sub von Point-to-Point-Komunikation (RPC)
 
@@ -387,7 +870,7 @@ Wie kann man als Publisher sicherstellen das ein Subscriber die Nachricht bekomm
 | **Amazon SNS/SQS**           | 托管云服务               | 多语言           | SNS = Pub/Sub 推送，SQS = 队列拉取   | AWS 微服务通信    |
 | **MQTT Broker（如 Mosquitto）** | 专为物联网设计的 Pub/Sub 协议 | 多语言           | 小巧、轻量级、适合不稳定网络                | IoT设备、嵌入式系统  |
 
-## 10.1 Brokerless und broker-based Pub/Sub Systemen
+## 12.1 Brokerless und broker-based Pub/Sub Systemen
 
 
 L¨osung: In Pub/Sub Systemen kann eine Nachricht mehrere Empf¨anger haben. Sender (sog. Publis-
@@ -401,7 +884,7 @@ wenden sind: Publisher m¨ussen z.B. nicht wissen, wo die Subscriber sind. Ein z
 aber bei hoher Last ¨uberlastet werden. Brokerless Systeme k¨onnen skalierbarer sein, da es keine zentrale
 Komponente gibt. Allerdings ist der Aufwand f¨ur Clients und der Communication Overhead h¨oher.
 
-## 10.2 Interaction patterns
+## 12.2 Interaction patterns
 
 So far, we assumed that one sender sends a message to one recipient via a shared channel.
 
@@ -425,7 +908,7 @@ communication). Examples:
 • …
 This interaction pattern is usually refered to as publish/subscribe (pub/sub).
 
-## 10.3 Pub/sub
+## 12.3 Pub/sub
 
 In pub/sub, senders are called publishers (who publish messages/events), recipients are called
 subscribers.
@@ -497,8 +980,23 @@ Pub/sub:
 
 
 
+# 13 Apache kafka 
 
-# 11 Anwendungsszenarien
+
+Topic-based pub/sub system, originally developed at LinkedIn.
+While MQTT targets lightweight embedded environments, Kafka targets high-throughput use cases.
+Kafka is usually deployed in large clusters and often connects to stream processing systems.
+=> If you end up in a development-related role after you graduate, it is very likely that you will work with Kafka.
+
+Pinterest built MemQ to augment Kafka – targetting more cost-efficiency with simple scaling at
+GB/s traffic volumes in exchange for higher end-to-end latency.
+=> Traded higher latency (compared to Kafka) for 90% cost savings.
+
+
+![[400_Anwendungssystem/image/Pasted image 20250629004113.png]]
+
+
+# 14 Anwendungsszenarien
 ¨Uberlegen Sie sich f¨ur folgende Anwendungsszenarien, welche Art der Kommunikation zwischen den Kom-
 ponenten am besten geeignet ist:
 1. Zwei Systeme. Eines produziert Events, das andere verschickt diese Events als PushNotification an User.

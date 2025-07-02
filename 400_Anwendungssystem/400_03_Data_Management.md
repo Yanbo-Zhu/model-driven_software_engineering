@@ -532,9 +532,63 @@ The query is supposed to return a single customer, so the query method getSingle
 
 
 
+### 2.1.4 JPA 的 Annotation
+
+#### 2.1.4.1 mappedBy
+
+在 JPA（Java Persistence API）中，mappedBy 是用在双向关联关系中的一个关键属性，表示关系的“被拥有方”，用于指定由哪一端来维护数据库表中的外键。
 
 
-### 2.1.4 例子 
+为什么需要 mappedBy
+- 防止 **重复维护外键**：避免两个表都试图更新外键，造成冲突。
+- 由拥有方（没有 `mappedBy` 的一方）负责维护数据库中的外键列。
+- 被拥有方（写了 `mappedBy`）只反映这种关系，不更新外键。
+
+实体类 1：Student
+```
+@Entity
+public class Student {
+    @Id
+    private Long id;
+
+    @OneToMany(mappedBy = "student")  // 指的是 Enrollment 中的 student 字段
+    private List<Enrollment> enrollments;
+}
+
+```
+这里的 mappedBy = "student" 意思是：
+由 Enrollment 实体中的 student 字段来维护这段关系，当前实体（如 Student）只是被动一方。
+
+
+实体类 2：Enrollment
+```
+@Entity
+public class Enrollment {
+    @Id
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")  // 外键真正存在的位置
+    private Student student;
+}
+
+```
+
+
+| 一端            | 多端            | 是否需要 `mappedBy`                    |
+| ------------- | ------------- | ---------------------------------- |
+| `@OneToMany`  | `@ManyToOne`  | 是，写在 `One` 端                       |
+| `@ManyToMany` | `@ManyToMany` | 一个需要 `mappedBy`，另一个不要              |
+| `@OneToOne`   | `@OneToOne`   | 也是一端写 `mappedBy`，一端写 `@JoinColumn` |
+
+
+
+
+
+
+
+
+### 2.1.5 例子 
 
 
 ![[image/Pasted image 20250515155144.png]]
@@ -635,7 +689,7 @@ Foreign key placement in database tables:
 • Many-to-many association: additional table required
 
 
-### 2.1.5 例子 
+### 2.1.6 例子 
 
 Why is `@Id` placed above the **getter** (`getVorlesungsnummer`) and not directly above the **field** (`vorlesungsnummer`)?
 
