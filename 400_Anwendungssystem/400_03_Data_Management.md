@@ -446,10 +446,12 @@ Eine statische BuilderKlasse erlaubt das Erstellen von Instanzen im Builder-Patt
 
 # 2 Database systems
 
+
+
 ## 2.1 Object-Relational Mapping & JPA  Jakarta Persistence API
 
 
-JPA contains more features
+JPA  Java Persistence API contains more features
 • Transactions (supported through JTA for the Java EE implementation of JPA, for Java SE environments, a simplified transaction API is provided)
 • Additional Metadata APIs for Entities and ORM (many more Annotations!)
 • Instead of Annotations, XML descriptors can be used for basically everything
@@ -485,7 +487,7 @@ ResultSet rs = stmt.executeQuery("SELECT * FROM Kunden");
 
 ---
 
-### 2.1.2 Using JPA Entities
+### 2.1.2 Using JPA Entities 
 
 ![[image/Pasted image 20250515155938.png]]
 
@@ -514,8 +516,6 @@ Query in drei Form schreiben:
 • Criteria API: Queries are constructed by object-based query definition objects, rather than the string-based approach of the Jakarta Persistence query language Queries are executed by an EntityManager.  (nicht mehr sql, sondern OOP Sache )
 
 ==Queries are executed by an EntityManager.==
-
-
 ```java
 @PersistenceContext
 EntityManager em;
