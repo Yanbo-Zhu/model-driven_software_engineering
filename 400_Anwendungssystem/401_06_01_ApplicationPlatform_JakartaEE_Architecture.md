@@ -8,8 +8,98 @@ Glassfish, WebSphere, WildFly/JBoss.
 Jakarta EE alternatives include Spring or .NET.
 
 
+Appserver Architektur ist jakaratEE 
 
-# 1 Jakarta EE Overview 
+
+# 1 Vue代码部署在服务器端，  Vue是如何在客户端动态渲染页面
+
+**Vue 的代码虽然部署在服务器，但运行是在客户端浏览器中完成的。**
+
+| 阶段   | 内容                      | 执行位置                            |
+| ---- | ----------------------- | ------------------------------- |
+| 开发阶段 | 编写 Vue 源代码              | 本地开发环境                          |
+| 构建阶段 | 打包为 HTML + JS + CSS     | 构建工具（webpack、vite）              |
+| 部署阶段 | 上传打包文件到服务器              | 服务器（Nginx、Spring Boot、Tomcat 等） |
+| 访问阶段 | 浏览器下载 HTML/JS 文件，执行 Vue | 浏览器（客户端） ✅ Vue 开始工作！            |
+
+
+
+1 部署：Vue 项目经过打包构建
+npm run build
+
+这会把项目变成一堆静态资源文件，比如：
+```
+dist/
+├── index.html
+├── js/
+│   └── app.123abc.js
+├── css/
+│   └── style.456def.css
+
+```
+
+这些文件将被部署在服务器（如 Nginx、Tomcat、Spring Boot 的静态资源目录）上。
+
+---
+
+2 浏览器访问：下载静态文件
+
+当用户访问你的 Vue 应用时：
+- 浏览器发送请求，比如 `GET /index.html`
+- 服务器返回静态文件 `index.html`，里面包含了：
+    - 一个 `<div id="app"></div>` 容器
+    - 一个 `<script src="/js/app.123abc.js"></script>` 的 Vue 脚本链接
+
+
+3 浏览器加载：Vue 脚本在客户端运行
+
+然后浏览器执行以下动作：
+- 加载并执行 `app.123abc.js`（这是你用 Vue 写的代码打包后的结果）
+- Vue 的 JavaScript 在 **浏览器中运行**，并找到 HTML 中的 `<div id="app">`
+- 然后 Vue 会“挂载”到这个 DOM 元素上，并根据你定义的组件和数据，**动态渲染页面内容**
+📌 **此时渲染逻辑都是在客户端完成的，Vue 本身不需要服务器参与渲染。**
+
+
+
+---
+
+例子 
+HTML 初始结构：
+```
+<body>
+  <div id="app"></div>
+  <script src="/js/app.js"></script>
+</body>
+
+```
+
+
+Vue 代码（已经打包在 app.js 中）：
+```
+new Vue({
+  el: '#app',
+  data: {
+    message: '你好，Vue！'
+  },
+  template: '<div>{{ message }}</div>'
+})
+
+```
+
+
+运行效果（浏览器渲染后变成）：
+```
+<div id="app">
+  <div>你好，Vue！</div>
+</div>
+```
+
+整个渲染过程是在客户端浏览器中动态完成的！
+
+
+
+
+# 2 Jakarta EE Overview 
 
 Jakarta EE
 ├── Web Container
@@ -26,7 +116,7 @@ Jakarta EE
 
 
 
-# 2 fat and thin Client 
+# 3 fat and thin Client 
 
 fat client 
 thin client 
@@ -81,7 +171,7 @@ has application layer komponent in client
 
 - **Thin Client**：网页系统、企业后台、政府门户等
 - **Fat Client**：银行终端系统、工程软件、本地化企业工具等
-# 3 Web Container 
+# 4 Web Container 
 
 nur Web Container  braucht,  dann use tomcat 
 
@@ -98,7 +188,7 @@ nur Web Container  braucht,  dann use tomcat
 - Jetty
 - Undertow
 
-## 3.1 Servlets 
+## 4.1 Servlets 
 
 
 Provides entry point for requests from the web.
@@ -125,7 +215,14 @@ public class HelloWorld extends HttpServlet {
 
 
 
-## 3.2 Jakarta Server Pages   JSP 
+## 4.2 Jakarta Server Pages   JSP 
+
+是一种用于构建 动态网页内容 的服务器端技术。
+
+JSP（Jakarta Server Pages） 是一种可以把 Java 代码嵌入 HTML 页面 的技术。
+    它的目的是：让网页根据用户或服务器的情况，生成动态内容。
+    它运行在服务器上，生成的是最终的 HTML，然后发给浏览器。
+
 • Write HTML sites with special tags for embedding Java code
 • JSPs are compiled into servlets for execution
 
@@ -133,6 +230,20 @@ public class HelloWorld extends HttpServlet {
 - 是一种**动态 HTML 页面**，嵌入 Java 代码来生成内容。
 - JSP 被 Web 容器转译成 Servlet 后运行。    
 - 用于创建前端视图页面（HTML + 动态内容）。
+
+- JSP 和 Servlet 如何配合工作
+- JSP 如何连接后端数据库展示数据
+- JSP 中的 JSTL 和 EL 表达式如何简化开发
+- JSP 的生命周期（从请求到生成页面）
+
+
+JSP 是运行在服务器的？因为：
+- JSP 文件中可以嵌入 Java 代码，比如 `<%= someJavaCode %>`
+- 当用户请求 `.jsp` 页面时，服务器会 **执行 JSP 中的 Java 代码**，生成一个纯 HTML 页面，再发给浏览器。
+也就是说：
+- JSP 代码 → 在服务器运行 → 输出 HTML
+- 浏览器只看到 JSP 生成的 HTML，而不是 JSP 源码
+
 
 ```html
 <html>
@@ -157,10 +268,65 @@ public class HelloWorld extends HttpServlet {
 ```
 
 
+### 4.2.1 JSP 的主要作用
+
+动态生成 HTML 页面
+    JSP 能将 Java 代码嵌入 HTML 页面中，在服务器端生成动态内容（如用户信息、查询结果、表单处理结果等），再返回给浏览器。
+    例如：<%= user.getName() %> 会在网页中动态显示当前用户的名字。
+和静态 HTML 不同，JSP 能：
+    显示用户的名字、时间、搜索结果等变化的数据。
+    响应用户的输入或请求（比如：表单提交、搜索关键词等）。
+
+
+与 Java Servlet 协作
+    JSP 是 Servlet 的一种更方便的表示形式，本质上每个 JSP 页面最终都会被编译为一个 Servlet 类。
+    相比 Servlet，JSP 更适合编写以 HTML 为主、少量 Java 逻辑的页面。
+
+分离表现层和业务逻辑
+    JSP 主要用于表示层（View），与后端的业务逻辑（Model）和控制逻辑（Controller）分离（如通过 MVC 模式）。
+    后端逻辑可通过 JavaBean 或自定义标签库（JSTL）与 JSP 交互。
+
+模板机制
+    可以使用 <jsp:include> 或 <%@ include %> 引入公共页面片段（如头部、导航栏、尾部），方便网页模板化和复用。
+
+简化 Web 应用开发
+    开发者可以快速开发基于 Java 的交互式网页，而不必手动处理 HTTP 响应中的 HTML 拼接。
+
+
+```jsp
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head><title>欢迎页面</title></head>
+<body>
+    <h2>欢迎，<%= request.getParameter("name") %>！</h2>
+</body>
+</html>
+
+```
+
+如果用户访问链接 welcome.jsp?name=Tom，服务器返回： 欢迎，Tom！
+
+### 4.2.2 JSP 的执行过程（JSP 怎么工作）
+
+1. 浏览器访问 `.jsp` 页面（例如：`hello.jsp`）。
+2. 服务器会先把 JSP **编译为 Java 的 Servlet 类**（只做一次）。
+3. 然后这个 Servlet 运行，**生成 HTML 内容**。
+4. 最终，服务器把 HTML 发送到浏览器，用户看到结果。
+
+你看到的网页是 HTML，JSP 只在服务器端起作用。
+
+### 4.2.3 JSP 的核心优势
+
+| 功能         | 说明                                        |
+| ---------- | ----------------------------------------- |
+| 嵌入 Java 代码 | 可以直接在页面里写 Java，比如 `<%= user.getName() %>` |
+| 支持 MVC 模式  | JSP 做“视图”，和 Servlet、JavaBean 配合开发大型应用     |
+| 简化输出 HTML  | 不需要在 Java 代码里手动拼接 HTML，开发效率高              |
+| 可重用组件      | 用 `<jsp:include>` 把公共部分（头部、导航栏等）抽出来       |
 
 
 
-### 3.2.1 JSP 如何被转译成 Servlet 运行？
+### 4.2.4 JSP 如何被转译成 Servlet 运行？
 
 - JSP 是把 Java 代码和 HTML 混合写的一种方便方式。
 - 但 Web 容器只能运行 Java 类（Servlet），不能直接运行 JSP 文件。    
@@ -211,7 +377,7 @@ out.print("!");
     - 只要 JSP 文件没有变更，容器后续会直接用已经编译好的 Servlet，避免重复转换和编译，提高效率。
 
 
-### 3.2.2 jsp 对应的 servlet 的 class
+### 4.2.5 jsp 对应的 servlet 的 class
 
 
 JSP 对应的 Servlet 的 `.class` 文件，一般由 Web 容器自动生成并存放在服务器的工作目录中。具体位置和文件名取决于你使用的 Web 容器（比如 Tomcat）和它的配置。
@@ -254,7 +420,56 @@ JSP 对应的 Servlet 的 `.class` 文件，一般由 Web 容器自动生成并�
 - 你可以去这个目录查看编译后的 Servlet 类文件。
 
 
-## 3.3 JAX-RS（REST 服务）
+
+### 4.2.6 JSP 被前后端分离所替代 
+
+- **在早期：** JSP 是 Java Web 的核心技术。
+- **现在：** 虽然仍然被使用，但很多项目已经转向：
+    - 前后端分离（React/Vue）
+    - Spring Boot + Thymeleaf、FreeMarker 等模板引擎
+
+JSP + 前端框架作为静态资源（最常见）
+
+| 部分  | 技术                | 功能                              |
+| --- | ----------------- | ------------------------------- |
+| 后端  | JSP/Servlet/Java  | 提供数据 API 接口（JSON 格式），做认证、数据库访问等 |
+| 前端  | React/Vue/Angular | 在浏览器端做渲染，从后台获取数据（AJAX/Fetch）    |
+
+| 项目     | 建议                                         |
+| ------ | ------------------------------------------ |
+| 数据交互   | 后端返回 JSON（RESTful API），前端使用 axios/fetch 获取 |
+| 路由冲突   | 前端路由（如 Vue Router）避免和后端 URL 冲突             |
+| 静态资源管理 | 使用 CDN 或构建工具把前端资源打包好                       |
+| 安全问题   | 注意防止 XSS、CSRF，登录鉴权推荐使用 JWT 或 Session       |
+
+
+构建前端应用后部署在 JSP 项目中
+1. 使用 Vue/React CLI 工具构建前端项目 (`npm run build`)
+2. 把构建出来的 `dist/` 或 `build/` 目录放到 Java Web 项目的 `/static/` 文件夹或 WebContent 目录下
+3. JSP 作为入口页面引入这些静态资源（CSS/JS）
+4. 前端控制所有路由，后端只负责接口
+
+适用于你还在用 JSP 的 Web 项目，但希望前端更现代。
+
+用 JSP 提供一个“空页面”只加载前端框架：
+```
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+  <title>My App</title>
+  <script src="/static/js/vue-app.js"></script>
+</head>
+<body>
+  <div id="app"></div> <!-- 前端框架会挂载到这里 -->
+</body>
+</html>
+
+```
+- `vue-app.js` 是用 Vue 或 React 编译后的 JS 文件，在浏览器中运行。
+- 前端通过 `axios` 等工具请求后端提供的 JSON 数据接口（比如 `/api/users`）。
+- 后端可以用 JSP（或 Servlet）生成 JSON 响应。
+
+## 4.3 JAX-RS（REST 服务）
 
 Others: JAX-WS and JAX-RS to provide SOAP and REST endpoints by annotating a method
 
@@ -303,7 +518,7 @@ public class RestApplication extends Application {
 
 
 
-### 3.3.1 例子
+### 4.3.1 例子
 
 
 ```java
@@ -347,7 +562,7 @@ public class UserService {
 
 
 
-## 3.4 **Servlets** 和 **JAX-RS** 之间关系 
+## 4.4 **Servlets** 和 **JAX-RS** 之间关系 
 
 **Servlet 是底层的 HTTP 处理机制，JAX-RS 是建立在 Servlet 之上，用注解简化 RESTful Web 服务开发的框架。**
 
@@ -376,7 +591,7 @@ JAX-RS 是什么
 - **JAX-RS**：容器收到 HTTP 请求 → 分发给 JAX-RS 运行时（比如 Jersey）内部的 Servlet → 根据注解映射找到对应资源方法 → 执行方法 → 返回响应。
 简单说，JAX-RS 本质上就是一个更高层次的框架，基于 Servlet 实现，帮你省去手写大量 Servlet 代码，专注于写 REST API。
 
-### 3.4.1 例子 
+### 4.4.1 例子 
 
 
 Servlet 示例
@@ -433,7 +648,7 @@ public class HelloResource {
 - JAX-RS 资源类通常通过一个 JAX-RS 实现（如 Jersey、RESTEasy）部署在 Servlet 容器里。JAX-RS 实现会有一个 Servlet（例如 `ServletContainer`）来接收请求，调用对应的资源方法。
 
 
-# 4 EJB Container  **Enterprise JavaBeans**
+# 5 EJB Container  **Enterprise JavaBeans**
 
 实现 dependecy injection and refection 
 EJB，全称是 **Enterprise JavaBeans**，中文一般叫 **企业级 Java Bean**，它是 Java EE（现为 Jakarta EE）平台中的一个重要组件规范，主要用于实现企业级应用中的**业务逻辑层**。bussines logic layer 
@@ -479,7 +694,7 @@ EJB 的优势
 |类型|Stateless、Stateful、Singleton、Message-Driven|
 |适用场景|大型分布式企业应用，复杂业务逻辑层|
 
-## 4.1 EJB instance create 
+## 5.1 EJB instance create 
 
 EJB Is called from web container and directly from thick clients or remote Jakarta EE applications.
 EJBs are usually not instantiated by directly calling a constructor but rather from dependency injection or as a result of a remote request. The EJB container manages the instance lifecycle and can pool objects.
@@ -523,7 +738,7 @@ private MyServiceBean myService;
 - 这样可以 **提高系统性能和可伸缩性**。
 
 
-## 4.2 Session Beans
+## 5.2 Session Beans
 rufe asynchronous 
 
 - 处理客户端的请求和业务逻辑。
@@ -554,7 +769,7 @@ public class OrderServiceBean implements OrderService {
 
 
 
-### 4.2.1 **Stateless EJB 生命周期流程图**
+### 5.2.1 **Stateless EJB 生命周期流程图**
 
 - **Stateless EJB 是无状态的**，意味着容器可以复用同一个实例处理多个客户端请求。
 - 生命周期由 **容器托管**，开发者只需关注业务逻辑。
@@ -634,7 +849,7 @@ public class MyStatelessBean {
 
 ```
 
-## 4.3 Message-driven beans
+## 5.3 Message-driven beans
 用于异步处理消息，常与 JMS（Java 消息服务）结合，用来处理消息队列和主题。
 
 • Event-driven programming, called from Java‘s proprietary messaging system JMS
@@ -696,7 +911,7 @@ public void onMessage(Message msg) {
 
 ```
 
-### 4.3.1 例子 
+### 5.3.1 例子 
 
 
 好的，下面我将给你一个 **完整的 JMS 示例**，结合：
@@ -811,7 +1026,7 @@ java.naming.provider.url=http-remoting://localhost:8080
 
 
 
-# 5 Application Client Container
+# 6 Application Client Container
 
 standalone ohne IGB Container, mit Client Container kann ich direkt mit methold 
 
@@ -857,10 +1072,10 @@ public class Client {
 这就像是在本地给你的客户端程序“模拟一个微型的 Jakarta 容器环境”。
 
 
-## 5.1 例子 
+## 6.1 例子 
 
 
-### 5.1.1 
+### 6.1.1 
 
 假设你有一个远程部署在服务器上的 EJB：
 
@@ -893,7 +1108,7 @@ public class RemoteClient {
 这时你必须在 classpath 中添加 **应用服务器提供的客户端库**（比如 WildFly 的 `jboss-client.jar`），否则你连 `InitialContext` 都无法正确使用。
 
 
-### 5.1.2 
+### 6.1.2 
 
 
 
@@ -1030,7 +1245,7 @@ jboss-client.jar
 表示客户端成功通过 JNDI 远程调用了部署在 WildFly 上的 EJB。
 
 
-# 6 JNDI **Java Naming and Directory Interface**
+# 7 JNDI **Java Naming and Directory Interface**
 
 **Java Naming and Directory Interface**，Java 命名与目录接口）是 Java 提供的一套 **API，用于访问命名和目录服务**。它的主要作用是：**通过名字查找资源对象**，比如数据库连接池、EJB、JMS 队列等。
 
@@ -1093,7 +1308,7 @@ private DataSource dataSource;
 
 
 
-## 6.1 通过 JNDI 使用数据库连接池来访问 MySQL
+## 7.1 通过 JNDI 使用数据库连接池来访问 MySQL
 
 
 | 步骤  | 说明                           |
@@ -1175,7 +1390,7 @@ public class DbTestBean {
 ```
 
 
-## 6.2 通过 JNDI 使用 **JMS 队列**
+## 7.2 通过 JNDI 使用 **JMS 队列**
 
 
 | 类型     | 使用方式                           | JNDI 名称示例                           | 容器管理 |
@@ -1254,7 +1469,7 @@ public class SenderBean {
 ```
 
 
-## 6.3 通过 JNDI 使用 EJB 服务
+## 7.3 通过 JNDI 使用 EJB 服务
 
 Enterprise JavaBeans（EJB）是 Java EE 的核心之一，用于处理事务、安全性、并发等。
 
@@ -1314,10 +1529,10 @@ String result = remote.greet("RemoteUser");
 
 
 
-# 7 大例子 
+# 8 大例子 
 
 
-## 7.1 
+## 8.1 
 
 整合 **EJB（企业级 Java Bean）** 与 **JAX-RS（Java RESTful 服务）
 我们将创建一个简单的示例，演示：
@@ -1418,7 +1633,7 @@ Hello, Alice! (from EJB)
 ```
 
 
-## 7.2 
+## 8.2 
 
 **JAX-RS + EJB 示例基础上，加入数据库访问（JPA）与事务管理**
 
