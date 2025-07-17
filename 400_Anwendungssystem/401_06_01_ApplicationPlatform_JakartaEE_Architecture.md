@@ -121,9 +121,30 @@ Jakarta EE
 fat client 
 thin client 
 
+- **Presentation Layer（表示层）** – 用户界面/UI
+- **Business Logic Layer（业务逻辑层）** – 处理数据和业务规则
+- **Data Access Layer（数据访问层）** – 访问数据库等后端资源
+
+Thin Client:
+- **Presentation Layer**: Yes, but lightweight (often just a web browser or a small UI).
+    
+- **Business Logic**: ❌ Not on the client — it's handled on the server.
+    
+- **Data Access**: ❌ Handled entirely by the server.
+    
+
+Fat Client (for comparison):
+- **Presentation Layer**: Yes, and often rich/full-featured.
+    
+- **Business Logic**: Often handled on the client.
+    
+- **Data Access**: May directly access databases or communicate with servers.
+
 ---
 
 Thin Client（瘦客户端）
+
+Thin clinet has presentation layer.
 
 定义：
 瘦客户端是一个**功能较少**的客户端程序，**几乎不处理业务逻辑**，只负责展示用户界面和与服务器交互。
@@ -142,6 +163,7 @@ Thin Client（瘦客户端）
 ---
 Fat Client（胖客户端）
 
+Fat clinet has presentation layer.
 has application layer komponent in client 
 
 定义：
