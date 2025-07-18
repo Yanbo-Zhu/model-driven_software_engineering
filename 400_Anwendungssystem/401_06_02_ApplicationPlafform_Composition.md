@@ -50,6 +50,10 @@ Disadvantages:
 # 2 Service-oriented architecture (SOA)
 
 
+![[400_Anwendungssystem/image/Pasted image 20250718102428.png]]
+
+
+
 In SOC, software components are implemented as services.
 Services have a number of characteristics (which ones depends on the definition). Generally, the following can be agreed on:
 • Services are software components implemented as “black box“
@@ -101,6 +105,8 @@ Thank you; have a nice day!”
 
 # 3 Microservices 
 
+
+![[400_Anwendungssystem/image/Pasted image 20250718102831.png]]
 
 Disclaimer: The more concepts are current trends or hypes, the more definitions will be vague. And microservices (in some flavor) are the style that current applications tend to follow.
 Microservice-based architectures are similar to SOA and can be considered a variant. The terms are often used interchangeably (or rather: we now often say “microservices“ to what was referred to as “SOA“ ten years ago and we often say “microservice” instead of “service”).
@@ -162,6 +168,12 @@ Today, the original microservice style is often adapted to run in Kubernetes clu
 
 
 # 4 Virtualization
+
+
+mehrere Replicas muss nicht zwangsweise mehrere physisch getrennte Server bedeuten   => virtualisierung 
+
+![[400_Anwendungssystem/image/Pasted image 20250718104229.png]]
+
 
 Virtualization is a key technology for isolating different applications running on the same machine –from virtual machines to containers.
 Today, applications are almost always Dockerized(also as a deployment vehicle) and deployed on virtual machines.
@@ -309,6 +321,7 @@ Key difference: microVMsarestill generalpurposeVMs whichcanbeusedtorunmultiple a
 
 # 5 Cloud Computing 
 
+![[400_Anwendungssystem/image/Pasted image 20250718110602.png]]
 
 NIST: "Cloud computing is a model for enabling
 ubiquitous, convenient, on-demand network accessto a
@@ -316,6 +329,8 @@ shared pool of configurable computing resources
 (e.g., networks, servers, storage, applications, and services) that can be
 rapidly provisioned and releasedwith
 minimal management effort or service provider interaction.”
+
+
 
 
 ## 5.1 Function-as-a-Service
@@ -338,7 +353,7 @@ Characteristicsofserverlessapplications
 
 ![[400_Anwendungssystem/image/Pasted image 20250710154832.png]]
 
-
+![[400_Anwendungssystem/image/Pasted image 20250718110822.png]]
 
 # 6 软件研发进程
 
