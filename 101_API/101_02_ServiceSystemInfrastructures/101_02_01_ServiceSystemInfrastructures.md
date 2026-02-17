@@ -43,13 +43,15 @@ Each request-response exchange is **stateless**, i.e., every message is independ
 
 ---
 
+HTTP over TCP 
+
 Traditional web communication relies on the **Transmission Control Protocol (TCP)** for reliable delivery and **Transport Layer Security (TLS)** for encryption
 Each connection setup involves two separate handshakes before application data can be exchanged
 TCP handshake: Client and server synchronize sequence numbers using SYN, SYN-ACK, and ACK messages to establish a reliable byte stream
 TLS handshake: Runs on top of TCP to negotiate an encryption key and authenticate the server
 Only after both handshakes complete the client sends its HTTP request
 
-
+![](image/Pasted%20image%2020260217111642.png)
 
 
 ---
@@ -219,6 +221,9 @@ It is typically the entry point of a service architecture or microservice system
 ## 4.4 ##
 
 ![](image/Pasted%20image%2020260217002653.png)
+
+
+![](image/Pasted%20image%2020260217111813.png)
 
 ![](image/Pasted%20image%2020260217002709.png)
 
