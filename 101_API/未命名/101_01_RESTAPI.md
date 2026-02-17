@@ -32,11 +32,11 @@ REST selbst ist ein Architekturstil für die Datenübertragung in der Maschine-z
 
 # 2 常用的相关的 HTTP Method 
 
-![[101_API/image/Pasted image 20250221113206.png]]
+![[image/Pasted image 20250221113206.png]]
 
-![[101_API/image/Pasted image 20250221113340.png]]
+![[image/Pasted image 20250221113340.png]]
 
-![[101_API/image/Pasted image 20250221113355.png]]
+![[image/Pasted image 20250221113355.png]]
 
 # 3 Query Parameters
 
