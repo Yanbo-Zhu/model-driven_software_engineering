@@ -373,18 +373,191 @@ This approach allows CDNs to
 - GeoDNS allows the CDN to make policy-based decisions
 - ==When a user resolves a hostname such as cdn.yaos.shop, the authoritative DNS server determines the user's approximate location using a GeoIP database and returns the regional IP address that reflects the CDN's own mapping strategy==
     - Then - Anycast ensures that requests are automatically routed to one operational PoP that shares a global IP address (regional IP address ) 
-    - edge server ( in that pop )store and deleiver cahed content 
+    - edge server ( in that pop )s tore and deleiver cached content 
 - GeoDNS decisions are made at DNS resolution time and adapt only slowly to network changes 
 
-Geo
+
+## 6.4 Example: Netflix
+
+![](image/Pasted%20image%2020260217103313.png)
 
 
-# 7 MESSAGE QUEUING
+- Netflix's backend services — including user authentication, catalog metadata, recommendations, and the master copies of all video assets — run in the Netflix cloud infrastructure on AWS.
+- Origin servers in this cloud act as the source of truth for all content, generating video manifests (lists of segment URLs, bitrates, and encodings) and supplying the master video files distributed to the CDN.
+- **Open Connect Appliances (OCAs)** form the content-delivery layer, caching popular titles close to users, and are fed by the origin servers through scheduled content updates.
+- OCAs are deployed at Internet Exchange Points (IXPs), where multiple Internet Service Providers (ISPs) interconnect, and in many cases, embedded directly within ISP networks.
+- IX-site OCAs serve as regional caches for several ISPs and act as the upstream source for embedded OCAs.
+- Embedded ISP OCAs reside inside access networks and deliver video streams directly to subscribers, minimizing latency and backbone traffic
+# 7 Multi-regional Service DEployment
+
+
+![](image/Pasted%20image%2020260217103720.png)
+
+
+# 8 MESSAGE QUEUING
+
+
+![](image/Pasted%20image%2020260217103748.png)
+
+Message queues enable **asynchronous** communication between services by buffering messages between consumers and producers
+A producer publishes messages to the queue, where they remain stored until a consumer retrieves and processes them
+Decoupling increases resilience and scalability: producers do not wait for immediate response, and consumers can process messages at their own pace
+If a consumer fails, messages persist in the queue and are delivered once it becomes available again
+Common technologies include RabbitMQ, Kafka, ActiveMQ, and AWS SQS
+Example: when a customer places an order, an event is queued for inventory updates, payment confirmation, and email notification
+
+# 9 CONTROL PLANE
+
+
+Logging, Monitoring, Metrics, and Automation
+
+![](image/Pasted%20image%2020260217104255.png)
+
+
+The control plane provides cross-cutting capabilities that ensure transparency, stability, and automation across the entire service infrastructure
+It operates above the backend tier and collects operational data from all components
+Logging records events and system activities in structured form. It enables tracing requests across microservices, detecting errors, and performing audits
+Monitoring continuously observes system health by collecting status signals and alerting operators when thresholds are exceeded
+Metrics quantify performance indicators such as latency, throughput, and resource usage. They are used for dashboards, trend analysis, and capacity planning
+Automation executes operational tasks such as deployments, scaling, backups, or recovery without human intervention
 
 
 
-# 8 CONTROL PLANE
+
+# 10 AI INFRASTRUCTURES
+
+## 10.1 CPU VS GPU VS TPU
+
+CPUs
+- Central Processing Units (CPUs) are general purpose processors used in all computers and servers
+- Optimized for sequential, general purpose tasks such as executing program logic, managing I/O, and running operating systems
+- CPUs have a few powerful cores with large caches and flexible control units, which is applicable to workloads but **limited in parallel throughput**
+- In AI contexts, CPUs orchestrate data movement, pre- and post-processing, and light inference at the edge
+- CPUs operate primarily on **scalars**, i.e., single values processed sequentially by a few cores
+- Each red square represents a single arithmetic unit operating on one number at a time
+- High flexibility, but limited **parallelism** 
+
+![](image/Pasted%20image%2020260217104646.png)
+
+---
+
+GPUs
+- Graphics Processing Units (GPUs) were originally built for rendering images and evolved into massively parallel compute engines
+- They consist of thousands of smaller cores that execute the same instruction on many data elements simultaneously
+- This makes them ideal for training and inference in neural networks, where millions of matrix multiplications dominate
+- In AI infrastructures, GPUs enable large-scale model training and fast parallel inference in data centers and high-performance clusters
+- **GPUs operate on vectors, i.e., one-dimensional arrays of numbers processed in parallel**
+- Many red squares acting simultaneously along a row each performing the same instruction on different data (Single Instruction, Multiple Data)
+- **Massive parallelism** for matrix and vector math
+
+
+![](image/Pasted%20image%2020260217104715.png)
+
+---
+
+TPUs
+- Tensor Processing Units (TPUs) are custom-built by Google for tensor operations used in deep learning
+- They replace general flexibility with domain-specific efficiency and are optimized for dense matrix multiplies and low-precision arithmetic
+- They deliver higher throughput and lower energy use per AI operation compared to GPUs but support fewer model types
+- TPUs are commonly deployed in hyperscale clouds or integrated into on-device SoC for inference
+- **TPUs directly operate on tensors,** i.e., multidimensional arrays
+- Matrix blocks are processed as a unit, i.e., instead of looping through scalar or vector operations, **TPUs perform matrix multiplications in one cycle**
+- Specialized silicon for deep learning – extremely high throughput, low flexibility
+
+![](image/Pasted%20image%2020260217105203.png)
+
+
+## 10.2 The Inference Server
+
+
+![](image/Pasted%20image%2020260217105401.png)
+
+
+- An LLM Inference Server executes a trained large language model (LLM) to generate responses from incoming prompts
+- It is exposed through a standard API (REST, gRPC, WebSocket) and backed by specialized compute (GPU/TPU) and orchestration layers
+- Each inference follows a highly optimized sequence
+    - Prefill phase: The user's prompt is tokenized, embedded, and fed into the transformer layers to compute internal key-value states
+    - Decode phase: Tokens are generated iteratively, one after another, re-using cached activations for efficiency
+    - Post-processing: Decoded tokens are converted back to text, filtered and returned to the client
+- The pipeline runs entirely on GPU or TPU clusters optimized for matrix multiplication and memory bandwidth
+
+## 10.3 Forms of Parallelism for AI Inference
 
 
 
-# 9 AI INFRASTRUCTURES
+![](image/Pasted%20image%2020260217105552.png)
+
+Data Parallelism
+In data parallelism, each GPU or TPU holds **a full copy of the model weights**
+**Different input batches are processed independently** and in parallel on each accelerator
+During inference, **no synchronization** between accelerators is required – results are simply merged afterward
+Best for serving many requests at once (throughput scaling)
+Each accelerator must fit the entire model into its memory
+
+
+Tensor Parallelism
+When **the model is too large for one accelerator**, tensors (e.g., weight matrices) are shared across accelerators in tensor parallelism
+**Each GPU computes a portion of the same matrix multiplication at every layer** – e.g. one handles columns 0-2047, another 2048-4095
+Intermediate results are then aggregated via high-speed interconnects
+Enables very large models by distributing layer computations
+Required frequent communication between GPUs, sensitive to interconnect bandwidth and latency
+
+Pipeline Parallelism
+In pipeline parallelism, **the model's layers are divided into stages, each running on a different GPU**
+**Tokens (or micro-batches) flow through the pipeline while one accelerator processes the prefill of batch A, another decodes batch B**
+This overlapping keeps all accelerators busy and minimizes idle times
+Scales models that exceed a single accelerator's memory and improves utilization
+Introduces pipeline latency, and balancing that stage is complex
+
+
+## 10.4 Scaling Architectures for LLM Inference
+
+![](image/Pasted%20image%2020260217110438.png)
+
+
+Single Node – One GPU/TPU
+The simplest setup: one physical or virtual machine hosts both the model and the runtime
+Al computation – tokenization, prefill, and decode – runs on a single accelerator, such as GPU or TPU
+An accelerator is specialized hardware designed to speed up mathematical operations, particularly matrix multiplications, that dominate neural network workloads
+Ideal for small or quantized models, where model weights are stored using lower numerical precision (e.g., 8-bit instead of 16- or 32-bit) 
+
+
+Single Node – Multiple GPUs/TPUs
+A single server node contains several accelerators – GPUs or TPUs – connected inside the same machine via high-speed connectors
+**These internal links enable fast data exchange between accelerators and shared access to model parameters, enabling the node to act as a tightly coupled compute unit**
+Within this node, parallelism techniques are applied to scale inference across accelerators efficiently
+Inside one node, data, tensor, and pipeline parallelism works hand-in-hand, combining throughput, memory capacity, and utilization efficiency 
+
+
+Multi-Node Cluster
+A cluster consists of several server nodes, each equipped with one or more GPUs or TPUs, connected through a high-bandwidth data center network
+Together, the nodes form a single logical inference system capable of running models that exceed the capacity of any single machine
+Within this cluster, parallelism extends beyond node boundaries to scale throughput, memory, and performance
+Across nodes, data parallelism scales throughput easily, pipeline parallelism scales depth, and tensor parallelism scales model size – at rising coordination costs 
+
+
+
+Cross-Site or Geo-Distributed Deployment
+In a geo-distributed setup, inference capacity is deployed across multiple data centers or cloud regions, each hosting one or more local clusters
+A global load balancer or Anycast routing mechanism directs user requests to the nearest or least-loaded site, minimizing latency and ensuring high availability
+Data parallelism: Each site maintains a replica of the model and independently handles requests from its geographic region
+This minimizes cross-site data transfer, satisfies data sovereignty constraints, and allows near-linear scaling of throughput with global demand
+Synchronization between sites occurs only at the model or configuration level, e.g., when updating weights or deploying a new model version
+Pipeline and tensor parallelism: Stages or layers of a model could be distributed across sites, but the high latency and network variability of intercontinental links make this impractical
+
+## 10.5 Overview of LLM models and Hardware Planning Levels*
+
+
+![](image/Pasted%20image%2020260217110053.png)
+
+
+## 10.6 Retrieval-Augmented Generation (RAG)
+
+- Retrieval-Augmented Generation (RAG) combines information retrieval with text generation to produce context-aware and fact-grounded responses
+- Instead of relying solely on a model's internal parameters, a RAG pipeline retrieves relevant documents or data from external sources (e.g., databases, APIs, files,...) and injects them into the model's prompt at runtime
+- The **knowledge store** serves as the source of truth containing the original content and provides up-to-date information that can be indexed and referenced during generation
+- The **vector database** stores embeddings, i.e., high-dimensional vector representations of the knowledge content and acts as a semantic index enabling efficient similarity search
+- The **retriever** converts the user query into an embedding and returns the matching text snippets
+- The **orchestrator** combines the retrieved context with the original query 
+
+![](image/Pasted%20image%2020260217110323.png)
