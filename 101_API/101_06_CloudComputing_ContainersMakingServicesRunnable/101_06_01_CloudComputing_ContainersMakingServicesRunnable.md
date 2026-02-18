@@ -100,6 +100,8 @@ Infrastructure as a Service (IaaS)
 
 # 3 INFRASTRUCTURE AS A SERVICE
 
+
+## 3.1 virtualization
 Server virtualization abstracts a physical server into multiple isolated Virtual Machines (VMs) on the same hardware
 Each VM behaves like a "real" server: it has its own virtual CPU, memory, storage, and network interfaces
 ==A hypervisor (VM monitor) allocates hardware resources to VMs and enforces isolation between them==
@@ -123,7 +125,7 @@ Common for development, demos, and testing environments
 Examples: VirtualBox, VMware Workstation/Fusion, Parallels
 
 
-## 3.1 Instances and Instance Types
+## 3.2 Instances and Instance Types
 
 ![](image/Pasted%20image%2020260218160335.png)
 
@@ -141,7 +143,7 @@ Typical configuration dimensions (as in the AWS table) are:
 - EBS bandwidth (Gbps): dedicated throughput limit between the instance and its block storage volumes (important for storage-heavy workloads)
 
 
-## 3.2 Iaas Building Blocks
+## 3.3 Iaas Building Blocks
 
 
 ![](image/Pasted%20image%2020260218160606.png)
@@ -154,7 +156,7 @@ Typical configuration dimensions (as in the AWS table) are:
 - EBS Volumes represent persistent block storage (virtual disks) that can be attached to instances
 - Snapshots are point-in-time backups of volumes, used for restore and cloning   
 
-## 3.3 Regions and Availability Zones
+## 3.4 Regions and Availability Zones
 
 - Regions are geographically separated areas (e.g., Europe (Frankfurt)) that contain multiple data centers and offer a full portfolio of cloud services
 - Choose a region mainly for latency, data residency/compliance, service availability, and cost
@@ -169,7 +171,7 @@ Typical configuration dimensions (as in the AWS table) are:
 
 
 
-## 3.4 Image 
+## 3.5 Image 
 
 ![](image/Pasted%20image%2020260218160908.png)
 
@@ -189,7 +191,7 @@ Multiple target instances are started from the image; each instance begins with 
 
 Main effect: repeatable deployments and consistent runtime environments across all instances 
 
-## 3.5 OBSERVABILITY
+## 3.6 OBSERVABILITY
 
 ![](image/Pasted%20image%2020260218161034.png)
 
@@ -205,7 +207,7 @@ Main effect: repeatable deployments and consistent runtime environments across a
 
 
 
-## 3.6 ELASTIC LOAD BALANCING
+## 3.7 ELASTIC LOAD BALANCING
 
 ![](image/Pasted%20image%2020260218161159.png)
 
@@ -352,6 +354,81 @@ eliminating the need to purchase and own physical infrastructure
 shifting infrastructure ownership to the cloud provider
 
 
+## 7.1 Static vs dynamic scaling
 
-## 7.1 UTILIZING DEMAND-SIDE ECONOMIES OF SCALE
 
+
+In static scaling, capacity is provisioned for a fixed level (often the expected peak in demand). When demand is low, resources remain idle (wasted cost); when demand exceeds the provisioned level, the system becomes overloaded
+
+Dynamic scaling continuously adapts capacity to the current workload. Additional instances are added during peaks and removed when demand drops
+
+The result is a better trade-off between cost and quality: less idle capacity during off-peak periods while still maintaining performance and availability during demand spikes 
+
+![](image/Pasted%20image%2020260218202546.png)
+
+## 7.2 Cost models
+
+
+![](image/Pasted%20image%2020260218202133.png)
+
+
+## 7.3 Resource types you have to pay
+
+![](image/Pasted%20image%2020260218202655.png)
+
+RI 是承诺"买什么"，SP 是承诺"花多少"。
+
+![](image/Pasted%20image%2020260218203128.png)
+
+## 7.4 UTILIZING DEMAND-SIDE ECONOMIES OF SCALE
+
+![](image/Pasted%20image%2020260218202711.png)
+
+
+
+Statistical multiplexing turns variability into an efficiency gain: by pooling many independent workloads, peaks rarely align and the aggregate load becomes smoother
+Smoother demand means higher utilization and less "just-in-case" capacity
+
+统计复用将波动性转化为效率提升：通过聚合大量独立的工作负载，峰值很少会同时发生，总负载因此变得更加平滑。
+更平滑的需求意味着更高的利用率，以及更少的"以防万一"的富余容量。
+
+High short-term variability with frequent spikes and troughs
+Dedicated provisioning must follow peaks, leaving long stretches of idle capacity
+Pooling absorbs these fluctuations by filling troughs with other tenants' work 
+高短期波动性，表现为频繁出现的峰值与低谷。
+专用资源配置必须按照峰值进行规划，导致在大部分时间里资源长期闲置。
+资源池化通过用其他租户的任务填满低谷，来吸收这些波动。
+
+
+Demand peaks shift by time zone and offset each other over 24 hours
+A global footprint enables pooling across regions, keeping infrastructure busy "around the clock"
+Variability becomes smoother at the global level than in any single region 
+需求峰值会因时区而转移，并在24小时内相互抵消。
+全球化的基础设施布局能够实现跨区域的资源池化，使基础设施保持"全天候"运转。
+从全球层面来看，波动性比任何一个单一区域都更加平滑。
+
+
+![](image/Pasted%20image%2020260218203224.png)
+Different workload types stress different resources (CPU-heavy vs I/O-heavy)
+Mixing them reduces stranded capacity across resource dimensions, not just CPU
+Higher overall utilization comes from complementarity in variability profiles  
+不同类型的工作负载会对不同资源造成压力（如计算密集型与 I/O 密集型）。
+混合部署它们可以减少在各个资源维度上（而不仅仅是 CPU）的闲置容量。
+更高的整体利用率，源于不同波动特性之间的互补性。
+
+
+![](image/Pasted%20image%2020260218203229.png)
+Uncertainty grows with planning horizon, so private capacity planning adds an upside buffer
+Aggregation lowers relative variability, shrinking the buffer needed for the same risk level
+Result: less idle capacity and lower unit cost 
+不确定性会随着规划周期的增长而增加，因此私有容量规划需要添加一个上浮缓冲。
+资源聚合能降低相对的波动性，从而在相同风险水平下缩减所需的缓冲容量。
+其结果是：闲置容量减少，单位成本降低。
+
+
+
+![](image/Pasted%20image%2020260218203209.png)
+
+Different businesses peak in different seasons (holiday vs tax season)
+Their variability is largely uncorrelated across the year, so capacity can be reused rather than duplicated
+Aggregation reduces the need for seasonal overprovisioning
