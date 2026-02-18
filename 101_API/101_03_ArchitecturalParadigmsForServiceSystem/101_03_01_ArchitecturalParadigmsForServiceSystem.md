@@ -2,7 +2,6 @@
 # 1 MONOLITHS VS MICROSERVICES
 
 
-
 A monolith is an application that is built and deployed as one single, indivisible unit with the following key characteristics
 - Single codebase: All functionality (e.g., product catalog, shopping cart, order management, payment) is contained in one large codebase
 - Single deployment: The entire system is built, tested, and deployed together. You cannot scale or update parts of it independently
