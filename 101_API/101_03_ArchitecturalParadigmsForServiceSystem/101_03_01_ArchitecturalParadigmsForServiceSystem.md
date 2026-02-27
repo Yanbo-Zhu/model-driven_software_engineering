@@ -373,7 +373,7 @@ Cons
 
 ## 7.1 domain
 
-A domain is the coherent **area of business capability** in which a system creates values, including its actors, rules, processes, and vocabulary
+A domain is the coherent== **area of business capability** ==in which a system creates values, including its actors, rules, processes, and vocabulary
 **It is defined by a stable purpose** (what it is to achieve), by a consistent ubiquitous language, and by ownership of certain business facts (its authoritative records)
 
 A subdomain is a smaller, tightly cohesive part of a domain that has its own purpose and internal consistency but still depends on the parent domain's language and goals
@@ -460,7 +460,7 @@ Ingredients 成分 of a Domain Model (Excerpt)
 
 ![](image/Pasted%20image%2020260217232851.png)
 
-**A bounded context is an explicit boundary within which a particular domain model and its Ubiquitous Language are defined,** valid, and consistent
+==**A bounded context is an explicit boundary within which a particular domain model and its Ubiquitous Language are defined,** ==valid, and consistent
 Inside the boundary, terms have precise meanings and the model is coherent
 Outside it, other contexts may use the same words differently, so integration occurs through well-defined contracts (APIs, events) and, when needed, translation and anti-corruption layers
 
@@ -491,7 +491,7 @@ Note: In asynchronous message patterns the notion of upstream and dowstream serv
 
 ![](image/Pasted%20image%2020260217233257.png)
 
-A context map shows bounded contexts and the model-dependency between them, plus (independently) the direction of message flows (requests, commands, events)
+==A context map shows bounded contexts and the model-dependency between them, plus (independently) the direction of message flows== (requests, commands, events)
 An upstream context is the one that own and defines the domain model on a given relationship
 It sets the language and structure; others must conform
 This status says nothing about who calls whom or who publishes events or sends commands

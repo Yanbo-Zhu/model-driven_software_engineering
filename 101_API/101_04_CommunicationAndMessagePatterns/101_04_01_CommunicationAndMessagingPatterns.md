@@ -128,7 +128,7 @@ Switch to an alternative path
 ![](image/Pasted%20image%2020260218011510.png)
 
 
-An operation is idempotent if executing it once or multiple times with the same input and on the same state leads to the **same resulting state**
+==An operation is idempotent if executing it once or multiple times with the same input and on the same state leads to the **same resulting state**==
 Idempotency is important for error handling in synchronous communication: if a call times out and the consumer retries, repeated execution must not create duplicate or inconsistent effects 
 
 Idempotent methods in HTTP
@@ -148,7 +148,7 @@ POST is not idempotent by definition, because it usually adds something, so repe
 
 ![](image/Pasted%20image%2020260218011935.png)
 
-Polling is a synchronous communication pattern where the consumer repeatedly sends a request (e.g., HTTP GET) to check whether some state on the server changed or a server-side event happened
+Polling is a ==synchronous communication== pattern where the consumer repeatedly sends a request (e.g., HTTP GET) to check whether some state on the server changed or a server-side event happened
 Each poll is a normal synchronous request-response; the service responds immediately with the current state, even if nothing has changed
 The consumer chooses a polling interval (e.g., 2 seconds, 10 seconds, 1 minute)
 Polling is executed in a dedicated worker thread to avoid blocking in the consumer's main thread
